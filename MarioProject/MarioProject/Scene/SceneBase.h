@@ -31,7 +31,7 @@ public:
 	}
 
 	//描画処理
-	virtual void Draw()
+	virtual void Draw(float delta_second) const
 	{
 		//インスタンスの取得
 		//GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
@@ -43,5 +43,5 @@ public:
 
 public:
 	//現在のシーン情報を取得する
-	virtual const eSceneType GetNowSceneType()const = 0;
+	virtual eSceneType GetNowSceneType()const = 0;
 };

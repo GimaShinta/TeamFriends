@@ -1,7 +1,7 @@
 #include "Application.h"
 
-//#include "../Utility/ResourceManager.h"
-//#include "../Utility/InputManager.h"
+#include "../Utility/ResourceManager.h"
+#include "../Utility/InputManager.h"
 #include "../Scene/SceneManager.h"
 
 #include "DxLib.h"
@@ -30,7 +30,7 @@ void Application::WakeUp()
 	SetGraphMode(D_WIN_MAX_X, D_WIN_MAX_Y, D_COLOR_BIT);
 
 	// ウィンドウタイトルの設定
-	SetWindowText("Game Development Supar_Mario 2024");
+	SetWindowText("TeamFriends_MarioProject 2025");
 
 	// 垂直同期を行わない
 	SetWaitVSyncFlag(FALSE);
@@ -55,7 +55,7 @@ void Application::WakeUp()
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// 最初のシーンをタイトル画面にする
-	//scene->ChangeScene(eSceneType::eTitle);
+	scene->ChangeScene(eSceneType::eTitle);
 
 	// 非アクティブ状態でも動作させる
 	SetAlwaysRunFlag(TRUE);
@@ -66,7 +66,7 @@ void Application::WakeUp()
 void Application::Run()
 {
 	// 入力情報を取得する
-	//InputManager* input = Singleton<InputManager>::GetInstance();
+	InputManager* input = Singleton<InputManager>::GetInstance();
 
 	//シーン情報を取得する
 	SceneManager* scene = Singleton<SceneManager>::GetInstance();
@@ -75,7 +75,7 @@ void Application::Run()
 	while (ProcessMessage() == D_SUCCESS)
 	{
 		// 入力情報の更新
-		//input->Update();
+		input->Update();
 
 		// フレームレートの制御
 		FreamControl();
@@ -84,7 +84,7 @@ void Application::Run()
 		Graph();
 
 		//シーンの切り替えとエンドチェック
-		//end_check = scene->Update(delta_second);
+		end_check = scene->Update(delta_second);
 
 		//ゲームを終了するか確認
 		if (end_check == true)
@@ -98,8 +98,8 @@ void Application::Run()
 void Application::ShutDown()
 {
 	// Singletonのインスタンスを解放する
-	//ResourceManager::DeleteInstance();
-	//SceneManager::DeleteInstance();
+	ResourceManager::DeleteInstance();
+	SceneManager::DeleteInstance();
 
 	// Dxライブラリの使用を終了する
 	DxLib_End();
@@ -115,7 +115,7 @@ void Application::Graph() const
 	ClearDrawScreen();
 
 	// シーンの描画処理
-	//scene->Draw();
+	scene->Draw(delta_second);
 
 	// 裏画面の内容を表画面に反映する
 	ScreenFlip();

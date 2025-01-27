@@ -141,6 +141,10 @@
     <ClCompile Include="Scene\ResultScene\ResultScene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
+    <ClCompile Include="Utility\Collision.cpp" />
+    <ClCompile Include="Utility\InputManager.cpp" />
+    <ClCompile Include="Utility\ResourceManager.cpp" />
+    <ClCompile Include="Utility\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
@@ -150,6 +154,9 @@
     <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\TitleScene\TitleScene.h" />
+    <ClInclude Include="Utility\Collision.h" />
+    <ClInclude Include="Utility\InputManager.h" />
+    <ClInclude Include="Utility\ResourceManager.h" />
     <ClInclude Include="Utility\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
