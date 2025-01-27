@@ -1,6 +1,7 @@
 #pragma once
 
 #include"../SceneBase.h"
+#include <vector>
 
 // インゲームシーンクラス
 class InGameScene : public SceneBase//,  public ObjectManager
@@ -21,7 +22,7 @@ private:
 
 
 	// オブジェクト配列
-
+	std::vector<MapObjectData> map_object;
 
 public:
 	InGameScene();

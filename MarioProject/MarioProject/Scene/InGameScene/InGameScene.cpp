@@ -1,10 +1,14 @@
 #include"InGameScene.h"
 #include"../../Utility/InputManager.h"
+#include"../../Utility/ResourceManager.h"
 
 //コメントアウト
 //#include"../../Object/Character/Player/Player.h"
 
 #include"DxLib.h"
+
+#include <fstream>
+#include <iostream>
 
 InGameScene::InGameScene()
 {
@@ -87,9 +91,38 @@ void InGameScene::DrawStageMapCSV()
 // csvを読み込んでオブジェクトの情報配列を作成
 void InGameScene::LoadStageObjectCSV()
 {
+	// 読み込むファイル名
+	std::string file_name = "Resource/Map/StageMap.csv";
+	// 指定ファイルを読み込む
+	std::ifstream ifs(file_name);
+
+	// エラーチェック
+	if (ifs.fail())
+	{
+		throw (file_name + "が開けません\n");
+	}
+
+	// ファイルから1行ずつ読み込む
+	std::string line;
+	// 生成するオブジェクト情報を生成
+	MapObjectData data;
+	while (std::getline(ifs, line))
+	{
+		// 読み込んだ文字と値を代入する
+		sscanf_s(
+			line.c_str(),
+			"%c,%d,%d,%d,%d",
+			&data.mode, (unsigned int)sizeof(data.mode),
+			&data.x_size, &data.y_size,
+			&data.spos_x, &data.spos_y
+		);
+
+		// 値を代入されたオブジェクト情報を配列に挿入
+		map_object.push_back(data);
+	}
 }
 
-// 作成したオブジェクトの情報配列を使ってオブジェクトを生成
+// 作成したオブジェクトの情報配列（map_object）を使ってオブジェクトを生成
 void InGameScene::CreateMapObject()
 {
 }
