@@ -19,7 +19,12 @@ bool BoxCollision::IsCheckHitTarget(eObjectType hit_object) const
     return false;
 }
 
-// 矩形の辺の関係位置で当たり判定をチェック
+/// <summary>
+/// 矩形の辺の関係位置で当たり判定をチェック
+/// </summary>
+/// <param name="c1">プレイヤー</param>
+/// <param name="c2">敵</param>
+/// <returns>当たっていたらtrue、当たっていなかったらfalse</returns>
 bool IsCheckCollision(const BoxCollision& c1, const BoxCollision& c2)
 {
     // 矩形1の左辺と矩形2の右辺の位置関係

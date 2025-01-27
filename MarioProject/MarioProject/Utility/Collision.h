@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Singleton.h"
 #include "Vector2D.h"
 #include <vector>
 #include <map>

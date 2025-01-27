@@ -2,7 +2,6 @@
 
 //#include "../Objects/GameObjectManager.h"
 
-
 // シーンの種類
 enum class eSceneType
 {
@@ -16,7 +15,7 @@ enum class eSceneType
 class SceneBase
 {
 public:
-	//初期化処理
+	// 初期化処理
 	virtual void Initialize() {}
 
 	/// <summary>
@@ -30,7 +29,11 @@ public:
 		return GetNowSceneType();
 	}
 
-	//描画処理
+	/// <summary>
+	/// 描画処理
+	/// </summary>
+	/// <param name="delta_second">1フレーム当たりの時間</param>
+	/// <returns></returns>
 	virtual void Draw(float delta_second) const
 	{
 		//インスタンスの取得
@@ -38,10 +41,10 @@ public:
 		//obj_manager->Draw();
 	}
 
-	//終了時処理
+	// 終了時処理
 	virtual void Finalize() {}
 
 public:
-	//現在のシーン情報を取得する
+	// 現在のシーン情報を取得する
 	virtual eSceneType GetNowSceneType()const = 0;
 };

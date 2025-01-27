@@ -15,6 +15,7 @@ InGameScene::~InGameScene()
 {
 }
 
+// 初期化処理
 void InGameScene::Initialize()
 {
 	//コメントアウト
@@ -22,6 +23,11 @@ void InGameScene::Initialize()
 	//object_manager->CreateObject<Player>(Vector2D(100, 600));
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="delta_second">１フレーム当たりの時間</param>
+/// <returns></returns>
 eSceneType InGameScene::Update(float delta_second)
 {
 	//コメントアウト
@@ -40,6 +46,11 @@ eSceneType InGameScene::Update(float delta_second)
 	return GetNowSceneType();
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
+/// <param name="delta_second">１フレーム当たりの時間</param>
+/// <returns></returns>
 void InGameScene::Draw(float delta_second) const
 {
 	//コメントアウト
@@ -49,10 +60,15 @@ void InGameScene::Draw(float delta_second) const
 	DrawFormatString(10, 10, GetColor(0, 255, 255), "インゲーム画面です");
 }
 
+// 終了時処理
 void InGameScene::Finalize()
 {
 }
 
+/// <summary>
+/// 現在のシーン情報
+/// </summary>
+/// <returns>現在はインゲームシーンです</returns>
 eSceneType InGameScene::GetNowSceneType() const
 {
 	return eSceneType::eInGame;
