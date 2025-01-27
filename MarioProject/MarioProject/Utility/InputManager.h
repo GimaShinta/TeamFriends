@@ -13,9 +13,6 @@
 class InputManager : public Singleton<class T>
 {
 private:
-	// 自クラスのポインタ（実体をアドレスの先で保有）
-	static InputManager* instance;
-
 	// キー入力情報
 	char now_key[D_KEYCODE_MAX];		// 現在の入力値
 	char old_key[D_KEYCODE_MAX];		// 前回の入力値

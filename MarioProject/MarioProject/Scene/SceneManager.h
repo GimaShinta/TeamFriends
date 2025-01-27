@@ -14,7 +14,7 @@ public:
     ~SceneManager();
 
 public:
-    // インスタンスの削除
+    // インスタンス(オブジェクトへの参照)の削除
     static void DeleteInstance();
 
 public:
@@ -34,7 +34,7 @@ public:
     /// <param name="delta_second">1フレーム当たりの時間</param>
     void Draw(float delta_second);
 
-    //終了時処理
+    // 終了時処理
     void Finalize();
 
 public:

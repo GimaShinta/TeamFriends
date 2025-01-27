@@ -3,7 +3,6 @@
 
 //コメントアウト
 //#include"../../Object/Character/Player/Player.h"
-//#include"../../Object/ObjectManager.h"
 
 #include"DxLib.h"
 
@@ -60,9 +59,10 @@ void InGameScene::Draw(float delta_second) const
 	DrawFormatString(10, 10, GetColor(0, 255, 255), "インゲーム画面です");
 }
 
-// 終了時処理
+// 終了時処理（使ったインスタンスの削除とか）
 void InGameScene::Finalize()
 {
+	InputManager::DeleteInstance();
 }
 
 /// <summary>
@@ -72,4 +72,24 @@ void InGameScene::Finalize()
 eSceneType InGameScene::GetNowSceneType() const
 {
 	return eSceneType::eInGame;
+}
+
+// 画像の読み込み
+void InGameScene::LoadImages()
+{
+}
+
+// csvを読み込んでステージを描画
+void InGameScene::DrawStageMapCSV()
+{
+}
+
+// csvを読み込んでオブジェクトの情報配列を作成
+void InGameScene::LoadStageObjectCSV()
+{
+}
+
+// 作成したオブジェクトの情報配列を使ってオブジェクトを生成
+void InGameScene::CreateMapObject()
+{
 }

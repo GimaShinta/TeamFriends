@@ -2,7 +2,6 @@
 
 #include "Vector2D.h"
 #include <vector>
-#include <map>
 
 // オブジェクトのタイプ
 enum eObjectType

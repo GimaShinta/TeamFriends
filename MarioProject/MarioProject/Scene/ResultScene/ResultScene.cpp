@@ -45,9 +45,10 @@ void ResultScene::Draw(float delta_second) const
 	DrawFormatString(10, 10, GetColor(100, 255, 0), "リザルト画面です");
 }
 
-// 終了時処理
+// 終了時処理（使ったインスタンスの削除とか）
 void ResultScene::Finalize()
 {
+	InputManager::DeleteInstance();
 }
 
 /// <summary>

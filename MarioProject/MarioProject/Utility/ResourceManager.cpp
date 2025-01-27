@@ -1,14 +1,14 @@
 #include "ResourceManager.h"
 #include "DxLib.h"
 
-// 静的メンバ変数定義
-ResourceManager* ResourceManager::instance = nullptr;	// 自クラスのポインタ
 
 /// <summary>
 /// インスタンス削除処理
 /// </summary>
 void ResourceManager::DeleteInstance()
 {
+	// 静的メンバ変数定義
+	static ResourceManager* instance = nullptr;	// 自クラスのポインタ
 	// インスタンスが生成されている場合、削除する
 	if (instance != nullptr)
 	{

@@ -45,9 +45,10 @@ void TitleScene::Draw(float delta_second) const
 	DrawFormatString(10, 10, GetColor(255, 255, 255), "タイトル画面です");
 }
 
-// 終了時処理
+// 終了時処理（使ったインスタンスの削除とか）
 void TitleScene::Finalize()
 {
+	InputManager::DeleteInstance();
 }
 
 /// <summary>

@@ -1,7 +1,5 @@
 #pragma once
 
-//#include "../Objects/GameObjectManager.h"
-
 // ƒV[ƒ“‚Ìí—Ş
 enum class eSceneType
 {

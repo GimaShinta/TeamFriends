@@ -5,7 +5,6 @@
 #include "InGameScene/InGameScene.h"
 #include "ResultScene/ResultScene.h"
 
-#include "../Application/Application.h"
 #include "../Utility/InputManager.h"
 
 #include "DxLib.h"
@@ -18,7 +17,7 @@ SceneManager::~SceneManager()
 {
 }
 
-// インスタンスの削除
+// インスタンス（オブジェクトへの参照）の削除
 void SceneManager::DeleteInstance()
 {
 	// 自クラスのポインタ（実体をアドレスの先で保有）

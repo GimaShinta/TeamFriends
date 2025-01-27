@@ -2,12 +2,27 @@
 
 #include"../SceneBase.h"
 
-//コメントアウト
-//#include"../../Object/ObjectManager.h"
-
 // インゲームシーンクラス
 class InGameScene : public SceneBase//,  public ObjectManager
 {
+private:
+	// オブジェクト情報を格納する構造体
+	struct MapObjectData
+	{
+		char mode;
+		int x_size;
+		int y_size;
+		int spos_x;
+		int spos_y;
+	};
+
+private:
+	// クラスポインタ変数
+
+
+	// オブジェクト配列
+
+
 public:
 	InGameScene();
 	virtual ~InGameScene();
@@ -34,4 +49,17 @@ public:
 
 	// 現在のシーンタイプ（オーバーライド必須）
 	virtual eSceneType GetNowSceneType() const override;
+
+private:
+	// 画像の読み込み
+	void LoadImages();
+
+	// csvを読み込んでステージを描画
+	void DrawStageMapCSV();
+
+	// csvを読み込んでオブジェクトの情報配列を作成
+	void LoadStageObjectCSV();
+
+	// 作成したオブジェクトの情報配列を使ってオブジェクトを生成
+	void CreateMapObject();
 };
