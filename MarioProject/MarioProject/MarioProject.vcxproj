@@ -137,8 +137,19 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="AppMain.cpp" />
+    <ClCompile Include="Scene\InGameScene\InGameScene.cpp" />
+    <ClCompile Include="Scene\ResultScene\ResultScene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\TitleScene\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\Application.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Scene\InGameScene\InGameScene.h" />
+    <ClInclude Include="Scene\ResultScene\ResultScene.h" />
+    <ClInclude Include="Scene\SceneBase.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Utility\Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
