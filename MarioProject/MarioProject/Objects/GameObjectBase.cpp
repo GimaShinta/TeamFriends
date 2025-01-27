@@ -58,9 +58,10 @@ void GameObjectBase::Draw(const Vector2D& screen_offset) const
 	DrawRotaGraphF(graph_location.x, graph_location.y, 1.5, 0.0, image, TRUE);
 }
 
-// 終了時処理
+// 終了時処理（使ったインスタンスなどの削除）
 void GameObjectBase::Finalize()
 {
+	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>

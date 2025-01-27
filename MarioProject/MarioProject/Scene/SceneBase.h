@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Objects/GameObjectManager.h"
+
 // シーンの種類
 enum class eSceneType
 {
@@ -35,8 +37,8 @@ public:
 	virtual void Draw(float delta_second) const
 	{
 		//インスタンスの取得
-		//GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
-		//obj_manager->Draw();
+		GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
+		obj_manager->Draw();
 	}
 
 	// 終了時処理

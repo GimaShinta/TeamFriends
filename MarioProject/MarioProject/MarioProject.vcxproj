@@ -137,8 +137,14 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="AppMain.cpp" />
+    <ClCompile Include="Objects\Character\Player\StateBase\State\IdleState.cpp" />
+    <ClCompile Include="Objects\Character\Player\StateBase\State\JumpState.cpp" />
+    <ClCompile Include="Objects\Character\CharacterBase.cpp" />
     <ClCompile Include="Objects\GameObjectManager.cpp" />
     <ClCompile Include="Objects\GameObjectBase.cpp" />
+    <ClCompile Include="Objects\Character\Player\Player.cpp" />
+    <ClCompile Include="Objects\Character\Player\StateBase\State\RunState.cpp" />
+    <ClCompile Include="Objects\Character\Player\StateBase\State\PlayerStateFactory.cpp" />
     <ClCompile Include="Scene\InGameScene\InGameScene.cpp" />
     <ClCompile Include="Scene\ResultScene\ResultScene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
@@ -150,8 +156,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
+    <ClInclude Include="Objects\Character\Player\StateBase\State\IdleState.h" />
+    <ClInclude Include="Objects\Character\Player\StateBase\State\JumpState.h" />
+    <ClInclude Include="Objects\Character\CharacterBase.h" />
+    <ClInclude Include="Objects\Character\Player\StateBase\PlayerState.h" />
+    <ClInclude Include="Objects\Character\Player\StateBase\PlayerStateBase.h" />
     <ClInclude Include="Objects\GameObjectManager.h" />
     <ClInclude Include="Objects\GameObjectBase.h" />
+    <ClInclude Include="Objects\Character\Player\Player.h" />
+    <ClInclude Include="Objects\Character\Player\StateBase\State\RunState.h" />
+    <ClInclude Include="Objects\Character\Player\StateBase\State\PlayerStateFactory.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Scene\InGameScene\InGameScene.h" />
     <ClInclude Include="Scene\ResultScene\ResultScene.h" />

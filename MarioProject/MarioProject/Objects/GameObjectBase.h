@@ -15,8 +15,7 @@ protected:
 	unsigned char z_layer;                  //
 
 public:
-	// 当たり判定サイズ
-	Vector2D box_size;
+	Vector2D box_size;              // 当たり判定サイズ
 
 protected:
 	int image;                      // 画像用
