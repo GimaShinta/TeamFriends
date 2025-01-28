@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="AppMain.cpp" />
+    <ClCompile Include="Objects\Character\Nokonoko\Nokonoko.cpp" />
     <ClCompile Include="Objects\Character\Kuribo\Kuribo.cpp" />
     <ClCompile Include="Objects\Character\Player\StateBase\State\IdleState.cpp" />
     <ClCompile Include="Objects\Character\Player\StateBase\State\JumpState.cpp" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
+    <ClInclude Include="Objects\Character\Nokonoko\Nokonoko.h" />
     <ClInclude Include="Objects\Character\Kuribo\Kuribo.h" />
     <ClInclude Include="Objects\Character\Player\StateBase\State\IdleState.h" />
     <ClInclude Include="Objects\Character\Player\StateBase\State\JumpState.h" />

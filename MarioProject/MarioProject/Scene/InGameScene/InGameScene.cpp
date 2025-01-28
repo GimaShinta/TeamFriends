@@ -5,10 +5,12 @@
 #include"../../Utility/InputManager.h"
 #include"../../Utility/ResourceManager.h"
 #include "../../Objects/GameObjectManager.h"
+#include "../../Application/Application.h"
 
 // ゲームオブジェクトのインクルード
 #include "../../Objects/Character/Player/Player.h"
 #include "../../Objects/Character/Kuribo/Kuribo.h"
+#include "../../Objects/Character/Nokonoko/Nokonoko.h"
 
 
 
@@ -30,6 +32,7 @@ void InGameScene::Initialize()
 	GameObjectManager* object_manager = Singleton<GameObjectManager>::GetInstance();
 	object_manager->CreateObject<Player>(Vector2D(100, 600));
 	object_manager->CreateObject<Kuribo>(Vector2D(700, 600));
+	object_manager->CreateObject<Nokonoko>(Vector2D(600, 600 - D_OBJECT_SIZE));
 }
 
 /// <summary>
