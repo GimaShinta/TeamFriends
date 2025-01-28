@@ -18,6 +18,10 @@
 #include <iostream>
 #include <sstream>
 
+// ステージの最大マス数
+#define MAP_SQUARE_X 211
+#define MAP_SQUARE_Y 15
+
 InGameScene::InGameScene():
 	  player(nullptr)
 	, kuribo(nullptr)
@@ -38,6 +42,11 @@ void InGameScene::Initialize()
 	CreateMapObject();
 	// csvを読み込んでステージの情報配列を作成
 	map_array = LoadStageMapCSV();
+
+	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
+	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
+	image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
+
 }
 
 /// <summary>
@@ -69,8 +78,10 @@ eSceneType InGameScene::Update(float delta_second)
 /// </summary>
 /// <param name="delta_second">１フレーム当たりの時間</param>
 /// <returns></returns>
-void InGameScene::Draw(float delta_second) const
+void InGameScene::Draw(float delta_second)
 {
+
+	DrawStageMap();
 	// 親クラスの描画処理
 	__super::Draw(delta_second);
 
@@ -146,6 +157,18 @@ std::vector<std::vector<char>> InGameScene::LoadStageMapCSV()
 // 作成したステージの情報配列を使って背景を生成
 void InGameScene::DrawStageMap()
 {
+	// ステージ読込みで作成したオブジェクト情報の配列から描画する
+	for (int i = 0; i < MAP_SQUARE_Y; i++)
+	{
+		for (int j = 0; j < MAP_SQUARE_X; j++)
+		{
+			char c = map_array[i][j];
+			if (c == '0')
+			{
+				DrawRotaGraphF(10 + j, 10 + i, 1.5, 0.0, image, TRUE);
+			}
+		}
+	}
 }
 
 // csvを読み込んでオブジェクトの情報配列を作成
