@@ -34,7 +34,7 @@ public:
 	/// </summary>
 	/// <param name="delta_second">1フレーム当たりの時間</param>
 	/// <returns></returns>
-	virtual void Draw(float delta_second) const
+	virtual void Draw(float delta_second)
 	{
 		//インスタンスの取得
 		GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();

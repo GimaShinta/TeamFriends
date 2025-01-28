@@ -24,13 +24,13 @@
     <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\TitleScene\TitleScene.cpp">
+    <ClCompile Include="Scene\SceneType\TitleScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\ResultScene\ResultScene.cpp">
+    <ClCompile Include="Scene\SceneType\ResultScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\InGameScene\InGameScene.cpp">
+    <ClCompile Include="Scene\SceneType\InGameScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Utility\Collision.cpp">
@@ -89,13 +89,13 @@
     <ClInclude Include="Scene\SceneBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\TitleScene\TitleScene.h">
+    <ClInclude Include="Scene\SceneType\TitleScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\ResultScene\ResultScene.h">
+    <ClInclude Include="Scene\SceneType\ResultScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\InGameScene\InGameScene.h">
+    <ClInclude Include="Scene\SceneType\InGameScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
