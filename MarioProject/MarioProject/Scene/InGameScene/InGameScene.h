@@ -28,7 +28,9 @@ private:
 
 private:
 	// クラスポインタ変数
-
+	class Player* player;
+	class Kuribo* kuribo;
+	class Nokonoko* nokonoko;
 
 	// オブジェクト配列
 	std::vector<MapObjectData> map_object;

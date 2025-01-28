@@ -17,7 +17,10 @@
 #include <fstream>
 #include <iostream>
 
-InGameScene::InGameScene()
+InGameScene::InGameScene():
+	  player(nullptr)
+	, kuribo(nullptr)
+	, nokonoko(nullptr)
 {
 }
 
@@ -28,12 +31,10 @@ InGameScene::~InGameScene()
 // 初期化処理
 void InGameScene::Initialize()
 {
-	// インスタンスの取得
-	GameObjectManager* object_manager = Singleton<GameObjectManager>::GetInstance();
-	object_manager->CreateObject<Player>(Vector2D(100, 600));
-	object_manager->CreateObject<Kuribo>(Vector2D(700, 600));
-	// ノコノコのはみ出したサイズ分だけ上にずらす
-	object_manager->CreateObject<Nokonoko>(Vector2D(600, 600 - D_OBJECT_SIZE));
+	// csvを読み込んでオブジェクトの情報配列を作成
+	LoadStageObjectCSV();
+	// 作成したオブジェクトの情報配列（map_object）を使ってオブジェクトを生成
+	CreateMapObject();
 }
 
 /// <summary>
@@ -167,7 +168,7 @@ void InGameScene::DrawStageMap()
 void InGameScene::LoadStageObjectCSV()
 {
 	// 読み込むファイル名
-	std::string file_name = "Resource/Map/StageMap.csv";
+	std::string file_name = "Resource/Map/ObjectData.csv";
 	// 指定ファイルを読み込む
 	std::ifstream ifs(file_name);
 
@@ -200,4 +201,35 @@ void InGameScene::LoadStageObjectCSV()
 // 作成したオブジェクトの情報配列（map_object）を使ってオブジェクトを生成
 void InGameScene::CreateMapObject()
 {
+	//インスタンスの取得
+	GameObjectManager* obj_m = Singleton<GameObjectManager>::GetInstance();
+
+	// ステージ読込みで作成したオブジェクト情報の配列から描画する
+	for (int i = 0; i < map_object.size(); i++)
+	{
+		// csvから読み込んだ情報を利用できるようにする
+		const MapObjectData& object = map_object[i];
+
+		// オブジェクトの生成座標
+		Vector2D generate_location = Vector2D(object.spos_x * (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2))) - D_OBJECT_SIZE;
+
+		// 最初の文字列を見て代入する値を変える
+		switch (object.mode)
+		{
+		case 'P':
+			// プレイヤーの生成
+			player = obj_m->CreateObject<Player>(generate_location);
+			break;
+		case 'K':
+			// エネミーの生成
+			kuribo = obj_m->CreateObject<Kuribo>(generate_location);
+			break;
+		case 'N':
+			// エネミーの生成
+			nokonoko = obj_m->CreateObject<Nokonoko>(generate_location);
+			break;
+		default:
+			continue;
+		}
+	}
 }
