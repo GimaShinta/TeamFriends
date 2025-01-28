@@ -16,15 +16,6 @@ public:
 		int spos_x;
 		int spos_y;
 	};
-	
-	// ステージマップの情報を保持する構造体
-	struct StageMapData 
-	{
-		std::vector<std::vector<char>> mapData;  // マップデータ ('.', 'P', ' ')
-		int width;
-		int height;
-	};
-
 
 private:
 	// クラスポインタ変数
@@ -34,6 +25,8 @@ private:
 
 	// オブジェクトの情報配列
 	std::vector<ObjectMapData> map_object;
+	// ステージの情報配列
+	std::vector<std::vector<char>> map_array;
 
 public:
 	InGameScene();
@@ -67,7 +60,7 @@ private:
 	void LoadImages();
 
 	// csvを読み込んでステージの情報配列を作成
-	void LoadStageMapCSV();
+	std::vector<std::vector<char>> LoadStageMapCSV();
 
 	// 作成したステージの情報配列を使って背景を生成
 	void DrawStageMap();
