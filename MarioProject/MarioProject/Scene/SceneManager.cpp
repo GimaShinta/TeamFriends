@@ -1,9 +1,9 @@
 #include "SceneManager.h"
 
 // 各シーンのインクルード（必要なシーンは下に追加）
-#include "TitleScene/TitleScene.h"
-#include "InGameScene/InGameScene.h"
-#include "ResultScene/ResultScene.h"
+#include "SceneType/TitleScene.h"
+#include "SceneType/InGameScene.h"
+#include "SceneType/ResultScene.h"
 
 #include "../Utility/InputManager.h"
 

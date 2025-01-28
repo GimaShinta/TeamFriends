@@ -40,7 +40,7 @@ eSceneType ResultScene::Update(float delta_second)
 /// </summary>
 /// <param name="delta_second">１フレーム当たりの時間</param>
 /// <returns></returns>
-void ResultScene::Draw(float delta_second) const
+void ResultScene::Draw(float delta_second)
 {
 	DrawFormatString(10, 10, GetColor(100, 255, 0), "リザルト画面です");
 }

@@ -7,6 +7,7 @@
 class InGameScene : public SceneBase//,  public ObjectManager
 {
 public:
+	int image;
 	// csvの値を格納する構造体
 	struct ObjectMapData
 	{
@@ -47,7 +48,7 @@ public:
 	/// </summary>
 	/// <param name="delta_second">１フレーム当たりの時間</param>
 	/// <returns></returns>
-	virtual void Draw(float delta_second) const override;
+	virtual void Draw(float delta_second) override;
 
 	// 終了時処理
 	virtual void Finalize() override;

@@ -40,7 +40,7 @@ eSceneType TitleScene::Update(float delta_second)
 /// </summary>
 /// <param name="delta_second">１フレーム当たりの時間</param>
 /// <returns></returns>
-void TitleScene::Draw(float delta_second) const
+void TitleScene::Draw(float delta_second)
 {
 	DrawFormatString(10, 10, GetColor(255, 255, 255), "タイトル画面です");
 }
