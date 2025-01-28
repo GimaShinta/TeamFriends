@@ -4,6 +4,7 @@
 
 #include "../../Objects/GameObjectManager.h"
 #include "../../Objects/Character/Player/Player.h"
+#include "../../Objects/Character/Kuribo/Kuribo.h"
 
 #include"DxLib.h"
 
@@ -25,6 +26,7 @@ void InGameScene::Initialize()
 	// インスタンスの取得
 	GameObjectManager* object_manager = Singleton<GameObjectManager>::GetInstance();
 	object_manager->CreateObject<Player>(Vector2D(100, 600));
+	object_manager->CreateObject<Kuribo>(Vector2D(700, 600));
 }
 
 /// <summary>

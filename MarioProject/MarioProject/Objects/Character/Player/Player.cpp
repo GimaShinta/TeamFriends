@@ -71,7 +71,6 @@ void Player::Update(float delta_second)
 		location.y = 600.0f;
 		g_velocity = 0.0f;
 	}
-
 }
 
 /// <summary>

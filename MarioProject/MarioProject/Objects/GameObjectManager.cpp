@@ -1,4 +1,5 @@
 #include "GameObjectManager.h"
+#include "../Application/Application.h"
 
 GameObjectManager::GameObjectManager()
 {
@@ -35,13 +36,18 @@ void GameObjectManager::Initialize()
 /// <param name="delta_second">１フレーム当たりの時間</param>
 void GameObjectManager::Update(const float& delta_second)
 {
-	// 生成できるオブジェクトをメイン配列に移動させる
+	// 生成できるオブジェクトをゲーム配列に移動させる
 	CheckCreateObject();
 
-	// リスト内のオブジェクトを更新する
+	// インゲーム配列内のオブジェクトを更新する
 	for (GameObjectBase* obj : game_object)
 	{
-		obj->Update(delta_second);
+		// ゲームオブジェクトの位置座標がウィンドウの右端外あたりに来たら
+		if (obj->GetLocation().x <= D_WIN_MAX_X + (D_OBJECT_SIZE * 2))
+		{
+			// ゲームオブジェクトの更新処理を開始する（動作が重くなるのを防ぐ）
+			obj->Update(delta_second);
+		}
 	}
 
 	// 当たり判定確認処理
@@ -73,11 +79,15 @@ void GameObjectManager::Update(const float& delta_second)
 // 描画処理
 void GameObjectManager::Draw() const
 {
-	// オブジェクトリスト内のオブジェクトを描画する
+	// ゲーム配列内のオブジェクトを描画する
 	for (GameObjectBase* obj : game_object)
 	{
-		//メイン配列にいるオブジェクトの描画
-		obj->Draw(screen_offset);
+		// ゲームオブジェクトの位置座標がウィンドウの右端外あたりに来たら
+		if (obj->GetLocation().x <= D_WIN_MAX_X + (D_OBJECT_SIZE * 2))
+		{
+			// ゲームオブジェクトの描画処理を開始する（動作が重くなるのを防ぐ）
+			obj->Draw(screen_offset);
+		}
 	}
 }
 
