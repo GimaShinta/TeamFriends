@@ -181,7 +181,7 @@ void InGameScene::LoadStageObjectCSV()
 	// ファイルから1行ずつ読み込む
 	std::string line;
 	// 生成するオブジェクト情報を生成
-	MapObjectData data;
+	ObjectMapData data;
 	while (std::getline(ifs, line))
 	{
 		// 読み込んだ文字と値を代入する
@@ -208,7 +208,7 @@ void InGameScene::CreateMapObject()
 	for (int i = 0; i < map_object.size(); i++)
 	{
 		// csvから読み込んだ情報を利用できるようにする
-		const MapObjectData& object = map_object[i];
+		const ObjectMapData& object = map_object[i];
 
 		// オブジェクトの生成座標
 		Vector2D generate_location = Vector2D(object.spos_x * (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2))) - D_OBJECT_SIZE;
@@ -221,11 +221,13 @@ void InGameScene::CreateMapObject()
 			player = obj_m->CreateObject<Player>(generate_location);
 			break;
 		case 'K':
-			// エネミーの生成
+			// クリボーの生成
 			kuribo = obj_m->CreateObject<Kuribo>(generate_location);
 			break;
 		case 'N':
-			// エネミーの生成
+			// ノコノコの生成
+			// 背が高い分上にずらして生成
+			generate_location.y -= D_OBJECT_SIZE;
 			nokonoko = obj_m->CreateObject<Nokonoko>(generate_location);
 			break;
 		default:
