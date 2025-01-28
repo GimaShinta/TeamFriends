@@ -76,6 +76,10 @@ void RunState::Draw() const
 // 終了時処理
 void RunState::Finalize()
 {
+	InputManager::DeleteInstance();
+
+	//コメントアウト
+	//ResourceManager::DeleteInstance();
 }
 
 // 現在の動きの状態を取得

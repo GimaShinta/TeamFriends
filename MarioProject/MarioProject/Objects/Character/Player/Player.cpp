@@ -4,6 +4,7 @@
 #include "StateBase/State/PlayerStateFactory.h"
 
 #include "DxLib.h"
+#include"../../../Application/Application.h"
 
 #define D_GRAVITY (30.0f)      //重力加速度(m/ss)
 
@@ -26,6 +27,7 @@ void Player::Initialize()
 
 	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
+
 	/* GetImagesは画像を切り分けて配列に入れてくれる関数だけど、代入するimage変数は配列変数じゃないから
 	 画像が1つしか入らないため、引数の後に[0]をつける*/
 	image = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32)[0];
@@ -72,6 +74,15 @@ void Player::Update(float delta_second)
 		g_velocity = 0.0f;
 	}
 
+	//画面外に行かないようにする
+	if (location.x < 0 + D_OBJECT_SIZE) 
+	{ //←
+		location.x = 0 + D_OBJECT_SIZE;
+	}
+	else if(location.x > D_WIN_MAX_X - D_OBJECT_SIZE)
+	{ //→
+		location.x = D_WIN_MAX_X - D_OBJECT_SIZE;
+	}
 }
 
 /// <summary>

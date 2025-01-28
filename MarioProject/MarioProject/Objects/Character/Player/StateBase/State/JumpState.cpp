@@ -44,7 +44,7 @@ void JumpState::Update(float delta_second)
 	if (old_location.y == player->GetLocation().y)
 	{
 		// ’â~ó‘Ô‚É‘JˆÚ
-		player->SetNextState(ePlayerState::RUN);
+		player->SetNextState(ePlayerState::IDLE);
 	}
 
 	//// ‚µ‚á‚ª‚İó‘Ô‚É‘JˆÚ
@@ -70,6 +70,8 @@ void JumpState::Draw() const
 // I—¹ˆ—
 void JumpState::Finalize()
 {
+	InputManager::DeleteInstance();
+	ResourceManager::DeleteInstance();
 }
 
 // Œ»İ‚ÌˆÚ“®ó‘Ô‚Ìæ“¾

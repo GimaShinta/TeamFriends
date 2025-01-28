@@ -1,7 +1,7 @@
 #include "IdleState.h"
 #include "DxLib.h"
 
-#include "../../Player.h"
+//#include "../../Player.h"
 #include "../PlayerState.h"
 
 #include "../../../../../Utility/InputManager.h"
