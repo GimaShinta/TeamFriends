@@ -40,6 +40,7 @@ void RunState::Update(float delta_second)
 		old_location = 0.0f;
 	}
 
+
 	// ƒWƒƒƒ“ƒvó‘Ô‚É‘JˆÚ
 	if (input->GetKeyDown(KEY_INPUT_UP))
 	{
