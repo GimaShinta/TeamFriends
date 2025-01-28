@@ -80,8 +80,9 @@ eSceneType InGameScene::Update(float delta_second)
 /// <returns></returns>
 void InGameScene::Draw(float delta_second)
 {
-
+	// 作成したステージの情報配列を使って背景を描画
 	DrawStageMap();
+
 	// 親クラスの描画処理
 	__super::Draw(delta_second);
 
@@ -146,7 +147,7 @@ std::vector<std::vector<char>> InGameScene::LoadStageMapCSV()
 			// 最初の文字のみを抽出
 			row.push_back(cell[0]);
 		}
-		// １行の文字列を全て分割された状態で代入
+		// １行の文字列を全て分割された状態で格納
 		data.push_back(row);
 	}
 
@@ -154,7 +155,7 @@ std::vector<std::vector<char>> InGameScene::LoadStageMapCSV()
 	return data;
 }
 
-// 作成したステージの情報配列を使って背景を生成
+// 作成したステージの情報配列を使って背景を描画
 void InGameScene::DrawStageMap()
 {
 	// ステージ読込みで作成したオブジェクト情報の配列から描画する
@@ -162,10 +163,18 @@ void InGameScene::DrawStageMap()
 	{
 		for (int j = 0; j < MAP_SQUARE_X; j++)
 		{
+			// １文字を抽出
 			char c = map_array[i][j];
+			// 入っている文字で画像の変更
+			switch (c)
+			{
+			case '0':
+			case '1':
+				break;
+			}
 			if (c == '0')
 			{
-				DrawRotaGraphF(10 + j, 10 + i, 1.5, 0.0, image, TRUE);
+				DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j), D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
 			}
 		}
 	}

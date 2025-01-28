@@ -63,7 +63,7 @@ private:
 	// csvを読み込んでステージの情報配列を作成
 	std::vector<std::vector<char>> LoadStageMapCSV();
 
-	// 作成したステージの情報配列を使って背景を生成
+	// 作成したステージの情報配列を使って背景を描画
 	void DrawStageMap();
 
 	// csvを読み込んでオブジェクトの情報配列を作成
