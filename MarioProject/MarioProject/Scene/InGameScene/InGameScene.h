@@ -6,9 +6,9 @@
 // インゲームシーンクラス
 class InGameScene : public SceneBase//,  public ObjectManager
 {
-private:
+public:
 	// csvの値を格納する構造体
-	struct MapObjectData
+	struct ObjectMapData
 	{
 		char mode;
 		int x_size;
@@ -32,8 +32,8 @@ private:
 	class Kuribo* kuribo;
 	class Nokonoko* nokonoko;
 
-	// オブジェクト配列
-	std::vector<MapObjectData> map_object;
+	// オブジェクトの情報配列
+	std::vector<ObjectMapData> map_object;
 
 public:
 	InGameScene();
