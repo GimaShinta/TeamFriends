@@ -16,6 +16,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 InGameScene::InGameScene():
 	  player(nullptr)
@@ -35,6 +36,8 @@ void InGameScene::Initialize()
 	LoadStageObjectCSV();
 	// 作成したオブジェクトの情報配列（map_object）を使ってオブジェクトを生成
 	CreateMapObject();
+	// csvを読み込んでステージの情報配列を作成
+	map_array = LoadStageMapCSV();
 }
 
 /// <summary>
@@ -100,63 +103,44 @@ void InGameScene::LoadImages()
 }
 
 // csvを読み込んでステージの情報配列を作成
-void InGameScene::LoadStageMapCSV()
+std::vector<std::vector<char>> InGameScene::LoadStageMapCSV()
 {
-	FILE* fp = NULL;
-	std::string file_name = "Resource/Map/StageMapFoods.csv";
-
-	// 指定されたファイルを開く
-	errno_t result = fopen_s(&fp, file_name.c_str(), "r");
+	// 読み込むファイル名
+	std::string file_name = "Resource/Map/StageMap.csv";
+	// 指定ファイルを読み込む
+	std::ifstream ifs(file_name);
 
 	// エラーチェック
-	if (result != 0)
+	if (ifs.fail())
 	{
-		throw (file_name + "が開けません");
+		throw (file_name + "が開けません\n");
 	}
 
-	int x = 0;
-	int y = 0;
+	// 戻り値用ステージ情報配列
+	std::vector<std::vector<char>> data;
+	// csvの1行の文字列を保存する変数
+	std::string line;
 
-	// ファイル内の文字を確認していく
-	while (true)
+	// getlineでcsvファイルの1行の文字列を読み込み、それをlineに代入
+	while (std::getline(ifs, line))
 	{
-		// ファイルから1文字抽出する
-		int c = fgetc(fp);
+		std::vector<char> row;
+		// lineに入っている文字列をカンマ区切りで分割
+		std::stringstream ss(line);
+		std::string cell;
 
-		// 抽出した文字がEOFならループ終了
-		if (c == EOF)
+		// getlineでカンマで区切られた文字を読み込む
+		while (std::getline(ss, cell, ','))
 		{
-			break;
+			// 最初の文字のみを抽出
+			row.push_back(cell[0]);
 		}
-		// 抽出した文字がドットなら、通常餌を生成
-		else if (c == '.')
-		{
-			//Vector2D generate_location = (Vector2D((float)x, (float)y) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
-
-			//CreateObject<Food>(generate_location);
-			x++;
-		}
-		// 抽出した文字がドットなら、パワー餌を生成
-		else if (c == 'P')
-		{
-			//Vector2D generate_location = (Vector2D((float)x, (float)y) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
-			//CreateObject<PowerFood>(generate_location);
-			x++;
-		}
-		// 抽出した文字が空白文字なら、生成しないで次の文字を見に行く
-		else if (c == ' ')
-		{
-			x++;
-		}
-		// 抽出した文字が改行文字なら、次の行を見に行く
-		else if (c == '\n')
-		{
-			x = 0;
-			y++;
-		}
+		// １行の文字列を全て分割された状態で代入
+		data.push_back(row);
 	}
-	// 開いたファイルを閉じる
-	fclose(fp);
+
+	// 作成したステージの情報配列
+	return data;
 }
 
 // 作成したステージの情報配列を使って背景を生成
