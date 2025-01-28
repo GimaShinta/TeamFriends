@@ -20,7 +20,7 @@ void Nokonoko::Initialize()
 	// 動くかどうか（trueなら動く、falseなら止まる）
 	is_mobility = true;
 	// 速度の設定
-	velocity.x = 100.0f;
+	velocity.x = -100.0f;
 
 	// 画像の設定
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
@@ -39,7 +39,7 @@ void Nokonoko::Initialize()
 void Nokonoko::Update(float delta_second)
 {
 	// 移動の実行
-	location.x -= velocity.x * delta_second;
+	__super::Movement(delta_second);
 
 	// 親クラスの更新処理を呼び出す
 	__super::Update(delta_second);
