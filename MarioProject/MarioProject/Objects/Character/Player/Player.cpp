@@ -12,6 +12,7 @@ Player::Player():
 	  flip_flag(false)
 	, now_state(ePlayerState::NONE)
 	, next_state(ePlayerState::NONE)
+	,stage_end(FALSE)
 {
 }
 
@@ -79,9 +80,21 @@ void Player::Update(float delta_second)
 	{ //Å©
 		location.x = 0 + D_OBJECT_SIZE;
 	}
-	else if(location.x > D_WIN_MAX_X - D_OBJECT_SIZE)
-	{ //Å®
+
+	if (stage_end == FALSE)
+	{
+		//Player->ê^ÇÒíÜÇ…íÖÇ¢ÇΩÇÁ.....èàóù
+		if (location.x >= D_WIN_MAX_X / 2)
+		{
+			location.x = D_WIN_MAX_X / 2;
+		}
+	}
+	else
+	{
+		if (location.x > D_WIN_MAX_X - D_OBJECT_SIZE)
+		{ //Å®
 		location.x = D_WIN_MAX_X - D_OBJECT_SIZE;
+		}
 	}
 }
 
