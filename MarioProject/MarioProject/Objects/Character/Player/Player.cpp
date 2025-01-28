@@ -105,10 +105,26 @@ void Player::Finalize()
 	ResourceManager::DeleteInstance();
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="hit_object"></param>
 void Player::OnHitCollision(GameObjectBase* hit_object)
 {
+	if (hit_object->GetCollision().object_type == eObjectType::eEnemy)
+	{
+		// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
+		ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
+		/* GetImagesは画像を切り分けて配列に入れてくれる関数だけど、代入するimage変数は配列変数じゃないから
+		 画像が1つしか入らないため、引数の後に[0]をつける*/
+		image = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32)[6];
+	}
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="next_state"></param>
 void Player::SetNextState(ePlayerState next_state)
 {
 	this->next_state = next_state;

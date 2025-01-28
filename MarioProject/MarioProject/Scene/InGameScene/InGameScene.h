@@ -7,7 +7,7 @@
 class InGameScene : public SceneBase//,  public ObjectManager
 {
 private:
-	// オブジェクト情報を格納する構造体
+	// csvの値を格納する構造体
 	struct MapObjectData
 	{
 		char mode;

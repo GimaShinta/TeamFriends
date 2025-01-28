@@ -1,6 +1,6 @@
 #include "CharacterBase.h"
 
-#define D_GRAVITY (30.0f)      //重力加速度(m/ss)
+#define D_GRAVITY 30.0f      //重力加速度(m/ss)
 
 CharacterBase::CharacterBase():
 	  velocity(0.0f)
