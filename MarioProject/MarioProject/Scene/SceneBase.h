@@ -38,6 +38,7 @@ public:
 	{
 		//インスタンスの取得
 		GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
+		// GameObjectManagerの描画処理へいく
 		obj_manager->Draw();
 	}
 

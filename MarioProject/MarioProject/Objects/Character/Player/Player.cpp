@@ -39,7 +39,11 @@ void Player::Initialize()
 	// 当たる相手のオブジェクトタイプ
 	collision.hit_object_type.push_back(eObjectType::eEnemy);
 
+	// 動くかどうか（trueなら動く、falseなら止まる）
 	is_mobility = true;
+
+	// プレイヤーの当たり判定サイズの設定
+	box_size = (24.0f);
 }
 
 /// <summary>
@@ -67,7 +71,7 @@ void Player::Update(float delta_second)
 	// 移動を実行する関数の呼び出し
 	__super::Movement(delta_second);
 
-	// y500.0f地点を地面と仮定
+	// y600.0f地点を地面と仮定
 	if (location.y > 600.0f)
 	{
 		location.y = 600.0f;

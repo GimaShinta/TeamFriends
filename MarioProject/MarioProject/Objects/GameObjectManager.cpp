@@ -206,7 +206,7 @@ void GameObjectManager::CheckCollision(GameObjectBase* target, GameObjectBase* p
 	}
 
 	// 当たり判定情報を作成
-	// tcとpcは、Collisionクラスで作った変数を利用できる
+	// tcとpcは、Collisionクラスのメンバ変数を利用できる
 	BoxCollision tc = target->GetCollision();
 	BoxCollision pc = partner->GetCollision();
 

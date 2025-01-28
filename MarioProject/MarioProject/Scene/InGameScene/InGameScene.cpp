@@ -1,16 +1,19 @@
 #include"InGameScene.h"
+#include"DxLib.h"
+
+// Singleton継承クラスのインクルード
 #include"../../Utility/InputManager.h"
 #include"../../Utility/ResourceManager.h"
-
 #include "../../Objects/GameObjectManager.h"
+
+// ゲームオブジェクトのインクルード
 #include "../../Objects/Character/Player/Player.h"
 #include "../../Objects/Character/Kuribo/Kuribo.h"
 
-#include"DxLib.h"
+
 
 #include <fstream>
 #include <iostream>
-
 
 InGameScene::InGameScene()
 {
@@ -74,6 +77,7 @@ void InGameScene::Draw(float delta_second) const
 void InGameScene::Finalize()
 {
 	InputManager::DeleteInstance();
+	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>

@@ -23,7 +23,7 @@ protected:
 	float animation_time;           // アニメーションの間隔
 
 public:
-	bool is_mobility;               //
+	bool is_mobility;               // 動くかどうか（trueなら動く、falseなら止まる）
 	bool is_destroy;                // 死んでいるかどうか
 
 public:

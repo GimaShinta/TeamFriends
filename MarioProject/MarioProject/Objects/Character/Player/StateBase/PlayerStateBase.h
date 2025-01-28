@@ -11,12 +11,11 @@
 class PlayerStateBase
 {
 protected:
-	// プレイヤー情報
-	class Player* player;
-	Vector2D old_location;
-	int state_image;
-	float animation_time;
-	int animation_count;
+	class Player* player;                  // プレイヤー情報
+	Vector2D old_location;                 // 前回の位置座標
+	int state_image;                       // 状態の画像（ジャンプであればジャンプの画像）
+	float animation_time;                  // アニメーションの時間管理
+	int animation_count;                   // アニメーションの時間経過によるカウント
 
 public:
 	PlayerStateBase(class Player* p)

@@ -27,7 +27,10 @@ void CharacterBase::Update(float delata_second)
 	__super::Update(delata_second);
 }
 
-// 描画処理
+/// <summary>
+/// 描画処理
+/// </summary>
+/// <param name="screen_offset"></param>
 void CharacterBase::Draw(const Vector2D& screen_offset) const
 {
 	// 親クラスの描画処理を呼び出す
@@ -39,7 +42,10 @@ void CharacterBase::Finalize()
 {
 }
 
-// ヒット時処理
+/// <summary>
+/// ヒット時処理
+/// </summary>
+/// <param name="hit_object">当たった相手</param>
 void CharacterBase::OnHitCollision(GameObjectBase* hit_object)
 {
 }

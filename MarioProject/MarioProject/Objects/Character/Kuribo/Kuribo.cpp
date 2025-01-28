@@ -30,7 +30,10 @@ void Kuribo::Initialize()
 	collision.hit_object_type.push_back(eObjectType::ePlayer);
 }
 
-// 更新処理
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="delta_second">１フレーム当たりの時間</param>
 void Kuribo::Update(float delta_second)
 {
 	// 移動の実行
@@ -40,7 +43,10 @@ void Kuribo::Update(float delta_second)
 	__super::Update(delta_second);
 }
 
-// 描画処理
+/// <summary>
+/// 描画処理
+/// </summary>
+/// <param name="screen_offset"></param>
 void Kuribo::Draw(const Vector2D& screen_offset) const
 {
 	//親クラスの描画処理を呼び出す
@@ -53,7 +59,10 @@ void Kuribo::Finalize()
 	ResourceManager::DeleteInstance();
 }
 
-//ヒット時処理
+/// <summary>
+/// ヒットした時の処理
+/// </summary>
+/// <param name="hit_object">当たった相手</param>
 void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 {
 }

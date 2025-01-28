@@ -15,7 +15,7 @@ private:
 	class PlayerStateBase* state = nullptr;           // 状態パターン自体を保存
 
 public:
-	ePlayerState next_state;     // 次の状態パターンを保存
+	ePlayerState next_state;                          // 次の状態パターンを保存
 	ePlayerState now_state;                           // 現在の状態パターンを保存
 
 public:
