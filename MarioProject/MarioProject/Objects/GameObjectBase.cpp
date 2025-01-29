@@ -161,4 +161,3 @@ const bool& GameObjectBase::GetMobility() const
 {
 	return is_mobility;
 }
-
