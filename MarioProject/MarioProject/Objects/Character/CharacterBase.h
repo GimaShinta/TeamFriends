@@ -9,9 +9,6 @@ protected:
 	float g_velocity;       // d—Í
 
 public:
-	//Vector2D velocity;      // ‘¬“x
-
-public:
 	CharacterBase();
 	~CharacterBase();
 
