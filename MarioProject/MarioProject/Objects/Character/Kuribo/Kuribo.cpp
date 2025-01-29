@@ -67,4 +67,14 @@ void Kuribo::Finalize()
 /// <param name="hit_object">“–‚½‚Á‚½‘Šè</param>
 void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 {
+	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
+	{
+		if (hit_object->GetVelocity().y > 1000.0f)
+		{
+			//// enum‚©‚È‚É‚©‚Å€‚ñ‚¾ó‘Ô‚É‚·‚é
+			//GameObjectManager* rm = Singleton<GameObjectManager>::GetInstance();
+			//rm->DestroyGameObject(this);
+			velocity = 0;
+		}
+	}
 }
