@@ -50,4 +50,7 @@ public:
 public:
 	//ステートの切り替え
 	void SetNextState(ePlayerState next_state);
+
+public:
+	void PlayerControl();
 };
