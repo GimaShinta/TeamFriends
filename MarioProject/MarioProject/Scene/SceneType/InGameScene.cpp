@@ -44,8 +44,8 @@ void InGameScene::Initialize()
 	map_array = LoadStageMapCSV();
 
 	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
-	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
-	image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
+	//ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
+	//image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
 
 }
 
@@ -80,15 +80,15 @@ eSceneType InGameScene::Update(float delta_second)
 /// <returns></returns>
 void InGameScene::Draw(float delta_second)
 {
+	//空(Stage)
+	DrawBox(0, 0, D_WIN_MAX_X, D_WIN_MAX_Y, GetColor(92, 148, 252), TRUE);
+
 	// 作成したステージの情報配列を使って背景を描画
 	DrawStageMap();
 
+
 	// 親クラスの描画処理
 	__super::Draw(delta_second);
-
-	// コメントアウティ
-	//GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
-	//obj_manager->Draw();
 
 	DrawFormatString(10, 10, GetColor(0, 255, 255), "インゲーム画面です");
 }
@@ -158,6 +158,9 @@ std::vector<std::vector<char>> InGameScene::LoadStageMapCSV()
 // 作成したステージの情報配列を使って背景を描画
 void InGameScene::DrawStageMap()
 {
+	//Resourceのインスタンス取得
+	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
+
 	// ステージ読込みで作成したオブジェクト情報の配列から描画する
 	for (int i = 0; i < MAP_SQUARE_Y; i++)
 	{
@@ -170,12 +173,12 @@ void InGameScene::DrawStageMap()
 			{
 			case '0':
 			case '1':
+				continue;
+			case '2':
+				image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
 				break;
 			}
-			if (c == '0')
-			{
 				DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j), D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
-			}
 		}
 	}
 }
