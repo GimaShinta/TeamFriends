@@ -133,6 +133,16 @@ Vector2D& GameObjectBase::GetLocation()
 	return location;
 }
 
+Vector2D& GameObjectBase::GetVelocity()
+{
+	return velocity;
+}
+
+void GameObjectBase::SetVelocity(float scroll)
+{
+	this->location.x = scroll;
+}
+
 /// <summary>
 /// オブジェクトサイズの取得
 /// </summary>

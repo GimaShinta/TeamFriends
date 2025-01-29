@@ -8,11 +8,14 @@
 #include "../../Application/Application.h"
 
 // ゲームオブジェクトのインクルード
+#include "../../Objects/Character/CharacterBase.h"
+#include "../../Objects/GameObjectBase.h"
 #include "../../Objects/Character/Player/Player.h"
 #include "../../Objects/Character/Kuribo/Kuribo.h"
 #include "../../Objects/Character/Nokonoko/Nokonoko.h"
 
-
+//ステート
+#include"../../Objects/Character/Player/StateBase/PlayerStateBase.h"
 
 #include <fstream>
 #include <iostream>
@@ -46,7 +49,6 @@ void InGameScene::Initialize()
 	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
 	//ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	//image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
-
 }
 
 /// <summary>
@@ -67,6 +69,30 @@ eSceneType InGameScene::Update(float delta_second)
 	if (input->GetKeyDown(KEY_INPUT_Y))
 	{
 		return eSceneType::eResult;
+	}
+
+	//プレイヤーが真ん中かつ移動中の時...
+	if (player->GetLocation().x >= D_WIN_MAX_X / 2 && player->now_state == ePlayerState::RUN)
+	{
+		//スクロール処理
+		if (scroll <= (D_OBJECT_SIZE * 2) * MAP_SQUARE_X - D_WIN_MAX_X)
+		{
+			//マリオの速度に合わせてスクロールする
+			float p_speed = player->GetVelocity().x;
+			scroll += p_speed * delta_second;
+			// 複数のオブジェクト用スクロール
+			for (GameObjectBase* object : object_array)
+			{
+				// オブジェクトの速度もマリオに合わせる
+				object->SetVelocity(object->GetLocation().x - (p_speed * delta_second));
+			}
+
+		}
+		else 
+		{
+			//制御処理の切り替え
+			player->stage_end = TRUE;
+		}
 	}
 
 	// 現在のシーンタイプはインゲームですということを呼び出し元へreturnで送る
@@ -171,14 +197,14 @@ void InGameScene::DrawStageMap()
 			// 入っている文字で画像の変更
 			switch (c)
 			{
-			case '0':
-			case '1':
+			case '0':	//空は描画しないので画像読み込みは行わない
+			case '1':	//地下 => 実装予定
 				continue;
 			case '2':
 				image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
 				break;
 			}
-				DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j), D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
+				DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j) - scroll, D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
 		}
 	}
 }
@@ -242,12 +268,16 @@ void InGameScene::CreateMapObject()
 		case 'K':
 			// クリボーの生成
 			kuribo = obj_m->CreateObject<Kuribo>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(kuribo);
 			break;
 		case 'N':
 			// ノコノコの生成
 			// 背が高い分上にずらして生成
 			generate_location.y -= D_OBJECT_SIZE;
 			nokonoko = obj_m->CreateObject<Nokonoko>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(nokonoko);
 			break;
 		default:
 			continue;

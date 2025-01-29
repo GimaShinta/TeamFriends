@@ -72,34 +72,8 @@ void Player::Update(float delta_second)
 	// 移動を実行する関数の呼び出し
 	__super::Movement(delta_second);
 
-	// y600.0f地点を地面と仮定
-	if (location.y > 600.0f)
-	{
-		location.y = 600.0f;
-		g_velocity = 0.0f;
-	}
-
-	//画面外に行かないようにする
-	if (location.x < 0 + D_OBJECT_SIZE) 
-	{ //←
-		location.x = 0 + D_OBJECT_SIZE;
-	}
-
-	if (stage_end == FALSE)
-	{
-		//Player->真ん中に着いたら.....処理
-		if (location.x >= D_WIN_MAX_X / 2)
-		{
-			location.x = D_WIN_MAX_X / 2;
-		}
-	}
-	else
-	{
-		if (location.x > D_WIN_MAX_X - D_OBJECT_SIZE)
-		{ //→
-		location.x = D_WIN_MAX_X - D_OBJECT_SIZE;
-		}
-	}
+	//プレーヤーの行動制御を行う
+	PlayerControl();
 }
 
 /// <summary>
@@ -123,7 +97,7 @@ void Player::Finalize()
 }
 
 /// <summary>
-/// 
+/// ヒット判定処理
 /// </summary>
 /// <param name="hit_object"></param>
 void Player::OnHitCollision(GameObjectBase* hit_object)
@@ -139,10 +113,57 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 }
 
 /// <summary>
-/// 
+/// ステートの設定
 /// </summary>
 /// <param name="next_state"></param>
 void Player::SetNextState(ePlayerState next_state)
 {
 	this->next_state = next_state;
+}
+
+/// <summary>
+/// プレイヤーの制御処理
+/// </summary>
+void Player::PlayerControl()
+{
+	//最大速度の設定
+	if (velocity.x >= 500)
+	{
+		velocity.x = 500;
+	}
+	else if (velocity.x <= -500)
+	{
+		velocity.x = -500;
+	}
+
+	// y600.0f地点を地面と仮定
+	if (location.y > 600.0f)
+	{
+		location.y = 600.0f;
+		g_velocity = 0.0f;
+	}
+
+	//画面外に行かないようにする
+	if (location.x < 0 + D_OBJECT_SIZE)
+	{ //←
+		location.x = 0 + D_OBJECT_SIZE;
+	}
+
+	//スクロール処理
+	if (stage_end == FALSE)
+	{
+		//Player->真ん中に着いたら
+		if (location.x >= D_WIN_MAX_X / 2)
+		{
+			location.x = D_WIN_MAX_X / 2;
+		}
+	}
+	else
+	{
+		//ステージの端に着いたら
+		if (location.x > D_WIN_MAX_X - D_OBJECT_SIZE)
+		{ //→
+			location.x = D_WIN_MAX_X - D_OBJECT_SIZE;
+		}
+	}
 }
