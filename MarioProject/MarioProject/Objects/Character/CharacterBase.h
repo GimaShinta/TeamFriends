@@ -9,7 +9,7 @@ protected:
 	float g_velocity;       // èdóÕ
 
 public:
-	Vector2D velocity;      // ë¨ìx
+	//Vector2D velocity;      // ë¨ìx
 
 public:
 	CharacterBase();

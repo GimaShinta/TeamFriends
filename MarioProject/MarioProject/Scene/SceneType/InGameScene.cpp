@@ -12,7 +12,8 @@
 #include "../../Objects/Character/Kuribo/Kuribo.h"
 #include "../../Objects/Character/Nokonoko/Nokonoko.h"
 
-
+//ステート
+#include"../../Objects/Character/Player/StateBase/PlayerStateBase.h"
 
 #include <fstream>
 #include <iostream>
@@ -67,6 +68,13 @@ eSceneType InGameScene::Update(float delta_second)
 	if (input->GetKeyDown(KEY_INPUT_Y))
 	{
 		return eSceneType::eResult;
+	}
+
+	Vector2D p_location = player->GetLocation();
+
+	if (p_location.x >= D_WIN_MAX_X / 2 && player->now_state == ePlayerState::RUN) 
+	{
+		scroll += player->GetVelocity().x * delta_second;
 	}
 
 	// 現在のシーンタイプはインゲームですということを呼び出し元へreturnで送る
@@ -171,14 +179,14 @@ void InGameScene::DrawStageMap()
 			// 入っている文字で画像の変更
 			switch (c)
 			{
-			case '0':
-			case '1':
+			case '0':	//空は描画しないので画像読み込みは行わない
+			case '1':	//地下 => 実装予定
 				continue;
 			case '2':
 				image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
 				break;
 			}
-				DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j), D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
+				DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j) - scroll, D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
 		}
 	}
 }

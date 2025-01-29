@@ -16,6 +16,7 @@ protected:
 
 public:
 	Vector2D box_size;              // 当たり判定サイズ
+	Vector2D velocity;
 
 protected:
 	int image;                      // 画像用
@@ -76,6 +77,10 @@ public:
 	void SetOwnerScene(class GameObjectManager* scene); // 
 	void SetLocation(const Vector2D& location);         // 位置座標を設定する（主にオブジェクトの生成位置を決める）
 	Vector2D& GetLocation();                            // 現在の位置座標を取得する
+
+	Vector2D& GetVelocity();	//速度取得
+	void SetVelocity(Vector2D velocity);	//速度設定
+
 	Vector2D& GetBoxSize();                             // オブジェクトの大きさを取得する
 	const BoxCollision& GetCollision()const;            // オブジェクトがもつ当たり判定情報（左上と右下の点とか）を取得する
 	const unsigned char GetZLayer()const;
