@@ -16,6 +16,5 @@ public:
 public:
 	virtual void OnHitCollision(GameObjectBase* hit_object) override;
 	void SetSizeData(int x_size, int y_size);
-
 };
 

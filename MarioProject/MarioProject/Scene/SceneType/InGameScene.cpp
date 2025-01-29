@@ -90,7 +90,6 @@ eSceneType InGameScene::Update(float delta_second)
 				// オブジェクトの速度もマリオに合わせる
 				object->SetVelocity(object->GetLocation().x - (p_speed * delta_second));
 			}
-
 		}
 		else 
 		{
@@ -98,11 +97,7 @@ eSceneType InGameScene::Update(float delta_second)
 			player->stage_end = TRUE;
 		}
 	}
-	//if (LoadImages() == true)
-	//{
-	//	
-	//	player->SetLocation(player->GetLocation());
-	//}
+	
 	// 現在のシーンタイプはインゲームですということを呼び出し元へreturnで送る
 	return GetNowSceneType();
 }
