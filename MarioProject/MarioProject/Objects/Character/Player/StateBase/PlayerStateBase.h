@@ -28,6 +28,12 @@ public:
 
 	virtual ~PlayerStateBase() = default;
 
+	// ’n–Ê‚É‚¢‚é‚©‚Ç‚¤‚©‚ğŠm”F‚·‚é
+	virtual bool IsOnGround() const
+	{
+		return player->IsOnGround();
+	}
+
 public:
 	// ‰Šú‰»ˆ—
 	virtual void Initialize() = 0;

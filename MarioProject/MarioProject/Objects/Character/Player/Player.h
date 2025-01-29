@@ -7,21 +7,23 @@
 
 // プレイヤークラス（メンバ関数のオーバーライド必須）
 class Player : public CharacterBase
-{
+{	
+private:
+	class PlayerStateBase* state = nullptr;           // 状態パターン自体を保存
+
 public:
 	bool flip_flag;    // 画像反転させるかどうか（trueは反転させる、falseは反転させない）
 	bool stage_end;	   //ステージの端に着いたらTRUE
+	bool isOnGround;	//地面にいるかどうか
 
-private:
-	class PlayerStateBase* state = nullptr;           // 状態パターン自体を保存
 
 public:
 	ePlayerState next_state;                          // 次の状態パターンを保存
 	ePlayerState now_state;                           // 現在の状態パターンを保存
 
 public:
-	Player();
-	~Player();
+	Player();	//コンストラクタ
+	~Player();	//デストラクタ
 
 public:
 	// 初期化処理
@@ -45,11 +47,13 @@ public:
 public:
 	void OnHitCollision(GameObjectBase* hit_object) override;
 
-public:
 	//ステートの切り替え
 	void SetNextState(ePlayerState next_state);
 
 public:
 	//プレイヤーの制御
 	void PlayerControl();
+
+	// 地面にいるかどうかを確認する
+	bool IsOnGround() const;
 };
