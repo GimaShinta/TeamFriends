@@ -13,6 +13,9 @@
 #include "../../Objects/Character/Kuribo/Kuribo.h"
 #include "../../Objects/Character/Nokonoko/Nokonoko.h"
 #include "../../Objects/Block/Ground/Ground.h"
+#include "../../Objects/Block/Brick/Brick.h"
+#include "../../Objects/Block/Hatena/Hatena.h"
+#include "../../Objects/Block/Kai/Kai.h"
 
 //ステート
 #include"../../Objects/Character/Player/StateBase/PlayerStateBase.h"
@@ -315,6 +318,28 @@ void InGameScene::CreateMapObject()
 			game_object = obj_m->CreateObject<Nokonoko>(generate_location);
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
+			break;
+		case 'B':
+			// 破壊可能ブロックの生成
+			game_object = obj_m->CreateObject<Brick>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(game_object);
+			break;
+		case 'H':
+			// ハテナブロックの生成
+			game_object = obj_m->CreateObject<Hatena>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(game_object);
+			break;
+		case 'I':
+			// 破壊不可ブロックの生成
+			generate_location = Vector2D((object.x_size * D_OBJECT_SIZE) + (object.spos_x * (D_OBJECT_SIZE * 2)) - (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2)));
+			game_object = obj_m->CreateObject<Kai>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(game_object);
+			// オブジェクトサイズの変更
+			game_object->box_size.x = object.x_size * D_OBJECT_SIZE;
+			game_object->box_size.y = object.y_size * D_OBJECT_SIZE;
 			break;
 		case 'G':
 			// 地面の生成
