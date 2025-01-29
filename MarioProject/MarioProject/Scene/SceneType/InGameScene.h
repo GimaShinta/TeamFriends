@@ -7,7 +7,11 @@
 class InGameScene : public SceneBase//,  public ObjectManager
 {
 public:
-	int image;
+
+	int image;	//画像
+	float scroll;	//スクロール量
+
+private:
 	// csvの値を格納する構造体
 	struct ObjectMapData
 	{
