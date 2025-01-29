@@ -1,12 +1,14 @@
 #pragma once
-
 #include "../BlockBase.h"
-
-class Ground : public BlockBase
+class Hatena :
+    public BlockBase
 {
 public:
-	Ground();
-	~Ground();
+	std::vector<int> hatena_animation;
+	bool is_kara;
+public:
+	Hatena();
+	~Hatena();
 
 public:
 	void Initialize() override;

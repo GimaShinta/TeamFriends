@@ -1,12 +1,11 @@
 #pragma once
-
 #include "../BlockBase.h"
-
-class Ground : public BlockBase
+class Kai :
+    public BlockBase
 {
 public:
-	Ground();
-	~Ground();
+	Kai();
+	~Kai();
 
 public:
 	void Initialize() override;
