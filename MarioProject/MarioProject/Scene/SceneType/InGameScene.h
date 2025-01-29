@@ -30,6 +30,10 @@ private:
 
 	// オブジェクトの情報配列
 	std::vector<ObjectMapData> map_object;
+
+	// 生成したオブジェクトを格納する配列
+	std::vector<GameObjectBase*> object_array;
+
 	// ステージの情報配列
 	std::vector<std::vector<char>> map_array;
 

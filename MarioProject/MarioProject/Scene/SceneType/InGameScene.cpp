@@ -8,6 +8,8 @@
 #include "../../Application/Application.h"
 
 // ゲームオブジェクトのインクルード
+#include "../../Objects/Character/CharacterBase.h"
+#include "../../Objects/GameObjectBase.h"
 #include "../../Objects/Character/Player/Player.h"
 #include "../../Objects/Character/Kuribo/Kuribo.h"
 #include "../../Objects/Character/Nokonoko/Nokonoko.h"
@@ -76,9 +78,18 @@ eSceneType InGameScene::Update(float delta_second)
 		if (scroll <= (D_OBJECT_SIZE * 2) * MAP_SQUARE_X - D_WIN_MAX_X)
 		{
 			//マリオの速度に合わせてスクロールする
-			scroll += player->GetVelocity().x * delta_second;
+			float p_speed = player->GetVelocity().x;
+			scroll += p_speed * delta_second;
+			// 複数のオブジェクト用スクロール
+			for (GameObjectBase* object : object_array)
+			{
+				// オブジェクトの速度もマリオに合わせる
+				object->SetVelocity(object->GetLocation().x - (p_speed * delta_second));
+			}
+
 		}
-		else {
+		else 
+		{
 			//制御処理の切り替え
 			player->stage_end = TRUE;
 		}
@@ -257,12 +268,16 @@ void InGameScene::CreateMapObject()
 		case 'K':
 			// クリボーの生成
 			kuribo = obj_m->CreateObject<Kuribo>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(kuribo);
 			break;
 		case 'N':
 			// ノコノコの生成
 			// 背が高い分上にずらして生成
 			generate_location.y -= D_OBJECT_SIZE;
 			nokonoko = obj_m->CreateObject<Nokonoko>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(nokonoko);
 			break;
 		default:
 			continue;

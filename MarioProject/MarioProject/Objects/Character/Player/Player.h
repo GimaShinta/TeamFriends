@@ -10,9 +10,7 @@ class Player : public CharacterBase
 {
 public:
 	bool flip_flag;    // 画像反転させるかどうか（trueは反転させる、falseは反転させない）
-
-public:
-	bool stage_end;	//ステージの端に着いたらTRUE
+	bool stage_end;	   //ステージの端に着いたらTRUE
 
 private:
 	class PlayerStateBase* state = nullptr;           // 状態パターン自体を保存
