@@ -8,11 +8,11 @@
 #include "../../Application/Application.h"
 
 // ゲームオブジェクトのインクルード
-#include "../../Objects/Character/CharacterBase.h"
 #include "../../Objects/GameObjectBase.h"
 #include "../../Objects/Character/Player/Player.h"
 #include "../../Objects/Character/Kuribo/Kuribo.h"
 #include "../../Objects/Character/Nokonoko/Nokonoko.h"
+#include "../../Objects/Block/Ground/Ground.h"
 
 //ステート
 #include"../../Objects/Character/Player/StateBase/PlayerStateBase.h"
@@ -27,8 +27,9 @@
 
 InGameScene::InGameScene():
 	  player(nullptr)
-	, kuribo(nullptr)
-	, nokonoko(nullptr)
+	, game_object(nullptr)
+	, image(NULL)
+	, scroll(0.0f)
 {
 }
 
@@ -94,7 +95,11 @@ eSceneType InGameScene::Update(float delta_second)
 			player->stage_end = TRUE;
 		}
 	}
-
+	//if (LoadImages() == true)
+	//{
+	//	
+	//	player->SetLocation(player->GetLocation());
+	//}
 	// 現在のシーンタイプはインゲームですということを呼び出し元へreturnで送る
 	return GetNowSceneType();
 }
@@ -135,9 +140,40 @@ eSceneType InGameScene::GetNowSceneType() const
 	return eSceneType::eInGame;
 }
 
-// 画像の読み込み
-void InGameScene::LoadImages()
+// マップとの当たり判定（collisionでやったほうがいいかも）
+bool InGameScene::LoadImages()
 {
+	// プレイヤーの現在地を保存
+	Vector2D p_rect = player->GetLocation();
+	// プレイヤーのサイズを保存
+	Vector2D p_box = player->GetBoxSize();
+	// プレイヤーの四つの頂点を保存
+	Vector2D vertices[4] =
+	{
+		// 左上の座標
+		Vector2D(p_rect - p_box),
+		// 左下の座標
+		Vector2D(p_rect.x - p_box.x, p_rect.y + p_box.y),
+		// 右上の座標
+		Vector2D(p_rect.x + p_box.x, p_rect.y - p_box.y),
+		// 右下の座標
+		Vector2D(p_rect + p_box),
+	};
+
+	for (int i = 0; i < 4 ; i++)
+	{
+		// プレイヤーの現在のマスの位置
+		int x_id = vertices[i].x / (D_OBJECT_SIZE * 2);
+		int y_id = vertices[i].y / (D_OBJECT_SIZE * 2);
+		// プレイヤーがいるマスが0以外の文字だったら
+		if (map_array[y_id][x_id] != '0')
+		{
+			// 当たっている
+			return true;
+		}
+	}
+	// 当たっていない
+	return false;
 }
 
 // csvを読み込んでステージの情報配列を作成
@@ -204,7 +240,8 @@ void InGameScene::DrawStageMap()
 				image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
 				break;
 			}
-				DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j) - scroll, D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
+			// ステージ情報を見て描画
+			DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j) - scroll, D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
 		}
 	}
 }
@@ -256,7 +293,7 @@ void InGameScene::CreateMapObject()
 		const ObjectMapData& object = map_object[i];
 
 		// オブジェクトの生成座標
-		Vector2D generate_location = Vector2D(object.spos_x * (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2))) - D_OBJECT_SIZE;
+		Vector2D generate_location = Vector2D((D_OBJECT_SIZE * 2) * object.spos_x, (D_OBJECT_SIZE * 2) * object.spos_y ) - D_OBJECT_SIZE;
 
 		// 最初の文字列を見て代入する値を変える
 		switch (object.mode)
@@ -267,17 +304,27 @@ void InGameScene::CreateMapObject()
 			break;
 		case 'K':
 			// クリボーの生成
-			kuribo = obj_m->CreateObject<Kuribo>(generate_location);
+			game_object = obj_m->CreateObject<Kuribo>(generate_location);
 			// 複数利用できるように配列で管理
-			object_array.push_back(kuribo);
+			object_array.push_back(game_object);
 			break;
 		case 'N':
 			// ノコノコの生成
 			// 背が高い分上にずらして生成
 			generate_location.y -= D_OBJECT_SIZE;
-			nokonoko = obj_m->CreateObject<Nokonoko>(generate_location);
+			game_object = obj_m->CreateObject<Nokonoko>(generate_location);
 			// 複数利用できるように配列で管理
-			object_array.push_back(nokonoko);
+			object_array.push_back(game_object);
+			break;
+		case 'G':
+			// 地面の生成
+			generate_location = Vector2D((object.x_size * D_OBJECT_SIZE) + (object.spos_x * (D_OBJECT_SIZE * 2)) - (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2)));
+			game_object = obj_m->CreateObject<Ground>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(game_object);
+			// オブジェクトサイズの変更
+			game_object->box_size.x = object.x_size * D_OBJECT_SIZE;
+			game_object->box_size.y = object.y_size * D_OBJECT_SIZE;
 			break;
 		default:
 			continue;

@@ -25,6 +25,7 @@ GameObjectBase::~GameObjectBase()
 // ‰Šú‰»ˆ—
 void GameObjectBase::Initialize()
 {
+	box_size = 24.0f;
 }
 
 /// <summary>
