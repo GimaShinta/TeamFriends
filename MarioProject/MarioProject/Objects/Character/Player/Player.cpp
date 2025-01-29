@@ -156,7 +156,6 @@ void Player::PlayerControl()
 		if (location.x >= D_WIN_MAX_X / 2)
 		{
 			location.x = D_WIN_MAX_X / 2;
-
 		}
 	}
 	else

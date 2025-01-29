@@ -52,5 +52,6 @@ public:
 	void SetNextState(ePlayerState next_state);
 
 public:
+	//ƒvƒŒƒCƒ„[‚Ì§Œä
 	void PlayerControl();
 };

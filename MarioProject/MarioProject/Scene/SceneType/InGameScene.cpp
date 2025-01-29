@@ -47,7 +47,6 @@ void InGameScene::Initialize()
 	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
 	//ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	//image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
-
 }
 
 /// <summary>
@@ -70,11 +69,19 @@ eSceneType InGameScene::Update(float delta_second)
 		return eSceneType::eResult;
 	}
 
-	Vector2D p_location = player->GetLocation();
-
-	if (p_location.x >= D_WIN_MAX_X / 2 && player->now_state == ePlayerState::RUN) 
+	//プレイヤーが真ん中かつ移動中の時...
+	if (player->GetLocation().x >= D_WIN_MAX_X / 2 && player->now_state == ePlayerState::RUN)
 	{
-		scroll += player->GetVelocity().x * delta_second;
+		//スクロール処理
+		if (scroll <= (D_OBJECT_SIZE * 2) * MAP_SQUARE_X - D_WIN_MAX_X)
+		{
+			//マリオの速度に合わせてスクロールする
+			scroll += player->GetVelocity().x * delta_second;
+		}
+		else {
+			//制御処理の切り替え
+			player->stage_end = TRUE;
+		}
 	}
 
 	// 現在のシーンタイプはインゲームですということを呼び出し元へreturnで送る
