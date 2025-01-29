@@ -32,3 +32,8 @@ void Ground::Draw(const Vector2D& screen_offset) const
 	DrawBox(location.x - box_size.x, location.y - box_size.y,
 		location.x + box_size.x, location.y + box_size.y, GetColor(255, 0, 0), TRUE);
 }
+
+void Ground::Finalize()
+{
+	ResourceManager::DeleteInstance();
+}

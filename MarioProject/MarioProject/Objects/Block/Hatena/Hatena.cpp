@@ -2,7 +2,8 @@
 
 #include "../../../Utility/ResourceManager.h"
 
-Hatena::Hatena()
+Hatena::Hatena() :
+	 is_kara(false)
 {
 }
 
@@ -16,7 +17,8 @@ void Hatena::Initialize()
 
 	//‰æ‘œ‚Ìİ’è
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
-	image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
+	hatena_animation = rm->GetImages("Resource/Images/Block/hatena.png", 1, 1, 1, 32, 32);
+	image = hatena_animation[0];
 
 	//“–‚½‚è”»’è‚Ìİ’è
 	collision.is_blocking = true;
@@ -27,4 +29,9 @@ void Hatena::Initialize()
 
 void Hatena::Draw(const Vector2D& screen_offset) const
 {
+}
+
+void Hatena::Finalize()
+{
+	ResourceManager::DeleteInstance();
 }
