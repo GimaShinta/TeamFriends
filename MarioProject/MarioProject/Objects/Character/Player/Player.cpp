@@ -13,6 +13,7 @@ Player::Player():
 	, now_state(ePlayerState::NONE)
 	, next_state(ePlayerState::NONE)
 	,stage_end(FALSE)
+	, isOnGround(false) //初期値(地面)
 {
 }
 
@@ -136,10 +137,15 @@ void Player::PlayerControl()
 	}
 
 	// y600.0f地点を地面と仮定
-	if (location.y > 600.0f)
+	if (location.y >= 600.0f)
 	{
 		location.y = 600.0f;
 		g_velocity = 0.0f;
+		isOnGround = true; // 地面にいる
+	}
+	else
+	{
+		isOnGround = false; // 空中にいる
 	}
 
 	//画面外に行かないようにする
@@ -165,4 +171,10 @@ void Player::PlayerControl()
 			location.x = D_WIN_MAX_X - D_OBJECT_SIZE;
 		}
 	}
+}
+
+// 地面にいるかどうかを確認する
+bool Player::IsOnGround() const
+{
+	return isOnGround;
 }
