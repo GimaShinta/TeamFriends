@@ -139,7 +139,12 @@ Vector2D& GameObjectBase::GetVelocity()
 	return velocity;
 }
 
-void GameObjectBase::SetVelocity(float scroll)
+void GameObjectBase::SetVelocity(const Vector2D& velo)
+{
+	this->velocity = velo;
+}
+
+void GameObjectBase::SetScroll(float scroll)
 {
 	this->location.x = scroll;
 }

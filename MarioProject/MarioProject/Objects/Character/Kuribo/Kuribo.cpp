@@ -67,14 +67,24 @@ void Kuribo::Finalize()
 /// <param name="hit_object">当たった相手</param>
 void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 {
+	GameObjectManager* rm = Singleton<GameObjectManager>::GetInstance();
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
+		// クリボーの上に触れたら
 		if (hit_object->GetVelocity().y > 1000.0f)
 		{
-			//// enumかなにかで死んだ状態にする
-			//GameObjectManager* rm = Singleton<GameObjectManager>::GetInstance();
-			//rm->DestroyGameObject(this);
-			velocity = 0;
+			// enumかなにかで死んだ状態にするのがいいかも
+			// 動きを止める
+			is_mobility = false;
+			// マリオをジャンプさせる
+			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
+			// 削除配列へ
+			rm->DestroyGameObject(this);
+		}
+		// クリボーの上以外に触れたら
+		else
+		{
+			rm->DestroyGameObject(hit_object);
 		}
 	}
 }
