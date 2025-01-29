@@ -24,9 +24,8 @@ private:
 
 private:
 	// クラスポインタ変数
-	class Player* player;
-	class Kuribo* kuribo;
-	class Nokonoko* nokonoko;
+	class Player* player;                   // プレイヤー情報を保持
+	class GameObjectBase* game_object;      // プレイヤー以外のゲームオブジェクト情報を保持する
 
 	// オブジェクトの情報配列
 	std::vector<ObjectMapData> map_object;
@@ -66,7 +65,7 @@ public:
 
 private:
 	// 画像の読み込み
-	void LoadImages();
+	bool LoadImages();
 
 	// csvを読み込んでステージの情報配列を作成
 	std::vector<std::vector<char>> LoadStageMapCSV();
