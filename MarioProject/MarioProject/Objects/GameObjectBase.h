@@ -12,7 +12,7 @@ protected:
 	class GameObjectManager* owner_scene;   //
 	Vector2D location;                      // オブジェクトのウィンドウの位置座標
 	BoxCollision collision;                 // 当たり判定情報の保持
-	unsigned char z_layer;                  //
+	unsigned char z_layer;          //
 
 public:
 	Vector2D box_size;              // 当たり判定サイズ
@@ -78,7 +78,7 @@ public:
 	Vector2D& GetLocation();                            // 現在の位置座標を取得する
 	Vector2D& GetBoxSize();                             // オブジェクトの大きさを取得する
 	const BoxCollision& GetCollision()const;            // オブジェクトがもつ当たり判定情報（左上と右下の点とか）を取得する
-	const unsigned char GetZLayer()const;               // 
+	const unsigned char GetZLayer()const;
 	const bool& GetMobility()const;                     // 
 };
 
