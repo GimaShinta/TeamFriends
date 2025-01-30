@@ -48,6 +48,7 @@ void IdleState::Update(float delta_second)
 		player->SetNextState(ePlayerState::JUMP);
 	}
 
+
 	//// ‚µ‚á‚ª‚Ýó‘Ô‚É‘JˆÚ
 	//if (input->GetKey(KEY_INPUT_DOWN))
 	//{
