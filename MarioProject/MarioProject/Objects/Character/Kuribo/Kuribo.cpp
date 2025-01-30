@@ -16,7 +16,7 @@ Kuribo::~Kuribo()
 void Kuribo::Initialize()
 {
 	// 判定サイズの設定
-	box_size = Vector2D(24.0f);
+	box_size = D_OBJECT_SIZE;
 	// 動くかどうか（trueなら動く、falseなら止まる）
 	is_mobility = true;
 	// 速度の設定

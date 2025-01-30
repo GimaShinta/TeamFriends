@@ -16,7 +16,7 @@ Nokonoko::~Nokonoko()
 void Nokonoko::Initialize()
 {
 	// 判定サイズの設定
-	box_size = Vector2D(24.0f, 48.0f);
+	box_size = Vector2D(D_OBJECT_SIZE, D_OBJECT_SIZE * 2);
 	// 動くかどうか（trueなら動く、falseなら止まる）
 	is_mobility = true;
 	// 速度の設定

@@ -33,12 +33,5 @@ public:
 	/// </summary>
 	/// <param name="hit_object">当たった相手のポインタ</param>
 	virtual void OnHitCollision(GameObjectBase* hit_object) override;
-
-	/// <summary>
-	/// ゲームオジェクトのサイズ変更
-	/// </summary>
-	/// <param name="x_size">xのサイズ</param>
-	/// <param name="y_size">yのサイズ</param>
-	void SetSizeData(int x_size, int y_size);
 };
 

@@ -23,19 +23,12 @@ void Brick::Initialize()
 
 	//当たり判定の設定
 	collision.is_blocking = true;
-	collision.object_type = eObjectType::eGround;
+	collision.object_type = eObjectType::eBlock;
 	collision.hit_object_type.push_back(eObjectType::ePlayer);
 	collision.hit_object_type.push_back(eObjectType::eEnemy);
-}
 
-/// <summary>
-/// 描画処理
-/// </summary>
-/// <param name="screen_offset"></param>
-void Brick::Draw(const Vector2D& screen_offset) const
-{
-	DrawBox(location.x - box_size.x, location.y - box_size.y,
-		location.x + box_size.x, location.y + box_size.y, GetColor(255, 0, 0), TRUE);
+	// 当たり判定サイズの設定
+	box_size = D_OBJECT_SIZE;
 }
 
 // 終了時処理（使ったインスタンスなどの削除）

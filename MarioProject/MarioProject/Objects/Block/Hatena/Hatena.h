@@ -16,13 +16,6 @@ public:
 public:
 	// ‰Šú‰»ˆ—
 	void Initialize() override;
-
-	/// <summary>
-	/// •`‰æˆ—
-	/// </summary>
-	/// <param name="screen_offset"></param>
-	void Draw(const Vector2D& screen_offset)const override;
-
 	// I—¹ˆ—
 	void Finalize() override;
 };

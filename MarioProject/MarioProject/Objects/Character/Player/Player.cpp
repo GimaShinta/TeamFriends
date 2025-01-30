@@ -44,7 +44,7 @@ void Player::Initialize()
 	is_mobility = true;
 
 	// プレイヤーの当たり判定サイズの設定
-	box_size = (24.0f);
+	box_size = D_OBJECT_SIZE;
 }
 
 /// <summary>

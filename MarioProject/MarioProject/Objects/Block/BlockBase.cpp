@@ -1,4 +1,5 @@
 #include "BlockBase.h"
+#include "DxLib.h"
 
 BlockBase::BlockBase()
 {
@@ -28,6 +29,9 @@ void BlockBase::Update(float delata_second)
 void BlockBase::Draw(const Vector2D& screen_offset) const
 {
 	__super::Draw(screen_offset);
+	// 当たり判定の可視化
+	DrawBox(this->location.x - this->box_size.x, this->location.y - this->box_size.y,
+		this->location.x + this->box_size.x, this->location.y + this->box_size.y, GetColor(255, 0, 0), TRUE);
 }
 
 // 終了時処理
@@ -41,15 +45,4 @@ void BlockBase::Finalize()
 /// <param name="hit_object">当たった相手</param>
 void BlockBase::OnHitCollision(GameObjectBase* hit_object)
 {
-}
-
-/// <summary>
-/// ゲームオジェクトのサイズ変更
-/// </summary>
-/// <param name="x_size">xのサイズ</param>
-/// <param name="y_size">yのサイズ</param>
-void BlockBase::SetSizeData(int x_size, int y_size)
-{
-	box_size.x = x_size * D_OBJECT_SIZE;
-	box_size.y = y_size * D_OBJECT_SIZE;
 }

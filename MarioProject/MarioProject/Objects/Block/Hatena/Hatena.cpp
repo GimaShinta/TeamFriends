@@ -19,7 +19,7 @@ void Hatena::Initialize()
 
 	//画像の設定
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
-	hatena_animation = rm->GetImages("Resource/Images/Block/hatena.png", 1, 1, 1, 32, 32);
+	hatena_animation = rm->GetImages("Resource/Images/Block/hatena.png", 4, 4, 1, 32, 32);
 	image = hatena_animation[0];
 
 	//当たり判定の設定
@@ -27,14 +27,9 @@ void Hatena::Initialize()
 	collision.object_type = eObjectType::eGround;
 	collision.hit_object_type.push_back(eObjectType::ePlayer);
 	collision.hit_object_type.push_back(eObjectType::eEnemy);
-}
 
-/// <summary>
-/// 描画処理
-/// </summary>
-/// <param name="screen_offset"></param>
-void Hatena::Draw(const Vector2D& screen_offset) const
-{
+	// 当たり判定サイズの設定
+	box_size = D_OBJECT_SIZE;
 }
 
 // 終了時処理（使ったインスタンスなどの削除）
