@@ -76,6 +76,7 @@ void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 			// enumかなにかで死んだ状態にするのがいいかも
 			// 動きを止める
 			is_mobility = false;
+
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
 			// 削除配列へ
