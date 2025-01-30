@@ -43,6 +43,11 @@ void BlockBase::OnHitCollision(GameObjectBase* hit_object)
 {
 }
 
+/// <summary>
+/// ゲームオジェクトのサイズ変更
+/// </summary>
+/// <param name="x_size">xのサイズ</param>
+/// <param name="y_size">yのサイズ</param>
 void BlockBase::SetSizeData(int x_size, int y_size)
 {
 	box_size.x = x_size * D_OBJECT_SIZE;

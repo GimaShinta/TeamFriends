@@ -16,7 +16,7 @@ protected:
 
 public:
 	Vector2D box_size;              // 当たり判定サイズ
-	Vector2D velocity;
+	Vector2D velocity;              // 速度
 
 protected:
 	int image;                      // 画像用
@@ -79,7 +79,8 @@ public:
 	Vector2D& GetLocation();                            // 現在の位置座標を取得する
 
 	Vector2D& GetVelocity();	//速度取得
-	void SetVelocity(float scroll);	//速度設定
+	void SetVelocity(const Vector2D& velo);//速度設定
+	void SetScroll(float scroll);	// スクロール量の設定
 
 
 	Vector2D& GetBoxSize();                             // オブジェクトの大きさを取得する

@@ -6,6 +6,14 @@
 class Nokonoko :public CharacterBase
 {
 public:
+	// ƒmƒRƒmƒR‚Ìó‘Ô
+	enum ePlayerLooksState
+	{
+		NORMAL,
+		REVAIVAL
+	};
+
+public:
 	Nokonoko();
 	~Nokonoko();
 

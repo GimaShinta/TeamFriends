@@ -6,6 +6,15 @@
 class Kuribo :public CharacterBase
 {
 public:
+	// ƒNƒŠƒ{[‚Ìó‘Ô
+	enum eKUriboState
+	{
+		NORMAL,
+		HUMARERU,
+		DEAD
+	};
+
+public:
 	Kuribo();
 	~Kuribo();
 

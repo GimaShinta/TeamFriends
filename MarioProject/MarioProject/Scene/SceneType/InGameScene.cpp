@@ -88,7 +88,7 @@ eSceneType InGameScene::Update(float delta_second)
 			for (GameObjectBase* object : object_array)
 			{
 				// オブジェクトの速度もマリオに合わせる
-				object->SetVelocity(object->GetLocation().x - (p_speed * delta_second));
+				object->SetScroll(object->GetLocation().x - (p_speed * delta_second));
 			}
 		}
 		else 
