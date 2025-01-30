@@ -39,15 +39,13 @@ void RunState::Update(float delta_second)
         this->player->flip_flag = FALSE;
         old_location = 0.0f;
     }
-
     // ƒWƒƒƒ“ƒvó‘Ô‚É‘JˆÚ
     if (input->GetKeyDown(KEY_INPUT_UP) && this->IsOnGround())
     {
         player->SetNextState(ePlayerState::JUMP);
     }
-
     // ˆÚ“®“ü—Í‚ª‚È‚¢ê‡A’âŽ~ó‘Ô‚É‘JˆÚ
-    if (!input->GetKey(KEY_INPUT_LEFT) && !input->GetKey(KEY_INPUT_RIGHT))
+     else if (!input->GetKey(KEY_INPUT_LEFT) && !input->GetKey(KEY_INPUT_RIGHT))
     {
         // ’n–Ê‚É‚¢‚éê‡‚Ì‚ÝIDLEó‘Ô‚É‘JˆÚ
         if (this->IsOnGround())
