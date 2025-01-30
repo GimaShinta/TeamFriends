@@ -41,12 +41,22 @@ void Brick::Initialize()
 /// <param name="delata_second">１フレーム当たりの時間</param>
 void Brick::Update(float delata_second)
 {
+	// 破壊されていたら
+	if (is_destruction == true)
+	{
+		// インスタンスの取得
+		GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
+		// コインの生成
+		coin = gm->CreateObject<Coin>(location);
+		is_destruction = false;
+	}
 }
 
 // 終了時処理（使ったインスタンスなどの削除）
 void Brick::Finalize()
 {
 	ResourceManager::DeleteInstance();
+	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>
@@ -55,18 +65,20 @@ void Brick::Finalize()
 /// <param name="hit_object">当たった相手</param>
 void Brick::OnHitCollision(GameObjectBase* hit_object)
 {
-	// 当たった相手がマリオだったら
-	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
+	// 当たった相手がマリオだったらかつマリオの進行方向が上だったら
+	if (hit_object->GetCollision().object_type == eObjectType::ePlayer && hit_object->GetVelocity().y < -1.0f)
 	{
-		// マリオの進行方向が上だったら
-		if (hit_object->GetVelocity().y < -1.0f)
+		// マリオを下降させる
+		hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, 1.0f));
+
+		// 破壊されていなかったら
+		if (is_destruction == false)
 		{
-			// マリオを下降させる
-			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, 1.0f));
 			// インスタンスの取得
 			GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
 			// コインの生成
 			coin = gm->CreateObject<Coin>(location);
+			// 破壊フラグをオンにする
 			is_destruction = true;
 		}
 	}
