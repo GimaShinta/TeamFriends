@@ -5,6 +5,8 @@
 // タイトルシーンクラス
 class TitleScene :public SceneBase
 {
+private:
+	int title_image;    // タイトルの画像
 public:
 	TitleScene();
 	virtual ~TitleScene();

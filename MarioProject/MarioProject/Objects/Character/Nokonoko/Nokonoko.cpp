@@ -1,6 +1,7 @@
 #include "Nokonoko.h"
 #include "DxLib.h"
 
+// シングルトン継承クラスのインクルード
 #include "../../../Utility/ResourceManager.h"
 #include "../../../Objects/GameObjectManager.h"
 
@@ -20,6 +21,7 @@ void Nokonoko::Initialize()
 {
 	// 判定サイズの設定
 	box_size = Vector2D(D_OBJECT_SIZE, D_OBJECT_SIZE - (D_OBJECT_SIZE / 2));
+	revival_size = D_OBJECT_SIZE;
 	// 動くかどうか（trueなら動く、falseなら止まる）
 	is_mobility = true;
 	// 速度の設定
@@ -51,6 +53,7 @@ void Nokonoko::Update(float delta_second)
 		break;
 		// 甲羅状態の時
 	case Nokonoko::REVIVAL:
+		box_size = revival_size;
 		image = revival_animation[0];
 		if (revival_move == true)
 		{
@@ -81,6 +84,7 @@ void Nokonoko::Draw(const Vector2D& screen_offset) const
 void Nokonoko::Finalize()
 {
 	ResourceManager::DeleteInstance();
+	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>
@@ -94,7 +98,7 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
 		// ノコノコの上に触れたら
-		if (hit_object->GetVelocity().y > 1000.0f)
+		if (hit_object->GetVelocity().y > 0.0f)
 		{
 			// ノーマル状態だったら甲羅状態に変更
 			if (noko_state == eNokonokoState::NORMAL)
@@ -109,14 +113,14 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 				revival_move = true;
 
 				// マリオが左半分を踏んだ時
-				if (location.x > hit_object->GetLocation().x - 10.0f)
-				{
-					velocity *= 5.0f;
-				}
-				// マリオが右半分を踏んだ時
-				else if (location.x < hit_object->GetLocation().x + 10.0f)
+				if (location.x > hit_object->GetLocation().x - 8.0f)
 				{
 					velocity *= -5.0f;
+				}
+				// マリオが右半分を踏んだ時
+				else if (location.x < hit_object->GetLocation().x + 8.0f)
+				{
+					velocity *= 5.0f;
 				}
 				else
 				{

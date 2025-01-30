@@ -119,8 +119,6 @@ void InGameScene::Draw(float delta_second)
 
 	// 親クラスの描画処理
 	__super::Draw(delta_second);
-
-	DrawFormatString(10, 10, GetColor(0, 255, 255), "インゲーム画面です");
 }
 
 // 終了時処理（使ったインスタンスの削除とか）

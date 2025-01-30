@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "../Utility/ResourceManager.h"
+// シングルトン継承クラスのインクルード
 #include "../Utility/InputManager.h"
 #include "../Scene/SceneManager.h"
 
@@ -98,7 +98,7 @@ void Application::Run()
 void Application::ShutDown()
 {
 	// Singletonのインスタンスを解放する
-	ResourceManager::DeleteInstance();
+	InputManager::DeleteInstance();
 	SceneManager::DeleteInstance();
 
 	// Dxライブラリの使用を終了する

@@ -1,8 +1,13 @@
 #include"TitleScene.h"
-#include"../../Utility/InputManager.h"
 #include"DxLib.h"
 
-TitleScene::TitleScene()
+// シングルトン継承クラスのインクルード
+#include"../../Utility/InputManager.h"
+#include"../../Utility/ResourceManager.h"
+#include"../../Application/Application.h"
+
+TitleScene::TitleScene() :
+	title_image(NULL)
 {
 }
 
@@ -13,7 +18,9 @@ TitleScene::~TitleScene()
 // 初期化処理
 void TitleScene::Initialize()
 {
-
+	// インスタンスの取得
+	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
+	title_image = rm->GetImages("Resource/Images/title.png", 1, 1, 1, 32, 32)[0];
 }
 
 /// <summary>
@@ -32,6 +39,7 @@ eSceneType TitleScene::Update(float delta_second)
 		return eSceneType::eInGame;
 	}
 
+	// 現在のシーンがタイトルということを返す
 	return GetNowSceneType();
 }
 
@@ -42,7 +50,8 @@ eSceneType TitleScene::Update(float delta_second)
 /// <returns></returns>
 void TitleScene::Draw(float delta_second)
 {
-	DrawFormatString(10, 10, GetColor(255, 255, 255), "タイトル画面です");
+	// タイトル画像の描画
+	DrawRotaGraph(D_WIN_MAX_X / 2, D_WIN_MAX_Y / 2, 1.5, 0.0, title_image, TRUE);
 }
 
 // 終了時処理（使ったインスタンスの削除とか）

@@ -1,10 +1,12 @@
 #include "Kuribo.h"
 #include "DxLib.h"
 
+// シングルトン継承クラスのインクルード
 #include "../../../Utility/ResourceManager.h"
 #include "../../../Objects/GameObjectManager.h"
 
-Kuribo::Kuribo()
+Kuribo::Kuribo() :
+	kuribo_state(eKuriboState::NORMAL)
 {
 }
 
@@ -59,6 +61,7 @@ void Kuribo::Draw(const Vector2D& screen_offset) const
 void Kuribo::Finalize()
 {
 	ResourceManager::DeleteInstance();
+	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>

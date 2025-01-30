@@ -5,6 +5,9 @@
 // リザルトシーンクラス
 class ResultScene :public SceneBase
 {
+private:
+	int mario_image;    //マリオの画像
+
 public:
 	ResultScene();
 	virtual ~ResultScene();
