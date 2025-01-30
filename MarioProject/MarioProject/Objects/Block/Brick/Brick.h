@@ -24,6 +24,12 @@ public:
     /// <param name="delata_second">１フレーム当たりの時間</param>
 	virtual void Update(float delata_second) override;
 
+	/// <summary>
+    /// 描画処理
+    /// </summary>
+    /// <param name="screen_offset"></param>
+	virtual void Draw(const Vector2D& screen_offset)const override;
+
 	// 終了時処理
 	void Finalize() override;
 
@@ -33,25 +39,3 @@ public:
     /// <param name="hit_object">当たった相手</param>
 	virtual void OnHitCollision(GameObjectBase* hit_object) override;
 };
-
-// 破壊可能ブロックの破片クラス
-class BlickDebris : public BlockBase
-{
-private:
-	float g_velocity;
-
-public:
-	BlickDebris();
-	~BlickDebris();
-
-public:
-	// 初期化処理
-	void Initialize() override;
-
-	/// <summary>
-    /// 更新処理
-    /// </summary>
-    /// <param name="delata_second">１フレーム当たりの時間</param>
-	virtual void Update(float delta_second) override;
-};
-
