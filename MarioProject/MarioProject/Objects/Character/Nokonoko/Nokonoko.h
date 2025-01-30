@@ -16,6 +16,7 @@ private:
 
 private:
 	Vector2D revival_size;
+	bool revival_move;
 
 private:
 	eNokonokoState noko_state;          // ƒmƒRƒmƒR‚Ìó‘Ô‚ÌŠÇ—

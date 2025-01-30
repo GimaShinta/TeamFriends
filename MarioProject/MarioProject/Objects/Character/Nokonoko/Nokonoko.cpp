@@ -7,6 +7,7 @@
 Nokonoko::Nokonoko() :
 	noko_state(eNokonokoState::NORMAL)
 	, revival_size(0.0f)
+	, revival_move(false)
 {
 }
 
@@ -48,15 +49,19 @@ void Nokonoko::Update(float delta_second)
 		__super::Movement(delta_second);
 		image = nokonoko_animation[0];
 		break;
+		// 甲羅状態の時
 	case Nokonoko::REVIVAL:
 		image = revival_animation[0];
+		if (revival_move == true)
+		{
+			__super::Movement(delta_second);
+		}
 		break;
 	case Nokonoko::DEAD:
 		break;
 	default:
 		break;
 	}
-
 
 	// 親クラスの更新処理を呼び出す
 	__super::Update(delta_second);
@@ -91,10 +96,32 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 		// ノコノコの上に触れたら
 		if (hit_object->GetVelocity().y > 1000.0f)
 		{
+			// ノーマル状態だったら甲羅状態に変更
 			if (noko_state == eNokonokoState::NORMAL)
 			{
 				noko_state = eNokonokoState::REVIVAL;
+				// 座標少し下げる
 				location.y += D_OBJECT_SIZE;
+			}
+			else
+			{
+				// 甲羅状態で踏まれたらフラグオン
+				revival_move = true;
+
+				// マリオが左半分を踏んだ時
+				if (location.x > hit_object->GetLocation().x - 10.0f)
+				{
+					velocity *= 5.0f;
+				}
+				// マリオが右半分を踏んだ時
+				else if (location.x < hit_object->GetLocation().x + 10.0f)
+				{
+					velocity *= -5.0f;
+				}
+				else
+				{
+					velocity = 0;
+				}
 			}
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
