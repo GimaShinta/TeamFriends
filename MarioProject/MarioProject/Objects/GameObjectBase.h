@@ -16,7 +16,7 @@ protected:
 
 public:
 	Vector2D box_size;              // 当たり判定サイズ
-	Vector2D velocity;
+	Vector2D velocity;              // 速度
 
 protected:
 	int image;                      // 画像用

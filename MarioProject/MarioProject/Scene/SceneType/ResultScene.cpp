@@ -1,6 +1,6 @@
 #include"ResultScene.h"
-#include"../../Utility/InputManager.h"
 #include"DxLib.h"
+#include"../../Utility/InputManager.h"
 
 ResultScene::ResultScene()
 {
@@ -32,6 +32,7 @@ eSceneType ResultScene::Update(float delta_second)
 		return eSceneType::eXit;
 	}
 
+	// リザルトシーンだということを返す
 	return GetNowSceneType();
 }
 
