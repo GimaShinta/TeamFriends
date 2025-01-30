@@ -10,7 +10,7 @@ Hatena::Hatena() :
 Hatena::~Hatena()
 {
 }
-
+ 
 // ‰Šú‰»ˆ—
 void Hatena::Initialize()
 {
