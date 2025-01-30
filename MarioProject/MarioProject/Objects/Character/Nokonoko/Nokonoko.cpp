@@ -7,7 +7,6 @@
 
 Nokonoko::Nokonoko() :
 	noko_state(eNokonokoState::NORMAL)
-	, revival_size(0.0f)
 	, revival_move(false)
 {
 }
@@ -20,8 +19,7 @@ Nokonoko::~Nokonoko()
 void Nokonoko::Initialize()
 {
 	// 判定サイズの設定
-	box_size = Vector2D(D_OBJECT_SIZE, D_OBJECT_SIZE - (D_OBJECT_SIZE / 2));
-	revival_size = D_OBJECT_SIZE;
+	box_size = D_OBJECT_SIZE;
 	// 動くかどうか（trueなら動く、falseなら止まる）
 	is_mobility = true;
 	// 速度の設定
@@ -53,7 +51,6 @@ void Nokonoko::Update(float delta_second)
 		break;
 		// 甲羅状態の時
 	case Nokonoko::REVIVAL:
-		box_size = revival_size;
 		image = revival_animation[0];
 		if (revival_move == true)
 		{
@@ -78,6 +75,9 @@ void Nokonoko::Draw(const Vector2D& screen_offset) const
 {
 	//親クラスの描画処理を呼び出す
 	__super::Draw(screen_offset);
+	// 当たり判定の可視化
+	DrawBox(this->location.x - this->box_size.x, this->location.y - this->box_size.y,
+		this->location.x + this->box_size.x, this->location.y + this->box_size.y, GetColor(255, 0, 0), TRUE);
 }
 
 // 終了時処理（使ったインスタンスなどの削除）
@@ -98,7 +98,7 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
 		// ノコノコの上に触れたら
-		if (hit_object->GetVelocity().y > 0.0f)
+		if (hit_object->GetVelocity().y > 1000.0f) 
 		{
 			// ノーマル状態だったら甲羅状態に変更
 			if (noko_state == eNokonokoState::NORMAL)
@@ -113,25 +113,21 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 				revival_move = true;
 
 				// マリオが左半分を踏んだ時
-				if (location.x > hit_object->GetLocation().x - 8.0f)
+				if (location.x > hit_object->GetLocation().x)
 				{
 					velocity *= -5.0f;
 				}
 				// マリオが右半分を踏んだ時
-				else if (location.x < hit_object->GetLocation().x + 8.0f)
+				else if (location.x < hit_object->GetLocation().x)
 				{
 					velocity *= 5.0f;
-				}
-				else
-				{
-					velocity = 0;
 				}
 			}
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
 		}
 		// ノコノコの上以外に触れたら
-		else
+		else 
 		{
 			//// マリオを削除する
 			//rm->DestroyGameObject(hit_object);

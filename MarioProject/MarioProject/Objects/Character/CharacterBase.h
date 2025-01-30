@@ -2,6 +2,8 @@
 
 #include "../GameObjectBase.h"
 
+#define D_GRAVITY (30.0f)    //重力加速度(m/ss)
+
 // キャラクターベースクラス（メンバ関数のオーバーライド必須）
 class CharacterBase : public GameObjectBase
 {

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../CharacterBase.h"
-#include <vector>
-
 #include "StateBase//PlayerState.h"
+
+#include <vector>
 
 // プレイヤークラス（メンバ関数のオーバーライド必須）
 class Player : public CharacterBase

@@ -1,7 +1,5 @@
 #include "CharacterBase.h"
 
-#define D_GRAVITY 30.0f      //d—Í‰Á‘¬“x(m/ss)
-
 CharacterBase::CharacterBase():
 	g_velocity(0.0f)
 {

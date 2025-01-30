@@ -15,8 +15,7 @@ private:
 	};
 
 private:
-	Vector2D revival_size;
-	bool revival_move;
+	bool revival_move;         // 甲羅状態で走るか（trueは走っている、falseは走っていない）
 
 private:
 	eNokonokoState noko_state;          // ノコノコの状態の管理

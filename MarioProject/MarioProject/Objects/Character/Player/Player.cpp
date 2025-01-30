@@ -1,12 +1,10 @@
 #include "Player.h"
+#include "DxLib.h"
 
+// シングルトン継承クラスのインクルード
 #include "../../../Utility/ResourceManager.h"
 #include "StateBase/State/PlayerStateFactory.h"
-
-#include "DxLib.h"
 #include"../../../Application/Application.h"
-
-#define D_GRAVITY (30.0f)      //重力加速度(m/ss)
 
 Player::Player():
 	  flip_flag(false)
