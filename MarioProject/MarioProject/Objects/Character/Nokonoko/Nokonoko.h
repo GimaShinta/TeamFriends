@@ -5,13 +5,24 @@
 // ノコノコクラス
 class Nokonoko :public CharacterBase
 {
-public:
+private:
 	// ノコノコの状態
-	enum ePlayerLooksState
+	enum eNokonokoState
 	{
 		NORMAL,
-		REVAIVAL
+		REVIVAL,   // 甲羅状態
+		DEAD
 	};
+
+private:
+	Vector2D revival_size;
+
+private:
+	eNokonokoState noko_state;          // ノコノコの状態の管理
+
+private:
+	std::vector<int> nokonoko_animation;     // ノコノコのアニメーション画像を保持
+	std::vector<int> revival_animation;      // 甲羅状態のノコノコのアニメーション画像を保持
 
 public:
 	Nokonoko();

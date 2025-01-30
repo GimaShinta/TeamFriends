@@ -5,14 +5,20 @@
 // クリボークラス
 class Kuribo :public CharacterBase
 {
-public:
+private:
 	// クリボーの状態
-	enum eKUriboState
+	enum eKuriboState
 	{
 		NORMAL,
 		HUMARERU,
 		DEAD
 	};
+
+private:
+	eKuriboState kuribo_state;       // クリボーの状態の管理
+
+private:
+	std::vector<int> kuribo_animation;     // クリボーのアニメーション画像を保持
 
 public:
 	Kuribo();

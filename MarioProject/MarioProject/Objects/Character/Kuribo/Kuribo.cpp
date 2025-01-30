@@ -67,6 +67,7 @@ void Kuribo::Finalize()
 /// <param name="hit_object">当たった相手</param>
 void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 {
+	// インスタンスの取得
 	GameObjectManager* rm = Singleton<GameObjectManager>::GetInstance();
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
