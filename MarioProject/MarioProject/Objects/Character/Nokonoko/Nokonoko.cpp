@@ -18,7 +18,7 @@ Nokonoko::~Nokonoko()
 void Nokonoko::Initialize()
 {
 	// 判定サイズの設定
-	box_size = Vector2D(D_OBJECT_SIZE, D_OBJECT_SIZE);
+	box_size = Vector2D(D_OBJECT_SIZE, D_OBJECT_SIZE - (D_OBJECT_SIZE / 2));
 	// 動くかどうか（trueなら動く、falseなら止まる）
 	is_mobility = true;
 	// 速度の設定
@@ -91,15 +91,19 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 		// ノコノコの上に触れたら
 		if (hit_object->GetVelocity().y > 1000.0f)
 		{
-			noko_state = eNokonokoState::REVIVAL;
+			if (noko_state == eNokonokoState::NORMAL)
+			{
+				noko_state = eNokonokoState::REVIVAL;
+				location.y += D_OBJECT_SIZE;
+			}
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
 		}
 		// ノコノコの上以外に触れたら
 		else
 		{
-			// マリオを削除する
-			rm->DestroyGameObject(hit_object);
+			//// マリオを削除する
+			//rm->DestroyGameObject(hit_object);
 		}
 	}
 }
