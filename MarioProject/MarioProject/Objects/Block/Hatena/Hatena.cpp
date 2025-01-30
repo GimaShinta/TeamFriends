@@ -66,17 +66,17 @@ void Hatena::Finalize()
 /// <param name="hit_object">当たった相手</param>
 void Hatena::OnHitCollision(GameObjectBase* hit_object)
 {
-	// 当たった相手がマリオだったらかつマリオの進行方向が上だったら
+	// 当たった相手がマリオだったらかつ、マリオの進行方向が上だったら
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer  && hit_object->GetVelocity().y < -1.0f)
 	{
 		// マリオを下降させる
 		hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, 1.0f));
-		// 空じゃなかったらキノコを生成できるようにする
+		// 空じゃなかったら
 		if (is_kara == false)
 		{
 			// インスタンスの取得
 			GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
-			// コインの生成
+			// キノコの生成
 			gm->CreateObject<Mushroom>(location);
 			// 空になる
 			is_kara = true;
