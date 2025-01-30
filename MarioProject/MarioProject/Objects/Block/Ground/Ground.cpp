@@ -24,8 +24,11 @@ void Ground::Initialize()
 	collision.object_type = eObjectType::eGround;
 	collision.hit_object_type.push_back(eObjectType::ePlayer);
 	collision.hit_object_type.push_back(eObjectType::eEnemy);
+	collision.hit_object_type.push_back(eObjectType::eItem);
 }
 
+
+// 終了時処理（使ったインスタンスなどの削除）
 void Ground::Finalize()
 {
 	ResourceManager::DeleteInstance();

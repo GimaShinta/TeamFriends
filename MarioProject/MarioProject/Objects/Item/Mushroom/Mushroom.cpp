@@ -29,8 +29,24 @@ void Mushroom::Initialize()
 	box_size = D_OBJECT_SIZE;
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="delta_second">１フレーム当たりの時間</param>
+void Mushroom::Update(float delata_second)
+{
+}
+
 // 終了時処理（使ったインスタンスなどの削除）
 void Mushroom::Finalize()
 {
 	ResourceManager::DeleteInstance();
+}
+
+/// <summary>
+/// ヒット時処理
+/// </summary>
+/// <param name="hit_object">当たった相手</param>
+void Mushroom::OnHitCollision(GameObjectBase* hit_object)
+{
 }

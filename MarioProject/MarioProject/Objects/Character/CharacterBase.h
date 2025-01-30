@@ -46,6 +46,7 @@ public:
 	/// </summary>
 	/// <param name="delta_second">１フレーム当たりの時間</param>
 	virtual void Movement(float delta_second);
+
 	// スクロール速さに合わせて加速させる
 	void SetVelocity(const Vector2D& velocity);
 };

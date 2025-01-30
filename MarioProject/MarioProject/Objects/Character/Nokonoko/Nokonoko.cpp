@@ -34,6 +34,7 @@ void Nokonoko::Initialize()
 	collision.is_blocking = true;
 	collision.object_type = eObjectType::eEnemy;
 	collision.hit_object_type.push_back(eObjectType::ePlayer);
+	collision.hit_object_type.push_back(eObjectType::eBlock);
 }
 
 /// <summary>
@@ -95,14 +96,17 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 {
 	// インスタンスの取得
 	GameObjectManager* rm = Singleton<GameObjectManager>::GetInstance();
+
+	// マリオに当たったら
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
-		// ノコノコの上に触れたら
+		// ノコノコの上に触れたら（ぶつかって飛び跳ねたらこのマジックナンバーのせい）
 		if (hit_object->GetVelocity().y > 1000.0f) 
 		{
-			// ノーマル状態だったら甲羅状態に変更
+			// ノーマル状態だったら
 			if (noko_state == eNokonokoState::NORMAL)
 			{
+				// 甲羅状態に変更
 				noko_state = eNokonokoState::REVIVAL;
 				// 座標少し下げる
 				location.y += D_OBJECT_SIZE;
@@ -115,11 +119,13 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 				// マリオが左半分を踏んだ時
 				if (location.x > hit_object->GetLocation().x)
 				{
+					// 右に速度を上げて進む
 					velocity *= -5.0f;
 				}
 				// マリオが右半分を踏んだ時
 				else if (location.x < hit_object->GetLocation().x)
 				{
+					// 左に速度を上げて進む
 					velocity *= 5.0f;
 				}
 			}
@@ -129,7 +135,7 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 		// ノコノコの上以外に触れたら
 		else 
 		{
-			//// マリオを削除する
+			//// マリオを削除する（バグあり）
 			//rm->DestroyGameObject(hit_object);
 		}
 	}

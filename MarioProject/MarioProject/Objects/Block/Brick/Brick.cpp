@@ -2,8 +2,12 @@
 #include "DxLib.h"
 
 #include "../../../Utility/ResourceManager.h"
+#include "../../../Objects/GameObjectManager.h"
+#include "../../../Objects/Item/Coin/Coin.h"
 
-Brick::Brick()
+Brick::Brick() :
+	coin(nullptr)
+	, is_destruction(false)
 {
 }
 
@@ -31,8 +35,39 @@ void Brick::Initialize()
 	box_size = D_OBJECT_SIZE;
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="delata_second">１フレーム当たりの時間</param>
+void Brick::Update(float delata_second)
+{
+}
+
 // 終了時処理（使ったインスタンスなどの削除）
 void Brick::Finalize()
 {
 	ResourceManager::DeleteInstance();
+}
+
+/// <summary>
+/// ヒット時処理
+/// </summary>
+/// <param name="hit_object">当たった相手</param>
+void Brick::OnHitCollision(GameObjectBase* hit_object)
+{
+	// 当たった相手がマリオだったら
+	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
+	{
+		// マリオの進行方向が上だったら
+		if (hit_object->GetVelocity().y < -1.0f)
+		{
+			// マリオを下降させる
+			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, 1.0f));
+			// インスタンスの取得
+			GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
+			// コインの生成
+			coin = gm->CreateObject<Coin>(location);
+			is_destruction = true;
+		}
+	}
 }

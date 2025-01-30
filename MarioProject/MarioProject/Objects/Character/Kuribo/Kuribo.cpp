@@ -32,6 +32,7 @@ void Kuribo::Initialize()
 	collision.is_blocking = true;
 	collision.object_type = eObjectType::eEnemy;
 	collision.hit_object_type.push_back(eObjectType::ePlayer);
+	collision.hit_object_type.push_back(eObjectType::eBlock);
 }
 
 /// <summary>
@@ -75,6 +76,7 @@ void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 {
 	// インスタンスの取得
 	GameObjectManager* rm = Singleton<GameObjectManager>::GetInstance();
+	// マリオに当たったら
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
 		// クリボーの上に触れたら
