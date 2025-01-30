@@ -84,6 +84,7 @@ eSceneType InGameScene::Update(float delta_second)
 			//マリオの速度に合わせてスクロールする
 			float p_speed = player->GetVelocity().x;
 			scroll += p_speed * delta_second;
+
 			// 複数のオブジェクト用スクロール
 			for (GameObjectBase* object : object_array)
 			{

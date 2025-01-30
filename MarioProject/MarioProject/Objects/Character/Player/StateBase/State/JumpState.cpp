@@ -20,7 +20,7 @@ JumpState::~JumpState()
 void JumpState::Initialize()
 {
 	//移動処理
-	this->player->velocity.y -= 1000.0f;         //ジャンプ力
+	this->player->velocity.y -= 1300.0f;         //ジャンプ力
 	old_location = 0.0f;
 }
 
