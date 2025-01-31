@@ -63,10 +63,10 @@ public:
 	// 現在のシーンタイプ（オーバーライド必須）
 	virtual eSceneType GetNowSceneType() const override;
 
-private:
 	// 画像の読み込み
 	bool LoadImages();
 
+private:
 	// csvを読み込んでステージの情報配列を作成
 	std::vector<std::vector<char>> LoadStageMapCSV();
 

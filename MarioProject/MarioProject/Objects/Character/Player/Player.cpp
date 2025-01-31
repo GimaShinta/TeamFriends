@@ -6,6 +6,8 @@
 #include "StateBase/State/PlayerStateFactory.h"
 #include"../../../Application/Application.h"
 
+#include <cmath>
+
 Player::Player():
 	  flip_flag(false)
 	, now_state(ePlayerState::NONE)
@@ -134,10 +136,30 @@ void Player::PlayerControl()
 		velocity.x = -500;
 	}
 
-	// y600.0f地点を地面と仮定
-	if (location.y >= 600.0f)
+	// 当たっている場所が地面だったら
+	if (__super::MapCollision() == true)
 	{
-		location.y = 600.0f;
+		// 小数変数を整数に変換
+		int y = std::floor(location.y);
+
+		// チップサイズで割って現在のマップ位置を特定
+		y /= (D_OBJECT_SIZE * 2);
+
+		// マリオが地面に向かって進んでいたら
+		if (velocity.y < 0)
+		{
+			y++;
+		}
+		else
+		{
+			y += 0;
+		}
+
+		// マップサイズをかけて座標を特定
+		y *= (D_OBJECT_SIZE * 2);
+
+		// 座標を設定
+		location.y = y + D_OBJECT_SIZE;
 		g_velocity = 0.0f;
 		isOnGround = true; // 地面にいる
 	}

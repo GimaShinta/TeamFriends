@@ -52,6 +52,9 @@ void InGameScene::Initialize()
 	// csvを読み込んでステージの情報配列を作成
 	map_array = LoadStageMapCSV();
 
+	// ゲームオブジェクトにステージの情報配列を参照して渡す
+	player->SetMapData(map_array);
+
 	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
 	//ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	//image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
