@@ -66,9 +66,10 @@ void Hatena::Finalize()
 /// <param name="hit_object">当たった相手</param>
 void Hatena::OnHitCollision(GameObjectBase* hit_object)
 {
-	// 当たった相手がマリオだったらかつ、マリオの進行方向が上だったら
+	// 当たった相手がマリオだったら
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
+		// マリオの進行方向が上だったら
 		if (hit_object->GetVelocity().y < -1.0f)
 		{
 			// マリオを下降させる

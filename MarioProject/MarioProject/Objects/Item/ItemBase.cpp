@@ -42,5 +42,5 @@ void ItemBase::OnHitCollision(GameObjectBase* hit_object)
 /// <param name="delta_second">‚PƒtƒŒ[ƒ€“–‚½‚è‚ÌŠÔ</param>
 void ItemBase::Movement(float delta_second)
 {
-	location += velocity * delta_second;
+	this->location += velocity * delta_second;
 }

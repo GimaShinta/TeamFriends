@@ -22,7 +22,7 @@ public:
     /// 更新処理
     /// </summary>
     /// <param name="delata_second">１フレーム当たりの時間</param>
-	virtual void Update(float delata_second) override;
+	virtual void Update(float delta_second) override;
 
 	/// <summary>
     /// 描画処理

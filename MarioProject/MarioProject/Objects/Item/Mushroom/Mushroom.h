@@ -16,7 +16,7 @@ public:
     /// 更新処理
     /// </summary>
     /// <param name="delta_second">１フレーム当たりの時間</param>
-	virtual void Update(float delata_second);
+	virtual void Update(float delta_second);
 
 	// 終了時処理
 	virtual void Finalize() override;

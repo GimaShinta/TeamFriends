@@ -40,7 +40,7 @@ void Brick::Initialize()
 /// 更新処理
 /// </summary>
 /// <param name="delata_second">１フレーム当たりの時間</param>
-void Brick::Update(float delata_second)
+void Brick::Update(float delta_second)
 {
 	// 破壊されていたら
 	if (is_destruction == true)
@@ -54,6 +54,7 @@ void Brick::Update(float delata_second)
 		gm->CreateObject<BlickDebris>(Vector2D(location.x - box_size.x, location.y + box_size.y));
 		is_destruction = false;
 	}
+	__super::Update(delta_second);
 }
 
 /// <summary>

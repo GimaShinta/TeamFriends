@@ -41,7 +41,7 @@ void GameObjectBase::Update(float delata_second)
 	{
 		objm->DestroyGameObject(this);
 	}
-	if (this->location.y >= 720 + this->GetBoxSize().y)
+	if (this->location.y >= D_WIN_MAX_Y + this->GetBoxSize().y)
 	{
 		objm->DestroyGameObject(this);
 	}
