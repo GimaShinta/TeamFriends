@@ -116,7 +116,7 @@ eSceneType InGameScene::Update(float delta_second)
 void InGameScene::Draw(float delta_second)
 {
 	//空(Stage)
-	DrawBox(0, 0, D_WIN_MAX_X, D_WIN_MAX_Y, GetColor(92, 148, 252), TRUE);
+	DrawBox(0, 0, D_WIN_MAX_X, D_WIN_MAX_Y, GetColor(147, 187, 236), TRUE);
 
 	// 作成したステージの情報配列を使って背景を描画
 	DrawStageMap();
