@@ -52,6 +52,9 @@ void InGameScene::Initialize()
 	// csvを読み込んでステージの情報配列を作成
 	map_array = LoadStageMapCSV();
 
+	// ゲームオブジェクトにステージの情報配列を参照して渡す
+	player->SetMapData(map_array);
+
 	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
 	//ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	//image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
@@ -113,7 +116,7 @@ eSceneType InGameScene::Update(float delta_second)
 void InGameScene::Draw(float delta_second)
 {
 	//空(Stage)
-	DrawBox(0, 0, D_WIN_MAX_X, D_WIN_MAX_Y, GetColor(92, 148, 252), TRUE);
+	DrawBox(0, 0, D_WIN_MAX_X, D_WIN_MAX_Y, GetColor(147, 187, 236), TRUE);
 
 	// 作成したステージの情報配列を使って背景を描画
 	DrawStageMap();

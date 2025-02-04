@@ -66,6 +66,8 @@ void Nokonoko::Update(float delta_second)
 
 	// 親クラスの更新処理を呼び出す
 	__super::Update(delta_second);
+
+	GameObjectBase::Update(delta_second);
 }
 
 /// <summary>
@@ -76,9 +78,9 @@ void Nokonoko::Draw(const Vector2D& screen_offset) const
 {
 	//親クラスの描画処理を呼び出す
 	__super::Draw(screen_offset);
-	// 当たり判定の可視化
-	DrawBox(this->location.x - this->box_size.x, this->location.y - this->box_size.y,
-		this->location.x + this->box_size.x, this->location.y + this->box_size.y, GetColor(255, 0, 0), FALSE);
+	//// 当たり判定の可視化
+	//DrawBox(this->location.x - this->box_size.x, this->location.y - this->box_size.y,
+	//	this->location.x + this->box_size.x, this->location.y + this->box_size.y, GetColor(255, 0, 0), TRUE);
 }
 
 // 終了時処理（使ったインスタンスなどの削除）
