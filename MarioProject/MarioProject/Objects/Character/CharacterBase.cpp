@@ -121,7 +121,7 @@ bool CharacterBase::MapCollision()
 		int x_id = vertices[i].x / (D_OBJECT_SIZE * 2);
 		int y_id = vertices[i].y / (D_OBJECT_SIZE * 2);
 		// プレイヤーがいるマスが0以外の文字だったら
-		if (map_data[y_id][x_id] != '0')
+		if (map_data[y_id][x_id] == '2')
 		{
 			// 当たっている
 			return true;
