@@ -119,6 +119,7 @@ void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
 
+			// クリボーを踏まれた状態にする
 			kuribo_state = eKuriboState::HUMARERU;
 		}
 		// クリボーの上以外に触れたら
