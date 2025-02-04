@@ -27,14 +27,17 @@ void Mushroom::Initialize()
 
 	// 当たり判定サイズの設定
 	box_size = D_OBJECT_SIZE;
+
+	velocity.x = 100;
 }
 
 /// <summary>
 /// 更新処理
 /// </summary>
 /// <param name="delta_second">１フレーム当たりの時間</param>
-void Mushroom::Update(float delata_second)
+void Mushroom::Update(float delta_second)
 {
+	__super::Movement(delta_second);
 }
 
 // 終了時処理（使ったインスタンスなどの削除）

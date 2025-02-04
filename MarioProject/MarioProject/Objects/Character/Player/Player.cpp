@@ -45,6 +45,8 @@ void Player::Initialize()
 
 	// プレイヤーの当たり判定サイズの設定
 	box_size = D_OBJECT_SIZE;
+
+	velocity = 0;
 }
 
 /// <summary>
