@@ -239,6 +239,24 @@ void InGameScene::DrawStageMap()
 			case '2':
 				image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
 				break;
+			case 'a':
+				image = rm->GetImages("Resource/Images/mountain_left.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'b':
+				image = rm->GetImages("Resource/Images/mountain_surface2.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'c':
+				image = rm->GetImages("Resource/Images/mountain_surface.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'd':
+				image = rm->GetImages("Resource/Images/mountain_surface1.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'e':
+				image = rm->GetImages("Resource/Images/mountain_right.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'f':
+				image = rm->GetImages("Resource/Images/mountain_up.png", 1, 1, 1, 32, 32)[0];
+				break;
 			}
 			// ステージ情報を見て描画
 			DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j) - scroll, D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
