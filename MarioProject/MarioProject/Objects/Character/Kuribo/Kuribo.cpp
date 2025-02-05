@@ -33,6 +33,7 @@ void Kuribo::Initialize()
 	collision.is_blocking = true;
 	collision.object_type = eObjectType::eEnemy;
 	collision.hit_object_type.push_back(eObjectType::ePlayer);
+	collision.hit_object_type.push_back(eObjectType::eEnemy);
 	collision.hit_object_type.push_back(eObjectType::eBlock);
 }
 
@@ -42,6 +43,7 @@ void Kuribo::Initialize()
 /// <param name="delta_second">１フレーム当たりの時間</param>
 void Kuribo::Update(float delta_second)
 {
+	// クリボーの状態管理
 	switch (kuribo_state)
 	{
 	case Kuribo::NORMAL:
@@ -109,12 +111,12 @@ void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 	// マリオに当たったら
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
+		// 動きを止める
+		is_mobility = false;
 		// クリボーの上に触れたら
-		if (hit_object->GetVelocity().y > 1000.0f)
+		if (hit_object->GetVelocity().y > 0.0f)
 		{
 			// enumかなにかで死んだ状態にするのがいいかも
-			// 動きを止める
-			is_mobility = false;
 
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));

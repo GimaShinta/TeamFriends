@@ -1,10 +1,10 @@
 #include "Application.h"
+#include "DxLib.h"
 
 // シングルトン継承クラスのインクルード
 #include "../Utility/InputManager.h"
 #include "../Scene/SceneManager.h"
 
-#include "DxLib.h"
 
 // グローバル変数定義
 LONGLONG old_time;		// 前回計測値

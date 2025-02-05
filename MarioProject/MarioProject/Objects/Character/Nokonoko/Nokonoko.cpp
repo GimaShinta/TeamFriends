@@ -34,6 +34,7 @@ void Nokonoko::Initialize()
 	collision.is_blocking = true;
 	collision.object_type = eObjectType::eEnemy;
 	collision.hit_object_type.push_back(eObjectType::ePlayer);
+	collision.hit_object_type.push_back(eObjectType::eEnemy);
 	collision.hit_object_type.push_back(eObjectType::eBlock);
 }
 
@@ -43,6 +44,7 @@ void Nokonoko::Initialize()
 /// <param name="delta_second">１フレーム当たりの時間</param>
 void Nokonoko::Update(float delta_second)
 {
+	// ノコノコの状態管理
 	switch (noko_state)
 	{
 	case Nokonoko::NORMAL:
@@ -103,7 +105,7 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
 		// ノコノコの上に触れたら（ぶつかって飛び跳ねたらこのマジックナンバーのせい）
-		if (hit_object->GetVelocity().y > 1000.0f) 
+		if (hit_object->GetVelocity().y > 0.0f) 
 		{
 			// ノーマル状態だったら
 			if (noko_state == eNokonokoState::NORMAL)
@@ -115,7 +117,7 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 			}
 			else
 			{
-				// 甲羅状態で踏まれたらフラグオン
+				// 甲羅状態で踏まれたら移動
 				revival_move = true;
 
 				// マリオが左半分を踏んだ時
@@ -131,6 +133,7 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 					velocity *= 5.0f;
 				}
 			}
+
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
 		}
