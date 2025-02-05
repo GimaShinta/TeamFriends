@@ -284,13 +284,39 @@ void InGameScene::DrawStageMap()
 			case 'n':
 				image = rm->GetImages("Resource/Images/Block/kai_block.png", 1, 1, 1, 32, 32)[0];
 				break;
+			case 'o':
+				image = rm->GetImages("Resource/Images/flag.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'p':
+				image = rm->GetImages("Resource/Images/siro1.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'q':
+				image = rm->GetImages("Resource/Images/pole.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'r':
+				image = rm->GetImages("Resource/Images/cloud1.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 's':
+				image = rm->GetImages("Resource/Images/cloud2.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 't':
+				image = rm->GetImages("Resource/Images/cloud3.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'u':
+				image = rm->GetImages("Resource/Images/cloud4.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'v':
+				image = rm->GetImages("Resource/Images/cloud5.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'w':
+				image = rm->GetImages("Resource/Images/cloud6.png", 1, 1, 1, 32, 32)[0];
+				break;
 			}
 			// ステージ情報を見て描画
 			DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j) - scroll, D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
 		}
 	}
 }
-
 // csvを読み込んでオブジェクトの情報配列を作成
 void InGameScene::LoadStageObjectCSV()
 {
