@@ -260,6 +260,30 @@ void InGameScene::DrawStageMap()
 			case 'f':
 				image = rm->GetImages("Resource/Images/mountain_up.png", 1, 1, 1, 32, 32)[0];
 				break;
+			case 'g':
+				image = rm->GetImages("Resource/Images/ha0.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'h':
+				image = rm->GetImages("Resource/Images/ha1.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'i':
+				image = rm->GetImages("Resource/Images/ha2.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'j':
+				image = rm->GetImages("Resource/Images/dokan_left_down.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'k':
+				image = rm->GetImages("Resource/Images/dokan_right_down.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'l':
+				image = rm->GetImages("Resource/Images/dokan_left_up.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'm':
+				image = rm->GetImages("Resource/Images/dokan_right_up.png", 1, 1, 1, 32, 32)[0];
+				break;
+			case 'n':
+				image = rm->GetImages("Resource/Images/Block/kai_block.png", 1, 1, 1, 32, 32)[0];
+				break;
 			}
 			// ステージ情報を見て描画
 			DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j) - scroll, D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);
