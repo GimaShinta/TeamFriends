@@ -21,6 +21,12 @@ public:
 	ePlayerState next_state;                          // 次の状態パターンを保存
 	ePlayerState now_state;                           // 現在の状態パターンを保存
 
+private:
+	std::vector<int> mario_aniamtion; // アニメーション画像の保持
+
+private:
+	std::vector<int> mario_animation_num = { 0,1,2,3,2,1 };// アニメーションの順番
+
 public:
 	Player();	//コンストラクタ
 	~Player();	//デストラクタ
@@ -46,6 +52,9 @@ public:
 
 public:
 	void OnHitCollision(GameObjectBase* hit_object) override;
+
+	//アニメーション制御
+	void AnimationControl(float delta_second, std::vector<int>& animation_image, std::vector<int>& animation_num, int n_jump, int n_squat, int n_destroy);
 
 	//ステートの切り替え
 	void SetNextState(ePlayerState next_state);

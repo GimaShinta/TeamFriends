@@ -20,6 +20,9 @@ private:
 private:
 	std::vector<int> kuribo_animation;     // クリボーのアニメーション画像を保持
 
+private:
+	std::vector<int> kuribo_animation_num = { 0,1 };// アニメーションの順番
+
 public:
 	Kuribo();
 	~Kuribo();

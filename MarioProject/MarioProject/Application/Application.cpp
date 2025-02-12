@@ -5,7 +5,6 @@
 #include "../Utility/InputManager.h"
 #include "../Scene/SceneManager.h"
 
-
 // グローバル変数定義
 LONGLONG old_time;		// 前回計測値
 LONGLONG now_time;		// 現在計測値

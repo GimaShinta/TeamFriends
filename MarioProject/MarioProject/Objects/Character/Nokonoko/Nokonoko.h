@@ -24,6 +24,10 @@ private:
 	std::vector<int> nokonoko_animation;     // ノコノコのアニメーション画像を保持
 	std::vector<int> revival_animation;      // 甲羅状態のノコノコのアニメーション画像を保持
 
+private:
+	std::vector<int> nokonoko_animation_num = { 0,1 };// アニメーションの順番
+	std::vector<int> revival_animation_num = { 0,1 };// アニメーションの順番
+
 public:
 	Nokonoko();
 	~Nokonoko();

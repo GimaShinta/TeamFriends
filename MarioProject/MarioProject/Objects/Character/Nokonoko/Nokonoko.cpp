@@ -29,6 +29,7 @@ void Nokonoko::Initialize()
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	nokonoko_animation = rm->GetImages("Resource/Images/Enemy/nokonoko.png", 2, 2, 1, 32, 64);
 	revival_animation = rm->GetImages("Resource/Images/Enemy/nokonoko_revival.png", 2, 2, 1, 32, 32);
+	image = nokonoko_animation[0];
 
 	// 当たり判定の設定
 	collision.is_blocking = true;
@@ -50,14 +51,19 @@ void Nokonoko::Update(float delta_second)
 	case Nokonoko::NORMAL:
 		// 移動の実行
 		__super::Movement(delta_second);
-		image = nokonoko_animation[0];
+		// アニメーション
+		GameObjectBase::AnimationControl(delta_second, nokonoko_animation, nokonoko_animation_num, 8.0f);
 		break;
 		// 甲羅状態の時
 	case Nokonoko::REVIVAL:
 		image = revival_animation[0];
+		// 甲羅状態で移動しているか
 		if (revival_move == true)
 		{
+			// 移動の実行
 			__super::Movement(delta_second);
+			// アニメーション
+			GameObjectBase::AnimationControl(delta_second, revival_animation, revival_animation_num, 8.0f);
 		}
 		break;
 	case Nokonoko::DEAD:
@@ -69,6 +75,7 @@ void Nokonoko::Update(float delta_second)
 	// 親クラスの更新処理を呼び出す
 	__super::Update(delta_second);
 
+	// 削除処理
 	GameObjectBase::Update(delta_second);
 }
 
