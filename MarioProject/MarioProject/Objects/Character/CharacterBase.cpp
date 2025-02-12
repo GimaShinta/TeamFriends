@@ -6,7 +6,7 @@
 
 CharacterBase::CharacterBase():
 	g_velocity(0.0f)
-	, world_location(0.0f)
+	, scroll_value(0.0f)
 {
 }
 

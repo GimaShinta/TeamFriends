@@ -32,7 +32,9 @@ InGameScene::InGameScene():
 	  player(nullptr)
 	, game_object(nullptr)
 	, image(NULL)
+	, bgm(NULL)
 	, scroll(0.0f)
+	, score(0)
 {
 }
 
@@ -66,7 +68,10 @@ void InGameScene::Initialize()
 	//BGMの読み込み
 	bgm = LoadSoundMem("Resource/Sounds/BGM/Nonomura.wav");
 	//ボリューム（BGM）
-	ChangeVolumeSoundMem(255 * 60 / 100, bgm);
+	ChangeVolumeSoundMem(255 * 30 / 100, bgm);
+
+	// スコア（デバッグ用）
+	score = 12000;
 }
 
 /// <summary>
@@ -113,16 +118,16 @@ void InGameScene::Draw(float delta_second)
 	//UI_マリオ
 	DrawRotaGraph(150,40,1.8,0.0, ui_image[0], TRUE);
 
-	//UI_数字(表示するだけ)
-	/*for (int i = 0; i < 6; i++)
-	{
-		DrawRotaGraph(0 + i*30, 70, 1.8, 0.0, ui_num[0], TRUE);
-	}*/
-
+	//UI_スコア
+	DrawRotaGraph(3 * 30, 70, 1.8, 0.0, ui_num[score / 100000], TRUE);
+	DrawRotaGraph(4 * 30, 70, 1.8, 0.0, ui_num[(score % 100000) / 10000], TRUE);
+	DrawRotaGraph(5 * 30, 70, 1.8, 0.0, ui_num[(score % 100000 % 10000) / 1000], TRUE);
+	DrawRotaGraph(6 * 30, 70, 1.8, 0.0, ui_num[(score % 100000 % 10000 % 1000) / 100], TRUE);
+	DrawRotaGraph(7 * 30, 70, 1.8, 0.0, ui_num[(score % 100000 % 10000 % 1000 % 100) / 10], TRUE);
+	DrawRotaGraph(8 * 30, 70, 1.8, 0.0, ui_num[(score % 100000 % 10000 % 1000 % 100) % 10], TRUE);
 
 	// 作成したステージの情報配列を使って背景を描画
 	DrawStageMap();
-
 
 	// 親クラスの描画処理
 	__super::Draw(delta_second);
