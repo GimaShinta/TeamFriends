@@ -3,13 +3,19 @@
 #include"../SceneBase.h"
 #include <vector>
 
-// インゲームシーンクラス
+// インゲームシーンクラス 
 class InGameScene : public SceneBase//,  public ObjectManager
 {
 public:
 
 	int image;	//画像
 	float scroll;	//スクロール量
+
+private:
+	std::vector<int> ui_string;	//文字画像　
+	std::vector<int> ui_num;	//数字画像 
+	int ui_image[4];	//UI画像
+
 
 private:
 	// csvの値を格納する構造体
