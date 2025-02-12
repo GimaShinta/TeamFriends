@@ -54,8 +54,19 @@ void InGameScene::Initialize()
 	player->SetMapData(map_array);
 
 	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
-	//ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
-	//image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
+	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
+	ui_num = rm->GetImages("Resource/Images/UI/num.png", 15, 15, 1, 16, 16);
+
+	//UI文字
+	ui_image[0] = rm->GetImages("Resource/Images/UI/name_mario.png", 1, 0, 0, 32, 32)[0];
+	ui_image[1] = rm->GetImages("Resource/Images/UI/time.png", 1, 0, 0, 32, 32)[0];
+	ui_image[2] = rm->GetImages("Resource/Images/UI/top.png", 1, 0, 0, 32, 32)[0];
+	ui_image[3] = rm->GetImages("Resource/Images/UI/world.png", 1, 0, 0, 32, 32)[0];
+
+	//BGMの読み込み
+	bgm = LoadSoundMem("Resource/Sounds/BGM/Nonomura.wav");
+	//ボリューム（BGM）
+	ChangeVolumeSoundMem(255 * 60 / 100, bgm);
 }
 
 /// <summary>
@@ -65,6 +76,10 @@ void InGameScene::Initialize()
 /// <returns></returns>
 eSceneType InGameScene::Update(float delta_second)
 {
+
+	//BGM再生
+	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP, FALSE);
+
 	// インスタンスの取得
 	GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
 	InputManager* input = Singleton<InputManager>::GetInstance();
@@ -94,6 +109,16 @@ void InGameScene::Draw(float delta_second)
 {
 	//空(Stage)
 	DrawBox(0, 0, D_WIN_MAX_X, D_WIN_MAX_Y, GetColor(147, 187, 236), TRUE);
+
+	//UI_マリオ
+	DrawRotaGraph(150,40,1.8,0.0, ui_image[0], TRUE);
+
+	//UI_数字(表示するだけ)
+	/*for (int i = 0; i < 6; i++)
+	{
+		DrawRotaGraph(0 + i*30, 70, 1.8, 0.0, ui_num[0], TRUE);
+	}*/
+
 
 	// 作成したステージの情報配列を使って背景を描画
 	DrawStageMap();
