@@ -10,7 +10,6 @@ enum eObjectType
     ePlayer,
     eFireball,
     eEnemy,
-    eGround,
     eBlock,
     eItem,
     eGoal

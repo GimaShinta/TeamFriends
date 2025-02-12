@@ -43,7 +43,7 @@ void GameObjectManager::Update(const float& delta_second)
 	for (GameObjectBase* obj : game_object)
 	{
 		// ゲームオブジェクトの位置座標がウィンドウの右端外あたりに来たら
-		if (obj->GetLocation().x <= D_WIN_MAX_X + (D_OBJECT_SIZE * 2) || obj->GetCollision().object_type == eObjectType::eGround)
+		if (obj->GetLocation().x <= D_WIN_MAX_X + (D_OBJECT_SIZE * 2))
 		{
 			// ゲームオブジェクトの更新処理を開始する（動作が重くなるのを防ぐ）
 			obj->Update(delta_second);
@@ -83,7 +83,7 @@ void GameObjectManager::Draw() const
 	for (GameObjectBase* obj : game_object)
 	{
 		// ゲームオブジェクトの位置座標がウィンドウの右端外あたりに来たら
-		if (obj->GetLocation().x <= D_WIN_MAX_X + (D_OBJECT_SIZE * 2) || obj->GetCollision().object_type == eObjectType::eGround)
+		if (obj->GetLocation().x <= D_WIN_MAX_X + (D_OBJECT_SIZE * 2))
 		{
 			// ゲームオブジェクトの描画処理を開始する（動作が重くなるのを防ぐ）
 			obj->Draw(screen_offset);

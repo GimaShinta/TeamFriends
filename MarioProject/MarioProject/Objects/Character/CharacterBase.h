@@ -8,9 +8,9 @@
 class CharacterBase : public GameObjectBase
 {
 protected:
-	float g_velocity;       // 重力
+	float g_velocity;                          // 重力
 	std::vector<std::vector<char>> map_data;   // マップの情報保持
-	float world_location;                   // ワールド座標の保持（マップとの当たり判定で使う）
+	float scroll_value;                        // スクロール量を保存
 
 public:
 	CharacterBase();
@@ -52,6 +52,10 @@ public:
 	// スクロール速さに合わせて加速させる
 	void SetVelocity(const Vector2D& velocity);
 
+	/// <summary>
+	/// スクロール量の設定
+	/// </summary>
+	/// <param name="scroll">スクロール量</param>
 	void SetScrollValue(float& scroll);
 
 	/// <summary>

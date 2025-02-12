@@ -1,8 +1,8 @@
 #include "GameObjectBase.h"
 #include "DxLib.h"
 
+// Singleton継承クラスのインクルード
 #include "GameObjectManager.h"
-#include "../Utility/ResourceManager.h"
 #include "../Application/Application.h"
 
 GameObjectBase::GameObjectBase() :
@@ -25,6 +25,7 @@ GameObjectBase::~GameObjectBase()
 // 初期化処理
 void GameObjectBase::Initialize()
 {
+	// オブジェクトサイズの設定
 	box_size = 24.0f;
 }
 
@@ -35,9 +36,8 @@ void GameObjectBase::Initialize()
 void GameObjectBase::Update(float delata_second)
 {
 	// ウィンドウ外オブジェクトの削除
-	// 地面オブジェクトの配置位置の関係上-400以下になったら
 	GameObjectManager* objm = Singleton<GameObjectManager>::GetInstance();
-	if (this->location.x <= -400)
+	if (this->location.x <= - (D_OBJECT_SIZE * 2))
 	{
 		objm->DestroyGameObject(this);
 	}
