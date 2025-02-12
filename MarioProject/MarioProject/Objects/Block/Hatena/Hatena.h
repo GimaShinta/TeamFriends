@@ -5,10 +5,15 @@
 class Hatena :
     public BlockBase
 {
-public:
-	std::vector<int> hatena_animation;  // ハテナブロックのアニメーション画像を保持
+private:
 	int kara_image;
 	bool is_kara;                       // 空かどうか（trueなら空、falseなら空じゃない）
+
+private:
+	std::vector<int> hatena_animation;  // ハテナブロックのアニメーション画像を保持
+
+private:
+	std::vector<int> hatena_animation_num = { 0,1,2,3,2,1 }; // アニメーションの順番
 
 public:
 	Hatena();
@@ -22,7 +27,7 @@ public:
     /// 更新処理
     /// </summary>
     /// <param name="delata_second">１フレーム当たりの時間</param>
-	virtual void Update(float delata_second) override;
+	virtual void Update(float delta_second) override;
 
 	// 終了時処理
 	void Finalize() override;

@@ -5,6 +5,12 @@
 // プレイヤーの歩く状態クラス
 class RunState : public PlayerStateBase
 {
+private:
+	std::vector<int> mario_aniamtion; // アニメーション画像の保持
+
+private:
+	std::vector<int> mario_animation_num = { 0,1,2,3,2,1 };// アニメーションの順番
+
 public:
 	// このクラスが生成されるときに、引数にあるpにはプレイヤーのインスタンス（実体）のアドレスが渡される
 	RunState(class Player* p);

@@ -49,6 +49,8 @@ void Kuribo::Update(float delta_second)
 	case Kuribo::NORMAL:
 		// 移動の実行
 		__super::Movement(delta_second);
+		// アニメーション
+		GameObjectBase::AnimationControl(delta_second, kuribo_animation, kuribo_animation_num, 8.0f);
 		break;
 	case Kuribo::HUMARERU:
 		// つぶれている画像に設定

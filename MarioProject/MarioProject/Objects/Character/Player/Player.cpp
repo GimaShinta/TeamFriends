@@ -33,7 +33,9 @@ void Player::Initialize()
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	/* GetImagesは画像を切り分けて配列に入れてくれる関数だけど、代入するimage変数は配列変数じゃないから
 	 画像が1つしか入らないため、引数の後に[0]をつける*/
-	image = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32)[0];
+	mario_aniamtion = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32);
+	// 分割した画像の先頭を代入
+	image = mario_aniamtion[0];
 
 	// 当たり判定のオブジェクト設定
 	collision.is_blocking = true;
@@ -57,6 +59,9 @@ void Player::Initialize()
 /// <param name="delata_second">１フレーム当たりの時間</param>
 void Player::Update(float delta_second)
 {
+	// アニメーション
+	AnimationControl(delta_second, mario_aniamtion, mario_animation_num, 5, NULL, 6);
+
 	// stateの変更処理
 	if (next_state != ePlayerState::NONE && is_mobility == true)
 	{
@@ -116,10 +121,44 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 	}
 	else if (hit_object->GetCollision().object_type == eObjectType::eBlock)
 	{
-		if (velocity.x > 0)
-		{
-			location.x -= D_OBJECT_SIZE;
-		}
+		Vector2D diff = location - hit_object->GetLocation();
+
+	}
+}
+
+/// <summary>
+/// アニメーションの制御
+/// </summary>
+/// <param name="delta_second">1フレーム当たりの時間</param>
+/// <param name="animation_image">アニメーション総画像</param>
+/// <param name="animation_num">アニメーション順序</param>
+/// <param name="n_jump">ジャンプ画像の位置</param>
+/// <param name="n_squat">しゃがみ画像の位置</param>
+void Player::AnimationControl(float delta_second, std::vector<int>& animation_image, std::vector<int>& animation_num, int n_jump, int n_squat, int n_destroy)
+{
+	switch (now_state)
+	{
+	case ePlayerState::RUN:
+		// アニメーション総画像とアニメーション順序を引数とする
+		GameObjectBase::AnimationControl(delta_second, animation_image, animation_num, 16.0f);
+		break;
+	case ePlayerState::IDLE:
+		// 停止している画像を代入
+		image = animation_image[0];
+		break;
+	case ePlayerState::JUMP:
+		// n_jump番目にあるジャンプ画像を代入
+		image = animation_image[n_jump];
+		break;
+	case ePlayerState::SQUAT:
+		// n_squat番目にあるしゃがみ画像を代入
+		image = animation_image[n_squat];
+		break;
+	case ePlayerState::DESTROY:
+		image = animation_image[n_destroy];
+		break;
+	case ePlayerState::NONE:
+		break;
 	}
 }
 

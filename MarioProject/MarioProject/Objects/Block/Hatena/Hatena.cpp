@@ -40,7 +40,7 @@ void Hatena::Initialize()
 /// 更新処理
 /// </summary>
 /// <param name="delata_second">１フレーム当たりの時間</param>
-void Hatena::Update(float delata_second)
+void Hatena::Update(float delta_second)
 {
 	// 空になったら
 	if (is_kara == true)
@@ -50,7 +50,8 @@ void Hatena::Update(float delata_second)
 	}
 	else
 	{
-		image = hatena_animation[0];
+		// アニメーション
+		GameObjectBase::AnimationControl(delta_second, hatena_animation, hatena_animation_num, 6.0f);
 	}
 }
 
