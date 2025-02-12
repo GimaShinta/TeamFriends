@@ -1,11 +1,9 @@
 #include "IdleState.h"
 #include "DxLib.h"
 
-//#include "../../Player.h"
 #include "../PlayerState.h"
 
 #include "../../../../../Utility/InputManager.h"
-#include "../../../../../Utility/ResourceManager.h"
 
 IdleState::IdleState(Player* p) :
 	PlayerStateBase(p)
@@ -20,11 +18,7 @@ IdleState::~IdleState()
 void IdleState::Initialize()
 {
 	//‘¬“x‚ğ0‚É‚·‚é
-	player->velocity = 0.0f;
-
-	//‰æ‘œ‚Ìİ’è
-	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
-	state_image = rm->GetImages("Resource/Images/Enemy/kuribo.png", 3, 3, 1, 32, 32)[0];
+	player->velocity.x = 0.0f;
 }
 
 /// <summary>
@@ -70,7 +64,6 @@ void IdleState::Draw() const
 void IdleState::Finalize()
 {
 	InputManager::DeleteInstance();
-	ResourceManager::DeleteInstance();
 }
 
 // Œ»İ‚ÌˆÚ“®ó‘Ô‚Ìæ“¾
