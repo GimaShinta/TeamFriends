@@ -12,10 +12,8 @@
 #include "../../Objects/Character/Player/Player.h"
 #include "../../Objects/Character/Kuribo/Kuribo.h"
 #include "../../Objects/Character/Nokonoko/Nokonoko.h"
-#include "../../Objects/Block/Ground/Ground.h"
 #include "../../Objects/Block/Brick/Brick.h"
 #include "../../Objects/Block/Hatena/Hatena.h"
-#include "../../Objects/Block/Kai/Kai.h"
 #include "../../Objects/Item/Coin/Coin.h"
 #include "../../Objects/Item/Mushroom/Mushroom.h"
 
@@ -80,6 +78,7 @@ eSceneType InGameScene::Update(float delta_second)
 		return eSceneType::eResult;
 	}
 
+	// スクロール処理
 	Scroll(delta_second);
 	
 	// 現在のシーンタイプはインゲームですということを呼び出し元へreturnで送る
@@ -282,7 +281,7 @@ void InGameScene::DrawStageMap()
 				image = rm->GetImages("Resource/Images/cloud5.png", 1, 1, 1, 32, 32)[0];
 				break;
 			case 'w':
-				image = rm->GetImages("Resource/Images/cloud6.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/cloud6.png")[0];
 				break;
 			}
 			// ステージ情報を見て描画
@@ -372,28 +371,6 @@ void InGameScene::CreateMapObject()
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
 			break;
-		//case 'I':
-		//	// 繋がったブロックは1つのオブジェクトとして扱うために中心座標を求める
-		//	generate_location = Vector2D((object.x_size * D_OBJECT_SIZE) + (object.spos_x * (D_OBJECT_SIZE * 2)) - (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2)));
-		//	// 破壊不可ブロックの生成
-		//	game_object = obj_m->CreateObject<Kai>(generate_location);
-		//	// 複数利用できるように配列で管理
-		//	object_array.push_back(game_object);
-		//	// オブジェクトサイズの変更
-		//	game_object->box_size.x = object.x_size * D_OBJECT_SIZE;
-		//	game_object->box_size.y = object.y_size * D_OBJECT_SIZE;
-		//	break;
-		//case 'G':
-		//	// 繋がったブロックは1つのオブジェクトとして扱うために中心座標を求める
-		//	generate_location = Vector2D((object.x_size * D_OBJECT_SIZE) + (object.spos_x * (D_OBJECT_SIZE * 2)) - (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2)));
-		//	// 地面の生成
-		//	game_object = obj_m->CreateObject<Ground>(generate_location);
-		//	// 複数利用できるように配列で管理
-		//	object_array.push_back(game_object);
-		//	// オブジェクトサイズの変更
-		//	game_object->box_size.x = object.x_size * D_OBJECT_SIZE;
-		//	game_object->box_size.y = object.y_size * D_OBJECT_SIZE;
-		//	break;
 		case 'C':
 			// コインの生成
 			game_object = obj_m->CreateObject<Coin>(generate_location);

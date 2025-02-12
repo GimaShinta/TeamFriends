@@ -70,9 +70,13 @@ void CharacterBase::SetVelocity(const Vector2D& velocity)
 	this->velocity = velocity;
 }
 
+/// <summary>
+/// スクロール量の設定
+/// </summary>
+/// <param name="scroll">スクロール量</param>
 void CharacterBase::SetScrollValue(float& scroll)
 {
-	this->world_location = scroll;
+	this->scroll_value = scroll;
 }
 
 /// <summary>
@@ -88,7 +92,7 @@ void CharacterBase::SetMapData( const std::vector<std::vector<char>>& map)
 bool CharacterBase::MapCollision()
 {
 	// プレイヤーのワールド座標を保存
-	Vector2D p_rect = Vector2D (this->location.x + world_location, this->location.y);
+	Vector2D p_rect = Vector2D (this->location.x + scroll_value, this->location.y);
 	// プレイヤーのサイズを保存
 	Vector2D p_box = this->GetBoxSize();
 	// プレイヤーの四つの頂点を保存

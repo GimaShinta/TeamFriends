@@ -43,6 +43,7 @@ void Player::Initialize()
 	collision.object_type = eObjectType::ePlayer;
 	// 当たる相手のオブジェクトタイプ
 	collision.hit_object_type.push_back(eObjectType::eEnemy);
+	collision.hit_object_type.push_back(eObjectType::eBlock);
 
 	// 動くかどうか（trueなら動く、falseなら止まる）
 	is_mobility = true;
@@ -50,6 +51,7 @@ void Player::Initialize()
 	// プレイヤーの当たり判定サイズの設定
 	box_size = D_OBJECT_SIZE;
 
+	// 速度の初期化
 	velocity = 0;
 }
 
@@ -62,6 +64,9 @@ void Player::Update(float delta_second)
 	// アニメーション
 	AnimationControl(delta_second, mario_aniamtion, mario_animation_num, 5, NULL, 6);
 
+	//プレーヤーの行動制御を行う
+	PlayerControl(delta_second);
+
 	// stateの変更処理
 	if (next_state != ePlayerState::NONE && is_mobility == true)
 	{
@@ -71,14 +76,15 @@ void Player::Update(float delta_second)
 		state = PlayerStateFactory::Get((*this), next_state);
 		next_state = ePlayerState::NONE;
 	}
+
 	//状態別の更新処理を行う
 	state->Update(delta_second);
 
 	// 移動を実行する関数の呼び出し
 	__super::Movement(delta_second);
 
-	//プレーヤーの行動制御を行う
-	PlayerControl(delta_second);
+	// 親クラスの更新処理
+	__super::Update(delta_second);
 }
 
 /// <summary>
@@ -105,10 +111,12 @@ void Player::Finalize()
 /// <param name="hit_object"></param>
 void Player::OnHitCollision(GameObjectBase* hit_object)
 {
+	// 当たった相手がエネミーだったら
 	if (hit_object->GetCollision().object_type == eObjectType::eEnemy)
 	{
 		now_state = ePlayerState::DESTROY;
 	}
+	// 当たった相手がブロックだったら
 	else if (hit_object->GetCollision().object_type == eObjectType::eBlock)
 	{
 		Vector2D diff = location - hit_object->GetLocation();
