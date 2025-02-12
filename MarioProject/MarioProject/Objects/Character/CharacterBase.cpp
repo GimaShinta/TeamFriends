@@ -6,6 +6,7 @@
 
 CharacterBase::CharacterBase():
 	g_velocity(0.0f)
+	, world_location(0.0f)
 {
 }
 
@@ -69,37 +70,25 @@ void CharacterBase::SetVelocity(const Vector2D& velocity)
 	this->velocity = velocity;
 }
 
+void CharacterBase::SetScrollValue(float& scroll)
+{
+	this->world_location = scroll;
+}
+
 /// <summary>
 /// ステージの情報を設定
 /// </summary>
 /// <param name="map">インゲームで作ったステージ情報を参照で受け取る</param>
 void CharacterBase::SetMapData( const std::vector<std::vector<char>>& map)
 {
-	map_data = map;
+	this->map_data = map;
 }
 
 // マップとの当たり判定
 bool CharacterBase::MapCollision()
 {
-	//int x_id = std::floor(this->location.x) / (D_OBJECT_SIZE * 2);
-	//int y_id = std::floor(this->location.y) / (D_OBJECT_SIZE * 2);
-
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	for (int j = 0; j < 2; j++)
-	//	{
-	//		if (y_id + i >= 0 && y_id + i < map_data.size() &&
-	//			x_id + j >= 0 && x_id + j < map_data[0].size() &&
-	//			map_data[y_id + j][x_id + j] != '0')
-	//		{
-	//			return true;
-	//		}
-	//	}
-	//}
-	//return false;
-
-	// プレイヤーの現在地を保存
-	Vector2D p_rect = this->GetLocation();
+	// プレイヤーのワールド座標を保存
+	Vector2D p_rect = Vector2D (this->location.x + world_location, this->location.y);
 	// プレイヤーのサイズを保存
 	Vector2D p_box = this->GetBoxSize();
 	// プレイヤーの四つの頂点を保存
@@ -121,7 +110,8 @@ bool CharacterBase::MapCollision()
 		int x_id = std::floor(vertices[i].x) / (D_OBJECT_SIZE * 2);
 		int y_id = std::floor(vertices[i].y) / (D_OBJECT_SIZE * 2);
 		// プレイヤーがいるマスが0以外の文字だったら
-		if (map_data[y_id][x_id] == '2')
+		if (map_data[y_id][x_id] == '2' || map_data[y_id][x_id] == 'j' || map_data[y_id][x_id] == 'k'
+			|| map_data[y_id][x_id] == 'l' || map_data[y_id][x_id] == 'm' || map_data[y_id][x_id] == 'n')
 		{
 			// どのポイントが当たっているか
 			int id = i;
@@ -131,4 +121,32 @@ bool CharacterBase::MapCollision()
 	}
 	// 当たっていない
 	return false;
+
+
+	//int width_range_ids[2]
+	//{
+	//	(world_location.x - D_OBJECT_SIZE) / (D_OBJECT_SIZE * 2),
+	//	(world_location.x + D_OBJECT_SIZE) / (D_OBJECT_SIZE * 2)
+	//};
+	//int height_range_ids[2]
+	//{
+	//	(world_location.y - D_OBJECT_SIZE) / (D_OBJECT_SIZE * 2),
+	//	(world_location.y + D_OBJECT_SIZE) / (D_OBJECT_SIZE * 2)
+	//};
+
+	//const int start = 0;
+	//const int end = 1;
+
+	//for (int i = height_range_ids[start]; i <= height_range_ids[end]; i++)
+	//{
+	//	for (int j = width_range_ids[start]; j <= width_range_ids[end]; j++)
+	//	{
+	//		if (map_data[i][j] == '2')
+	//		{
+	//			// 当たり
+	//			return true;
+	//		}
+	//	}
+	//}
+	//return false;
 }

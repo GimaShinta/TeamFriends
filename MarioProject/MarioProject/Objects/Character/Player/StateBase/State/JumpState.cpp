@@ -1,11 +1,9 @@
 #include "JumpState.h"
 #include "DxLib.h"
 
-#include "../../Player.h"
 #include "../PlayerState.h"
 
 #include "../../../../../Utility/InputManager.h"
-#include "../../../../../Utility/ResourceManager.h"
 
 JumpState::JumpState(Player* p) :
 	PlayerStateBase(p)
@@ -71,7 +69,6 @@ void JumpState::Draw() const
 void JumpState::Finalize()
 {
 	InputManager::DeleteInstance();
-	ResourceManager::DeleteInstance();
 }
 
 // Œ»İ‚ÌˆÚ“®ó‘Ô‚Ìæ“¾

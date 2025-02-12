@@ -80,29 +80,7 @@ eSceneType InGameScene::Update(float delta_second)
 		return eSceneType::eResult;
 	}
 
-	//プレイヤーが真ん中かつ移動中の時...
-	if (player->GetLocation().x >= D_WIN_MAX_X / 2 && player->now_state == ePlayerState::RUN)
-	{
-		//スクロール処理
-		if (scroll <= (D_OBJECT_SIZE * 2) * MAP_SQUARE_X - D_WIN_MAX_X)
-		{
-			//マリオの速度に合わせてスクロールする
-			float p_speed = player->GetVelocity().x;
-			scroll += p_speed * delta_second;
-
-			// 複数のオブジェクト用スクロール
-			for (GameObjectBase* object : object_array)
-			{
-				// オブジェクトの速度もマリオに合わせる
-				object->SetScroll(object->GetLocation().x - (p_speed * delta_second));
-			}
-		}
-		else 
-		{
-			//制御処理の切り替え
-			player->stage_end = TRUE;
-		}
-	}
+	Scroll(delta_second);
 	
 	// 現在のシーンタイプはインゲームですということを呼び出し元へreturnで送る
 	return GetNowSceneType();
@@ -143,40 +121,35 @@ eSceneType InGameScene::GetNowSceneType() const
 	return eSceneType::eInGame;
 }
 
-// マップとの当たり判定（collisionでやったほうがいいかも）
-bool InGameScene::LoadImages()
+// スクロール処理
+void InGameScene::Scroll(float delta_second)
 {
-	// プレイヤーの現在地を保存
-	Vector2D p_rect = player->GetLocation();
-	// プレイヤーのサイズを保存
-	Vector2D p_box = player->GetBoxSize();
-	// プレイヤーの四つの頂点を保存
-	Vector2D vertices[4] =
-	{
-		// 左上の座標
-		Vector2D(p_rect - p_box),
-		// 左下の座標
-		Vector2D(p_rect.x - p_box.x, p_rect.y + p_box.y),
-		// 右上の座標
-		Vector2D(p_rect.x + p_box.x, p_rect.y - p_box.y),
-		// 右下の座標
-		Vector2D(p_rect + p_box),
-	};
+	// スクロール量をマリオに送る
+	player->SetScrollValue(scroll);
 
-	for (int i = 0; i < 4 ; i++)
+	//プレイヤーが真ん中かつ移動中の時...
+	if (player->GetLocation().x >= D_WIN_MAX_X / 2 && player->now_state == ePlayerState::RUN)
 	{
-		// プレイヤーの現在のマスの位置
-		int x_id = vertices[i].x / (D_OBJECT_SIZE * 2);
-		int y_id = vertices[i].y / (D_OBJECT_SIZE * 2);
-		// プレイヤーがいるマスが0以外の文字だったら
-		if (map_array[y_id][x_id] != '0')
+		//スクロール処理
+		if (scroll <= (D_OBJECT_SIZE * 2) * MAP_SQUARE_X - D_WIN_MAX_X)
 		{
-			// 当たっている
-			return true;
+			//マリオの速度に合わせてスクロールする
+			float p_speed = player->GetVelocity().x;
+			scroll += p_speed * delta_second;
+
+			// 複数のオブジェクト用スクロール
+			for (GameObjectBase* object : object_array)
+			{
+				// オブジェクトの速度もマリオに合わせる
+				object->SetScroll(object->GetLocation().x - (p_speed * delta_second));
+			}
+		}
+		else
+		{
+			//制御処理の切り替え
+			player->stage_end = TRUE;
 		}
 	}
-	// 当たっていない
-	return false;
 }
 
 // csvを読み込んでステージの情報配列を作成
@@ -399,28 +372,28 @@ void InGameScene::CreateMapObject()
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
 			break;
-		case 'I':
-			// 繋がったブロックは1つのオブジェクトとして扱うために中心座標を求める
-			generate_location = Vector2D((object.x_size * D_OBJECT_SIZE) + (object.spos_x * (D_OBJECT_SIZE * 2)) - (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2)));
-			// 破壊不可ブロックの生成
-			game_object = obj_m->CreateObject<Kai>(generate_location);
-			// 複数利用できるように配列で管理
-			object_array.push_back(game_object);
-			// オブジェクトサイズの変更
-			game_object->box_size.x = object.x_size * D_OBJECT_SIZE;
-			game_object->box_size.y = object.y_size * D_OBJECT_SIZE;
-			break;
-		case 'G':
-			// 繋がったブロックは1つのオブジェクトとして扱うために中心座標を求める
-			generate_location = Vector2D((object.x_size * D_OBJECT_SIZE) + (object.spos_x * (D_OBJECT_SIZE * 2)) - (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2)));
-			// 地面の生成
-			game_object = obj_m->CreateObject<Ground>(generate_location);
-			// 複数利用できるように配列で管理
-			object_array.push_back(game_object);
-			// オブジェクトサイズの変更
-			game_object->box_size.x = object.x_size * D_OBJECT_SIZE;
-			game_object->box_size.y = object.y_size * D_OBJECT_SIZE;
-			break;
+		//case 'I':
+		//	// 繋がったブロックは1つのオブジェクトとして扱うために中心座標を求める
+		//	generate_location = Vector2D((object.x_size * D_OBJECT_SIZE) + (object.spos_x * (D_OBJECT_SIZE * 2)) - (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2)));
+		//	// 破壊不可ブロックの生成
+		//	game_object = obj_m->CreateObject<Kai>(generate_location);
+		//	// 複数利用できるように配列で管理
+		//	object_array.push_back(game_object);
+		//	// オブジェクトサイズの変更
+		//	game_object->box_size.x = object.x_size * D_OBJECT_SIZE;
+		//	game_object->box_size.y = object.y_size * D_OBJECT_SIZE;
+		//	break;
+		//case 'G':
+		//	// 繋がったブロックは1つのオブジェクトとして扱うために中心座標を求める
+		//	generate_location = Vector2D((object.x_size * D_OBJECT_SIZE) + (object.spos_x * (D_OBJECT_SIZE * 2)) - (D_OBJECT_SIZE * 2), (object.spos_y * (D_OBJECT_SIZE * 2)));
+		//	// 地面の生成
+		//	game_object = obj_m->CreateObject<Ground>(generate_location);
+		//	// 複数利用できるように配列で管理
+		//	object_array.push_back(game_object);
+		//	// オブジェクトサイズの変更
+		//	game_object->box_size.x = object.x_size * D_OBJECT_SIZE;
+		//	game_object->box_size.y = object.y_size * D_OBJECT_SIZE;
+		//	break;
 		case 'C':
 			// コインの生成
 			game_object = obj_m->CreateObject<Coin>(generate_location);

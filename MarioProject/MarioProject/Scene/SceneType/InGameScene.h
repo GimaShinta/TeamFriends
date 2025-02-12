@@ -63,8 +63,8 @@ public:
 	// 現在のシーンタイプ（オーバーライド必須）
 	virtual eSceneType GetNowSceneType() const override;
 
-	// 画像の読み込み
-	bool LoadImages();
+	// スクロール処理
+	void Scroll(float delta_second);
 
 private:
 	// csvを読み込んでステージの情報配列を作成

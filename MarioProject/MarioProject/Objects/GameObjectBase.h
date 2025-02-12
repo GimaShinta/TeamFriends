@@ -18,6 +18,7 @@ public:
 	Vector2D box_size;              // 当たり判定サイズ
 	Vector2D velocity;              // 速度
 
+
 protected:
 	int image;                      // 画像用
 	int animation_count;            // 一定時間の到達数のカウント
@@ -81,6 +82,8 @@ public:
 	Vector2D& GetVelocity();	//速度取得
 	void SetVelocity(const Vector2D& velo);//速度設定
 	void SetScroll(float scroll);	// スクロール量の設定
+
+
 
 
 	Vector2D& GetBoxSize();                             // オブジェクトの大きさを取得する

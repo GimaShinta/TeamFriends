@@ -74,10 +74,6 @@ void Player::Update(float delta_second)
 	//状態別の更新処理を行う
 	state->Update(delta_second);
 
-	////重力速度の計算
-	//g_velocity += D_GRAVITY;
-	//velocity.y += g_velocity * delta_second;
-
 	// 移動を実行する関数の呼び出し
 	__super::Movement(delta_second);
 
@@ -94,15 +90,13 @@ void Player::Draw(const Vector2D& screen_offset) const
 	// オフセット値を基に画像の描画を行う
 	Vector2D graph_location = this->location + screen_offset;
 	DrawRotaGraphF(graph_location.x, graph_location.y, 1.5, 0.0, image, TRUE, flip_flag);
-
-	// 親クラスの描画処理
-	//__super::Draw(screen_offset);
 }
 
 // 終了時処理（使ったインスタンスなどの削除）
 void Player::Finalize()
 {
 	ResourceManager::DeleteInstance();
+	PlayerStateFactory::DeleteInstance();
 }
 
 /// <summary>
@@ -113,16 +107,16 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 {
 	if (hit_object->GetCollision().object_type == eObjectType::eEnemy)
 	{
-		// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
-		ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
-		/* GetImagesは画像を切り分けて配列に入れてくれる関数だけど、代入するimage変数は配列変数じゃないから
-		 画像が1つしか入らないため、引数の後に[0]をつける*/
-		image = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32)[6];
+		now_state = ePlayerState::DESTROY;
 	}
 	else if (hit_object->GetCollision().object_type == eObjectType::eBlock)
 	{
 		Vector2D diff = location - hit_object->GetLocation();
-
+		//if (velocity.y > 0)
+		//{
+		//	location.y = hit_object->GetLocation().y - (D_OBJECT_SIZE * 2);
+		//	isOnGround = true;
+		//}
 	}
 }
 
@@ -186,6 +180,64 @@ void Player::PlayerControl(float delta_second)
 		velocity.x = -P_MAX_SPEED;
 	}
 
+	//Vector2D P = Vector2D(location.x + velocity.x, location.y);
+	//Vector2D P_upper = Vector2D(P + (0, -24.0f));
+	//Vector2D P_upper_div_chip = P_upper / (D_OBJECT_SIZE * 2);
+	//if (map_data[P_upper_div_chip.y][P_upper_div_chip.x] == '2')
+	//{
+	//	if (velocity.x > 0)
+	//	{
+	//		location.x -= velocity.x;
+	//	}
+	//	else
+	//	{
+	//		location.x += velocity.x;
+	//	}
+	//}
+
+	//Vector2D P_bottom = Vector2D(P + (0, 24.0f));
+	//Vector2D P_bottom_div_chip = P_bottom / (D_OBJECT_SIZE * 2);
+	//if (map_data[P_bottom_div_chip.y][P_bottom_div_chip.x] == '2')
+	//{
+	//	if (velocity.x > 0)
+	//	{
+	//		location.x -= velocity.x;
+	//	}
+	//	else
+	//	{
+	//		location.x += velocity.x;
+	//	}
+	//}
+
+	//P = Vector2D(location.x, location.y + D_OBJECT_SIZE);
+	//Vector2D P_left = Vector2D(P + (-24.0f, 0));
+	//Vector2D P_left_div_chip = P_left / (D_OBJECT_SIZE * 2);
+	//if (map_data[P_left_div_chip.y][P_left_div_chip.x] == '2')
+	//{
+	//	if (velocity.y > 0)
+	//	{
+	//		location.y -= velocity.y;
+	//	}
+	//	else
+	//	{
+	//		location.y += velocity.y;
+	//	}
+	//}
+
+	//Vector2D P_right = Vector2D(P + (24.0f, 0));
+	//Vector2D P_right_div_chip = P_right / (D_OBJECT_SIZE * 2);
+	//if (map_data[P_right_div_chip.y][P_right_div_chip.x] == '2')
+	//{
+	//	if (velocity.y > 0)
+	//	{
+	//		location.y -= velocity.y;
+	//	}
+	//	else
+	//	{
+	//		location.y += velocity.y;
+	//	}
+	//}
+
 	// 当たっている場所が地面だったらその座標に設定
 	if (__super::MapCollision() == true)
 	{
@@ -233,9 +285,9 @@ void Player::PlayerControl(float delta_second)
 	else
 	{
 		//ステージの端に着いたら
-		if (location.x > D_WIN_MAX_X - D_OBJECT_SIZE)
+		if (location.x > D_WIN_MAX_X - D_OBJECT_SIZE * 1.2)
 		{ //→
-			location.x = D_WIN_MAX_X - D_OBJECT_SIZE;
+			location.x = D_WIN_MAX_X - D_OBJECT_SIZE * 1.2;
 		}
 	}
 }

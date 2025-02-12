@@ -16,7 +16,6 @@ public:
 	bool stage_end;	   //ステージの端に着いたらTRUE
 	bool isOnGround;	//地面にいるかどうか
 
-
 public:
 	ePlayerState next_state;                          // 次の状態パターンを保存
 	ePlayerState now_state;                           // 現在の状態パターンを保存

@@ -141,10 +141,8 @@
     <ClCompile Include="Objects\Item\Mushroom\Mushroom.cpp" />
     <ClCompile Include="Objects\Item\Coin\Coin.cpp" />
     <ClCompile Include="Objects\Item\ItemBase.cpp" />
-    <ClCompile Include="Objects\Block\Kai\Kai.cpp" />
     <ClCompile Include="Objects\Block\Brick\Brick.cpp" />
     <ClCompile Include="Objects\Block\Hatena\Hatena.cpp" />
-    <ClCompile Include="Objects\Block\Ground\Ground.cpp" />
     <ClCompile Include="Objects\Block\BlockBase.cpp" />
     <ClCompile Include="Objects\Character\Nokonoko\Nokonoko.cpp" />
     <ClCompile Include="Objects\Character\Kuribo\Kuribo.cpp" />
@@ -171,10 +169,8 @@
     <ClInclude Include="Objects\Item\Mushroom\Mushroom.h" />
     <ClInclude Include="Objects\Item\Coin\Coin.h" />
     <ClInclude Include="Objects\Item\ItemBase.h" />
-    <ClInclude Include="Objects\Block\Kai\Kai.h" />
     <ClInclude Include="Objects\Block\Brick\Brick.h" />
     <ClInclude Include="Objects\Block\Hatena\Hatena.h" />
-    <ClInclude Include="Objects\Block\Ground\Ground.h" />
     <ClInclude Include="Objects\Block\BlockBase.h" />
     <ClInclude Include="Objects\Character\Nokonoko\Nokonoko.h" />
     <ClInclude Include="Objects\Character\Kuribo\Kuribo.h" />
