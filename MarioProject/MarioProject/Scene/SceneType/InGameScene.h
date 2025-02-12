@@ -10,6 +10,7 @@ public:
 
 	int image;	//画像
 	float scroll;	//スクロール量
+	int bgm;
 
 private:
 	std::vector<int> ui_string;	//文字画像　

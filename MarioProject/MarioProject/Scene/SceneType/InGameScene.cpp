@@ -12,10 +12,8 @@
 #include "../../Objects/Character/Player/Player.h"
 #include "../../Objects/Character/Kuribo/Kuribo.h"
 #include "../../Objects/Character/Nokonoko/Nokonoko.h"
-#include "../../Objects/Block/Ground/Ground.h"
 #include "../../Objects/Block/Brick/Brick.h"
 #include "../../Objects/Block/Hatena/Hatena.h"
-#include "../../Objects/Block/Kai/Kai.h"
 #include "../../Objects/Item/Coin/Coin.h"
 #include "../../Objects/Item/Mushroom/Mushroom.h"
 
@@ -65,7 +63,10 @@ void InGameScene::Initialize()
 	ui_image[2] = rm->GetImages("Resource/Images/UI/top.png", 1, 0, 0, 32, 32)[0];
 	ui_image[3] = rm->GetImages("Resource/Images/UI/world.png", 1, 0, 0, 32, 32)[0];
 
-
+	//BGMの読み込み
+	bgm = LoadSoundMem("Resource/Sounds/BGM/Nonomura.wav");
+	//ボリューム（BGM）
+	ChangeVolumeSoundMem(255 * 60 / 100, bgm);
 }
 
 /// <summary>
@@ -75,6 +76,10 @@ void InGameScene::Initialize()
 /// <returns></returns>
 eSceneType InGameScene::Update(float delta_second)
 {
+
+	//BGM再生
+	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP, FALSE);
+
 	// インスタンスの取得
 	GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
 	InputManager* input = Singleton<InputManager>::GetInstance();
