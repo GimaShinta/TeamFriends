@@ -8,9 +8,11 @@
 
 #include <cmath>
 
+#define P_MAX_SPEED 500.0f
+
 Player::Player():
 	  flip_flag(false)
-	, now_state(ePlayerState::NONE)
+	, now_state(ePlayerState::IDLE)
 	, next_state(ePlayerState::NONE)
 	,stage_end(FALSE)
 	, isOnGround(false) //初期値(地面)
@@ -67,15 +69,15 @@ void Player::Update(float delta_second)
 	//状態別の更新処理を行う
 	state->Update(delta_second);
 
-	//重力速度の計算
-	g_velocity += D_GRAVITY;
-	velocity.y += g_velocity * delta_second;
+	////重力速度の計算
+	//g_velocity += D_GRAVITY;
+	//velocity.y += g_velocity * delta_second;
 
 	// 移動を実行する関数の呼び出し
 	__super::Movement(delta_second);
 
 	//プレーヤーの行動制御を行う
-	PlayerControl();
+	PlayerControl(delta_second);
 }
 
 /// <summary>
@@ -112,6 +114,13 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 		 画像が1つしか入らないため、引数の後に[0]をつける*/
 		image = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32)[6];
 	}
+	else if (hit_object->GetCollision().object_type == eObjectType::eBlock)
+	{
+		if (velocity.x > 0)
+		{
+			location.x -= D_OBJECT_SIZE;
+		}
+	}
 }
 
 /// <summary>
@@ -126,47 +135,44 @@ void Player::SetNextState(ePlayerState next_state)
 /// <summary>
 /// プレイヤーの制御処理
 /// </summary>
-void Player::PlayerControl()
+void Player::PlayerControl(float delta_second)
 {
 	//最大速度の設定
-	if (velocity.x >= 500)
+	if (velocity.x >= P_MAX_SPEED)
 	{
-		velocity.x = 500;
+		velocity.x = P_MAX_SPEED;
 	}
-	else if (velocity.x <= -500)
+	else if (velocity.x <= -P_MAX_SPEED)
 	{
-		velocity.x = -500;
+		velocity.x = -P_MAX_SPEED;
 	}
 
-	// 当たっている場所が地面だったら
+	// 当たっている場所が地面だったらその座標に設定
 	if (__super::MapCollision() == true)
 	{
-		// 小数変数を整数に変換
-		int y = std::floor(location.y);
+		// 変換用変数に保存
+		float y_map = location.y;
 
 		// チップサイズで割って現在のマップ位置を特定
-		y /= (D_OBJECT_SIZE * 2);
+		y_map /= (D_OBJECT_SIZE * 2);
 
-		// マリオが地面に向かって進んでいたら
-		if (velocity.y < 0)
-		{
-			y++;
-		}
-		else
-		{
-			y += 0;
-		}
+		// 切り上げ整数に変換
+		int y_id = std::ceil(y_map);
 
 		// マップサイズをかけて座標を特定
-		y *= (D_OBJECT_SIZE * 2);
+		y_id *= (D_OBJECT_SIZE * 2);
 
 		// 座標を設定
-		location.y = y + D_OBJECT_SIZE;
+		location.y = y_id - D_OBJECT_SIZE;
+		velocity.y = 0.0f;
 		g_velocity = 0.0f;
 		isOnGround = true; // 地面にいる
 	}
 	else
 	{
+		//重力速度の計算
+		g_velocity += D_GRAVITY;
+		velocity.y += g_velocity * delta_second;
 		isOnGround = false; // 空中にいる
 	}
 

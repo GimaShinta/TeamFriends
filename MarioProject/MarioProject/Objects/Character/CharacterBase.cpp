@@ -118,11 +118,13 @@ bool CharacterBase::MapCollision()
 	for (int i = 0; i < 4; i++)
 	{
 		// プレイヤーの現在のマスの位置
-		int x_id = vertices[i].x / (D_OBJECT_SIZE * 2);
-		int y_id = vertices[i].y / (D_OBJECT_SIZE * 2);
+		int x_id = std::floor(vertices[i].x) / (D_OBJECT_SIZE * 2);
+		int y_id = std::floor(vertices[i].y) / (D_OBJECT_SIZE * 2);
 		// プレイヤーがいるマスが0以外の文字だったら
 		if (map_data[y_id][x_id] == '2')
 		{
+			// どのポイントが当たっているか
+			int id = i;
 			// 当たっている
 			return true;
 		}
