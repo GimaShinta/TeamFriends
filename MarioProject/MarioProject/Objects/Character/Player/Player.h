@@ -52,7 +52,7 @@ public:
 
 public:
 	//プレイヤーの制御
-	void PlayerControl();
+	void PlayerControl(float delta_second);
 
 	// 地面にいるかどうかを確認する
 	bool IsOnGround() const;
