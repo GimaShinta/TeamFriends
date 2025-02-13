@@ -4,6 +4,8 @@
 
 #define D_GRAVITY (30.0f)    //重力加速度(m/ss)
 
+#include <cmath>
+
 // キャラクターベースクラス（メンバ関数のオーバーライド必須）
 class CharacterBase : public GameObjectBase
 {
@@ -65,6 +67,6 @@ public:
 	void SetMapData(const std::vector<std::vector<char>>& map);
 
 	// マップとの当たり判定
-	bool MapCollision();
+	bool MapCollision(int x, int y);
 };
 

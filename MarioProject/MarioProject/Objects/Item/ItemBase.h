@@ -1,13 +1,14 @@
 #pragma once
 #include "../GameObjectBase.h"
 
-#define D_GRAVITY (30.0f)    //重力加速度(m/ss)
+#define D_GRAVITY (100.0f)    //重力加速度(m/ss)
 
 // アイテム基底クラス
 class ItemBase : public GameObjectBase
 {
 protected:
 	float g_velocity;       // 重力
+	bool is_appearance;           // 出現時なのかどうか
 
 public:
 	ItemBase();

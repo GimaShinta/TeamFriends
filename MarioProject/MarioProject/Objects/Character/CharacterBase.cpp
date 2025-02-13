@@ -89,23 +89,23 @@ void CharacterBase::SetMapData( const std::vector<std::vector<char>>& map)
 }
 
 // マップとの当たり判定
-bool CharacterBase::MapCollision()
+bool CharacterBase::MapCollision(int x, int y)
 {
-	// プレイヤーのワールド座標を保存
-	Vector2D p_rect = Vector2D (this->location.x + scroll_value, this->location.y);
-	// プレイヤーのサイズを保存
-	Vector2D p_box = this->GetBoxSize();
-	// プレイヤーの四つの頂点を保存
+	// ワールド座標を保存
+	Vector2D object_rect = Vector2D (this->location.x + scroll_value, this->location.y);
+	// サイズを保存
+	Vector2D object_box = this->GetBoxSize();
+	// 四つの頂点を保存
 	Vector2D vertices[4] =
 	{
 		// 左上の座標
-		Vector2D(p_rect - p_box),
+		Vector2D(object_rect - object_box),
 		// 左下の座標
-		Vector2D(p_rect.x - p_box.x, p_rect.y + p_box.y),
+		Vector2D(object_rect.x - object_box.x, object_rect.y + object_box.y),
 		// 右上の座標
-		Vector2D(p_rect.x + p_box.x, p_rect.y - p_box.y),
+		Vector2D(object_rect.x + object_box.x, object_rect.y - object_box.y),
 		// 右下の座標
-		Vector2D(p_rect + p_box),
+		Vector2D(object_rect + object_box),
 	};
 
 	for (int i = 0; i < 4; i++)
@@ -114,8 +114,8 @@ bool CharacterBase::MapCollision()
 		int x_id = std::floor(vertices[i].x) / (D_OBJECT_SIZE * 2);
 		int y_id = std::floor(vertices[i].y) / (D_OBJECT_SIZE * 2);
 		// プレイヤーがいるマスが0以外の文字だったら
-		if (map_data[y_id][x_id] == '2' || map_data[y_id][x_id] == 'j' || map_data[y_id][x_id] == 'k'
-			|| map_data[y_id][x_id] == 'l' || map_data[y_id][x_id] == 'm' || map_data[y_id][x_id] == 'n')
+		if (map_data[y_id + y][x_id + x] == '2' || map_data[y_id + y][x_id + x] == 'j' || map_data[y_id + y][x_id + x] == 'k'
+			|| map_data[y_id + y][x_id + x] == 'l' || map_data[y_id + y][x_id + x] == 'm' || map_data[y_id + y][x_id + x] == 'n')
 		{
 			// どのポイントが当たっているか
 			int id = i;

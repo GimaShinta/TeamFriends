@@ -5,7 +5,7 @@
 class Hatena :
     public BlockBase
 {
-private:
+protected:
 	int kara_image;
 	bool is_kara;                       // ‹ó‚©‚Ç‚¤‚©itrue‚È‚ç‹óAfalse‚È‚ç‹ó‚¶‚á‚È‚¢j
 
@@ -37,6 +37,5 @@ public:
     /// </summary>
     /// <param name="hit_object">“–‚½‚Á‚½‘Šè</param>
 	virtual void OnHitCollision(GameObjectBase* hit_object) override;
-
 };
 

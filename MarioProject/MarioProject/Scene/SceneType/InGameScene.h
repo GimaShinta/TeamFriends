@@ -8,10 +8,10 @@ class InGameScene : public SceneBase//,  public ObjectManager
 {
 public:
 
-	int image;	//画像
+	int image;	//画像用
 	float scroll;	//スクロール量
-	int bgm;
-	int score;
+	int bgm;     // bgm用
+	int score;   // スコア
 
 private:
 	std::vector<int> ui_string;	//文字画像　

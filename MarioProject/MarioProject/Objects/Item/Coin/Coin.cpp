@@ -29,8 +29,8 @@ void Coin::Initialize()
 	// 当たり判定サイズの設定
 	box_size = D_OBJECT_SIZE;
 
-	// 上に飛ばす
-	velocity.y -= 700.0f;
+	//// 上に飛ばす
+	//velocity.y -= 700.0f;
 }
 
 /// <summary>
@@ -39,16 +39,22 @@ void Coin::Initialize()
 /// <param name="delta_second">１フレーム当たりの時間</param>
 void Coin::Update(float delta_second)
 {
+	// 出現したら
+	if (is_appearance == true)
+	{
+		// 重力速度の計算
+		g_velocity += D_GRAVITY;
+		velocity.y += g_velocity * delta_second;
+	}
+
+	// 下に落ちているとき
 	if (velocity.y > 1000.0f)
 	{
 		// インスタンスの取得
 		GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
+		// 自身を削除
 		gm->DestroyGameObject(this);
 	}
-
-	//重力速度の計算
-	g_velocity += D_GRAVITY;
-	velocity.y += g_velocity * delta_second;
 
 	// 親クラスの移動処理
 	__super::Movement(delta_second);
@@ -67,4 +73,15 @@ void Coin::Finalize()
 /// <param name="hit_object">当たった相手</param>
 void Coin::OnHitCollision(GameObjectBase* hit_object)
 {
+	// マリオに当たったら
+	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
+	{
+		// マリオの進行方向が上だったら
+		if (hit_object->GetVelocity().y < 0.0f)
+		{
+			// 初期速度の設定
+			velocity.y -= 1000;
+			is_appearance = true;
+		}
+	}
 }

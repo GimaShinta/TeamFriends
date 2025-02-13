@@ -124,6 +124,7 @@ void GameObjectBase::SetOwnerScene(GameObjectManager* scene)
 void GameObjectBase::SetLocation(const Vector2D& location)
 {
 	this->location = location;
+	this->old_location = location;
 }
 
 /// <summary>

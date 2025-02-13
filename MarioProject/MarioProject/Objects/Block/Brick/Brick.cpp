@@ -42,19 +42,23 @@ void Brick::Initialize()
 /// <param name="delata_second">１フレーム当たりの時間</param>
 void Brick::Update(float delta_second)
 {
-	// 破壊されていたら
-	if (is_destruction == true)
+	// 一マス上に到達したら移動反転
+	if (location.y < old_location.y - (D_OBJECT_SIZE * 2))
 	{
-		// インスタンスの取得
-		GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
-		gm->DestroyGameObject(this);
-		gm->CreateObject<BlickDebris>(location + box_size);
-		gm->CreateObject<BlickDebris>(location - box_size);
-		gm->CreateObject<BlickDebris>(Vector2D(location.x + box_size.x, location.y - box_size.y));
-		gm->CreateObject<BlickDebris>(Vector2D(location.x - box_size.x, location.y + box_size.y));
-		is_destruction = false;
+		velocity.y *= -1;
 	}
+
+	// 初期位置に戻る
+	if (location.y > old_location.y)
+	{
+		location.y = old_location.y;
+	}
+
+	// 画面外で削除
 	__super::Update(delta_second);
+
+	// 移動処理
+	location += velocity * delta_second;
 }
 
 /// <summary>
@@ -63,10 +67,8 @@ void Brick::Update(float delta_second)
 /// <param name="screen_offset"></param>
 void Brick::Draw(const Vector2D& screen_offset) const
 {
+	// 親クラスの描画処理
 	__super::Draw(screen_offset);
-	// 当たり判定の可視化
-	DrawBox(this->location.x - this->box_size.x, this->location.y - this->box_size.y,
-		this->location.x + this->box_size.x, this->location.y + this->box_size.y, GetColor(255, 0, 0), FALSE);
 }
 
 // 終了時処理（使ったインスタンスなどの削除）
@@ -88,15 +90,21 @@ void Brick::OnHitCollision(GameObjectBase* hit_object)
 		// マリオを下降させる
 		hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, 1.0f));
 
-		// 破壊されていなかったら
-		if (is_destruction == false)
+		// 破壊されていたら
+		if (is_destruction == true)
 		{
 			// インスタンスの取得
 			GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
-			// コインの生成
-			coin = gm->CreateObject<Coin>(location);
-			// 破壊フラグをオンにする
-			is_destruction = true;
+			gm->DestroyGameObject(this);
+			gm->CreateObject<BlickDebris>(location + box_size);
+			gm->CreateObject<BlickDebris>(location - box_size);
+			gm->CreateObject<BlickDebris>(Vector2D(location.x + box_size.x, location.y - box_size.y));
+			gm->CreateObject<BlickDebris>(Vector2D(location.x - box_size.x, location.y + box_size.y));
+		}
+		else
+		{
+			// 上に上昇させる
+			velocity.y -= 500;
 		}
 	}
 }
