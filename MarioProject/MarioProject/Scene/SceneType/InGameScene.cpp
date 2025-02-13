@@ -123,7 +123,7 @@ eSceneType InGameScene::Update(float delta_second)
 			if (animation_count >= 50)
 			{
 			    obj_manager->DestroyGameObject(player);
-				return eSceneType::eResult;
+				return eSceneType::eTitle;
 			}
 		}
 	}
