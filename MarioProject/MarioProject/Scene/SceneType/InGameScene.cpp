@@ -138,24 +138,26 @@ eSceneType InGameScene::Update(float delta_second)
 			}
 		}
 	}
-
-	// 時間制限がなくなったら
-	if (gametime < 0)
-	{
-		return eSceneType::eResult;
-	}
 	else
 	{
-		// 時間制限の減算
-		in_game_time += delta_second;
-		if (in_game_time >= 0.07f)
+		// 時間制限がなくなったら
+		if (gametime < 0)
 		{
-			in_game_time = 0.0f;
-			in_game_count++;
-			if (in_game_count >= 10)
+			return eSceneType::eResult;
+		}
+		else
+		{
+			// 時間制限の減算
+			in_game_time += delta_second;
+			if (in_game_time >= 0.07f)
 			{
-				gametime--;
-				in_game_count = 0;
+				in_game_time = 0.0f;
+				in_game_count++;
+				if (in_game_count >= 10)
+				{
+					gametime--;
+					in_game_count = 0;
+				}
 			}
 		}
 	}
@@ -208,6 +210,8 @@ void InGameScene::Draw(float delta_second)
 	DrawRotaGraph(815, 70, 1.8, 0.0, ui_num[gametime / 100], TRUE);
 	DrawRotaGraph(845, 70, 1.8, 0.0, ui_num[gametime % 100 / 10], TRUE);
 	DrawRotaGraph(875, 70, 1.8, 0.0, ui_num[gametime % 10], TRUE);
+
+	DrawFormatString(10, 10, GetColor(255, 255, 255), "%f", scroll);
 }
 
 // 終了時処理（使ったインスタンスの削除とか）
