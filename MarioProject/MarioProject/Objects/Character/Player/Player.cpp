@@ -17,6 +17,10 @@ Player::Player():
 	, isOnGround(false) //初期値(地面)
 	, is_goal(false)
 	, is_clear(false)
+	, sound_bgm(NULL)
+	, sound_clear(NULL)
+	, sound_destroy(NULL)
+	, sound_tach(NULL)
 {
 }
 
@@ -37,6 +41,13 @@ void Player::Initialize()
 	mario_aniamtion = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32);
 	// 分割した画像の先頭を代入
 	image = mario_aniamtion[0];
+
+	//BGMの読み込み
+	sound_bgm = LoadSoundMem("Resource/Sounds/BGM/Nonomura.wav");
+	sound_clear = rm->GetSounds("Resource/Sounds/SE_Goal.wav");
+	sound_tach = rm->GetSounds("Resource/Sounds/SE_PoleTouch.wav");
+	//BGM再生
+	PlaySoundMem(sound_bgm, DX_PLAYTYPE_LOOP);
 
 	// 当たり判定のオブジェクト設定
 	collision.is_blocking = true;
@@ -88,12 +99,23 @@ void Player::Update(float delta_second)
 	// ゴールしたら
 	if (is_goal == true)
 	{
+		if (CheckSoundMem(sound_bgm) == true)
+		{
+			StopSoundMem(sound_bgm);
+			PlaySoundMem(sound_tach, DX_PLAYTYPE_BACK);
+		}
+
 		// 操作不可状態にする
 		is_mobility = false;
 		velocity.x = 0;
 		// 地面に当たったら自動で進む
 		if (isOnGround == true)
 		{
+			if (CheckSoundMem(sound_tach) == true)
+			{
+				StopSoundMem(sound_tach);
+				PlaySoundMem(sound_clear, DX_PLAYTYPE_BACK);
+			}
 			velocity.x += 100;
 		}
 		// お城の中に消える
@@ -128,6 +150,7 @@ void Player::Finalize()
 	ResourceManager::DeleteInstance();
 	PlayerStateFactory::DeleteInstance();
 	GameObjectManager::DeleteInstance();
+	StopSoundMem(sound_bgm);
 }
 
 /// <summary>

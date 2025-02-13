@@ -1,4 +1,5 @@
 #include "Hatena.h"
+#include "DxLib.h"
 
 #include "../../../Utility/ResourceManager.h"
 #include "../../../Objects/GameObjectManager.h"
@@ -6,6 +7,8 @@
 Hatena::Hatena() :
 	 is_kara(false)
 	, kara_image(NULL)
+	, item_sound(NULL)
+	, block_sound(NULL)
 {
 }
 
@@ -24,6 +27,9 @@ void Hatena::Initialize()
 	hatena_animation = rm->GetImages("Resource/Images/Block/hatena.png", 4, 4, 1, 32, 32);
 	kara_image = rm->GetImages("Resource/Images/Block/kara_block.png")[0];
 	image = hatena_animation[0];
+
+	item_sound = rm->GetSounds("Resource/Sounds/SE_CoinPickUp.wav");
+	block_sound = rm->GetSounds("Resource/Sounds/SE_Block.wav");
 
 	//ìñÇΩÇËîªíËÇÃê›íË
 	collision.is_blocking = true;
@@ -94,10 +100,15 @@ void Hatena::OnHitCollision(GameObjectBase* hit_object)
 			// ãÛÇ∂Ç·Ç»Ç©Ç¡ÇΩÇÁ
 			if (is_kara == false)
 			{
+				PlaySoundMem(item_sound, DX_PLAYTYPE_BACK);
 				// è„Ç…è„è∏Ç≥ÇπÇÈ
 				velocity.y -= 500;
 				// ãÛÇ…Ç»ÇÈ
 				is_kara = true;
+			}
+			else
+			{
+				PlaySoundMem(block_sound, DX_PLAYTYPE_BACK);
 			}
 		}
 	}

@@ -10,6 +10,8 @@ int zanki = 2;
 
 ResultScene::ResultScene() :
 	mario_image(NULL)
+	, game_over_sound(NULL)
+	, death_sound(NULL)
 {
 }
 
@@ -23,6 +25,9 @@ void ResultScene::Initialize()
 	// マリオ画像の読込みと初期設定
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	mario_image = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32)[0];
+
+	game_over_sound = rm->GetSounds("Resource/Sounds/SE_GameOver.wav");
+	death_sound = rm->GetSounds("Resource/Sounds/SE_Death.wav");
 }
 
 /// <summary>
@@ -36,11 +41,15 @@ eSceneType ResultScene::Update(float delta_second)
 	InputManager* input = Singleton<InputManager>::GetInstance();
 
 	// 残機が0ではないとき
-	if (zanki >= 0)
+	if (zanki > 0)
 	{
 		//SPACEキーでタイトル画面に遷移する
 		if (input->GetKeyDown(KEY_INPUT_SPACE))
 		{
+			if (zanki < 2)
+			{
+				PlaySoundMem(death_sound, DX_PLAYTYPE_NORMAL);
+			}
 			// 残機を減らす
 			zanki--;
 			return eSceneType::eInGame;
@@ -48,6 +57,7 @@ eSceneType ResultScene::Update(float delta_second)
 	}
 	else
 	{
+		PlaySoundMem(game_over_sound, DX_PLAYTYPE_NORMAL);
 		// 残機が0になったらタイトルへ遷移
 		zanki = 2;
 		return eSceneType::eTitle;
@@ -72,9 +82,13 @@ void ResultScene::Draw(float delta_second)
 	{
 		DrawString(340, 450, "SPACE TO START", GetColor(255, 255, 255), TRUE);
 	}
-	else
+	else if (zanki >= 1)
 	{
 		DrawString(340, 450, "SPACE TO RESTART", GetColor(255, 255, 255), TRUE);
+	}
+	else
+	{
+		DrawString(400, 450, "RESTART", GetColor(255, 255, 255), TRUE);
 	}
 	SetFontSize(16);
 }

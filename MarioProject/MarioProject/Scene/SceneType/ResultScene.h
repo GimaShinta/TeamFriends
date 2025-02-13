@@ -7,6 +7,8 @@ class ResultScene :public SceneBase
 {
 private:
 	int mario_image;    //ƒ}ƒŠƒI‚Ì‰æ‘œ
+	int game_over_sound;
+	int death_sound;
 
 public:
 	ResultScene();

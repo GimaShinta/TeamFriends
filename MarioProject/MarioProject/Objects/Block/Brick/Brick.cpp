@@ -7,8 +7,8 @@
 #include "BlickDebris.h"
 
 Brick::Brick() :
-	coin(nullptr)
-	, is_destruction(false)
+	is_destruction(false)
+	, block_sound(NULL)
 {
 }
 
@@ -25,6 +25,8 @@ void Brick::Initialize()
 	//‰æ‘œ‚Ìİ’è
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	image = rm->GetImages("Resource/Images/Block/block.png", 1, 1, 1, 32, 32)[0];
+
+	block_sound = rm->GetSounds("Resource/Sounds/SE_Block.wav");
 
 	//“–‚½‚è”»’è‚Ìİ’è
 	collision.is_blocking = true;
@@ -104,6 +106,7 @@ void Brick::OnHitCollision(GameObjectBase* hit_object)
 		}
 		else
 		{
+			PlaySoundMem(block_sound, DX_PLAYTYPE_BACK);
 			// ã‚Éã¸‚³‚¹‚é
 			velocity.y -= 500;
 		}

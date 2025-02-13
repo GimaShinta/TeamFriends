@@ -7,6 +7,7 @@
 
 Kuribo::Kuribo() :
 	kuribo_state(eKuriboState::NORMAL)
+	, hit_sound(NULL)
 {
 }
 
@@ -28,6 +29,9 @@ void Kuribo::Initialize()
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	kuribo_animation = rm->GetImages("Resource/Images/Enemy/kuribo.png", 3, 3, 1, 32, 32);
 	image = kuribo_animation[0];
+
+	//BGMの読み込み
+	hit_sound = rm->GetSounds("Resource/Sounds/SE_StepOn.wav");
 
 	// 当たり判定の設定
 	collision.is_blocking = true;
@@ -116,6 +120,9 @@ void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 		// クリボーの上に触れたら
 		if (hit_object->GetVelocity().y > -10.0f)
 		{
+			//BGM再生
+			PlaySoundMem(hit_sound, DX_PLAYTYPE_BACK);
+
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
 

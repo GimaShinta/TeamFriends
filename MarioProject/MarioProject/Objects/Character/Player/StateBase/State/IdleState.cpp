@@ -41,18 +41,6 @@ void IdleState::Update(float delta_second)
 	{
 		player->SetNextState(ePlayerState::JUMP);
 	}
-
-
-	//// ‚µ‚á‚ª‚İó‘Ô‚É‘JˆÚ
-	//if (input->GetKey(KEY_INPUT_DOWN))
-	//{
-	//	player->SetNextState(ePlayerState::SQUAT);
-	//}
-
-	//if (player->is_destroy == true)
-	//{
-	//	player->SetNextState(ePlayerState::DESTROY);
-	//}
 }
 
 // •`‰æˆ—
