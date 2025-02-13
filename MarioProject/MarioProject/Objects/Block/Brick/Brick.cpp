@@ -43,7 +43,7 @@ void Brick::Initialize()
 void Brick::Update(float delta_second)
 {
 	// 一マス上に到達したら移動反転
-	if (location.y < old_location.y - (D_OBJECT_SIZE * 2))
+	if (location.y < old_location.y - D_OBJECT_SIZE)
 	{
 		velocity.y *= -1;
 	}
@@ -52,6 +52,7 @@ void Brick::Update(float delta_second)
 	if (location.y > old_location.y)
 	{
 		location.y = old_location.y;
+		velocity = 0;
 	}
 
 	// 画面外で削除

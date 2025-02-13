@@ -15,6 +15,8 @@ public:
 	bool flip_flag;    // 画像反転させるかどうか（trueは反転させる、falseは反転させない）
 	bool stage_end;	   //ステージの端に着いたらTRUE
 	bool isOnGround;	//地面にいるかどうか
+	bool is_goal;
+	bool is_clear;
 
 public:
 	ePlayerState next_state;                          // 次の状態パターンを保存
@@ -64,4 +66,10 @@ public:
 
 	// 地面にいるかどうかを確認する
 	bool IsOnGround() const;
+
+	// 死んでいるか
+	bool GetIsDestroy();
+
+	// clearしているか
+	bool GetIsClear();
 };

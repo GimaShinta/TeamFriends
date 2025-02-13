@@ -2,8 +2,6 @@
 
 #include "../../../Utility/ResourceManager.h"
 #include "../../../Objects/GameObjectManager.h"
-#include "../../../Objects/Item/Coin/Coin.h"
-#include "../../../Objects/Item/Mushroom/Mushroom.h"
 
 Hatena::Hatena() :
 	 is_kara(false)
@@ -54,6 +52,22 @@ void Hatena::Update(float delta_second)
 		// アニメーション
 		GameObjectBase::AnimationControl(delta_second, hatena_animation, hatena_animation_num, 6.0f);
 	}
+
+	// 一マス上に到達したら移動反転
+	if (location.y < old_location.y - D_OBJECT_SIZE)
+	{
+		velocity.y *= -1;
+	}
+
+	// 初期位置に戻る
+	if (location.y > old_location.y)
+	{
+		location.y = old_location.y;
+		velocity = 0;
+	}
+
+	// 移動処理
+	location += velocity * delta_second;
 }
 
 // 終了時処理（使ったインスタンスなどの削除）
@@ -80,6 +94,8 @@ void Hatena::OnHitCollision(GameObjectBase* hit_object)
 			// 空じゃなかったら
 			if (is_kara == false)
 			{
+				// 上に上昇させる
+				velocity.y -= 500;
 				// 空になる
 				is_kara = true;
 			}

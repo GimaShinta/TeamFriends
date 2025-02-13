@@ -15,6 +15,8 @@ enum class eSceneType
 class SceneBase
 {
 public:
+
+public:
 	// ‰Šú‰»ˆ—
 	virtual void Initialize() {}
 

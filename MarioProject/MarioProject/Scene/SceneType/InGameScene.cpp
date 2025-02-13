@@ -17,6 +17,8 @@
 #include "../../Objects/Block/Hatena/ItemHatena.h"
 #include "../../Objects/Item/Coin/Coin.h"
 #include "../../Objects/Item/Mushroom/Mushroom.h"
+#include "../../Objects/Block/Pole/PoleDown.h"
+#include "../../Objects/Block/Pole/PoleTop.h"
 
 //ステート
 #include"../../Objects/Character/Player/StateBase/PlayerStateBase.h"
@@ -36,6 +38,8 @@ InGameScene::InGameScene():
 	, bgm(NULL)
 	, scroll(0.0f)
 	, score(0)
+	, animation_count(0)
+	, animation_time(0.0f)
 {
 }
 
@@ -82,7 +86,6 @@ void InGameScene::Initialize()
 /// <returns></returns>
 eSceneType InGameScene::Update(float delta_second)
 {
-
 	//BGM再生
 	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP, FALSE);
 
@@ -93,15 +96,38 @@ eSceneType InGameScene::Update(float delta_second)
 	// GameObjectManagerクラスのUpdate関数にアクセス
 	obj_manager->Update(delta_second);
 
+	// スクロール処理
+	Scroll(delta_second);
+
+
 	//【デバッグ用】Yキーでリザルト画面に遷移する
 	if (input->GetKeyDown(KEY_INPUT_Y))
 	{
 		return eSceneType::eResult;
 	}
 
-	// スクロール処理
-	Scroll(delta_second);
-	
+	// マリオが死んでいたら
+	if (player->GetIsDestroy() == true)
+	{
+		return eSceneType::eResult;
+	}
+	// クリアしていたら
+	if (player->GetIsClear() == true)
+	{
+		// クリア余韻
+		animation_time += delta_second;
+		if (animation_time >= 0.07f)
+		{
+			animation_time = 0.0f;
+			animation_count++;
+			if (animation_count >= 50)
+			{
+			    obj_manager->DestroyGameObject(player);
+				return eSceneType::eResult;
+			}
+		}
+	}
+
 	// 現在のシーンタイプはインゲームですということを呼び出し元へreturnで送る
 	return GetNowSceneType();
 }
@@ -137,9 +163,12 @@ void InGameScene::Draw(float delta_second)
 // 終了時処理（使ったインスタンスの削除とか）
 void InGameScene::Finalize()
 {
+	GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
+	obj_manager->Finalize();
+
 	InputManager::DeleteInstance();
 	GameObjectManager::DeleteInstance();
-	ResourceManager::DeleteInstance();
+	ResourceManager::DeleteInstance();	
 }
 
 /// <summary>
@@ -413,6 +442,18 @@ void InGameScene::CreateMapObject()
 			object_array.push_back(game_object);
 			// ハテナブロックの生成
 			game_object = obj_m->CreateObject<ItemHatena>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(game_object);
+			break;
+		case 'D':
+			// ポールダウンの生成
+			game_object = obj_m->CreateObject<PoleDown>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(game_object);
+			break;
+		case 'T':
+			// ポールトップの生成
+			game_object = obj_m->CreateObject<PoleTop>(generate_location);
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
 			break;

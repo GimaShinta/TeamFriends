@@ -109,20 +109,22 @@ void Kuribo::Finalize()
 void Kuribo::OnHitCollision(GameObjectBase* hit_object)
 {
 	// インスタンスの取得
-	GameObjectManager* rm = Singleton<GameObjectManager>::GetInstance();
+	GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
 	// マリオに当たったら
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{
-		// 動きを止める
-		is_mobility = false;
 		// クリボーの上に触れたら
-		if (hit_object->GetVelocity().y > 0.0f)
+		if (hit_object->GetVelocity().y > -10.0f)
 		{
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
 
 			// クリボーを踏まれた状態にする
 			kuribo_state = eKuriboState::HUMARERU;
+		}
+		else
+		{
+			hit_object->is_destroy = true;
 		}
 	}
 }

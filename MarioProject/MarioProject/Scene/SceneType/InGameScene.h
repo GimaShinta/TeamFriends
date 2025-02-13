@@ -7,7 +7,8 @@
 class InGameScene : public SceneBase//,  public ObjectManager
 {
 public:
-
+	float animation_time;
+	int animation_count;
 	int image;	//画像用
 	float scroll;	//スクロール量
 	int bgm;     // bgm用

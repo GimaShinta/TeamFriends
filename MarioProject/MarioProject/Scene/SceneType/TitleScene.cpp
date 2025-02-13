@@ -36,7 +36,7 @@ eSceneType TitleScene::Update(float delta_second)
 	//【デバッグ用】スペースキーでインゲーム画面に遷移する
 	if (input->GetKeyDown(KEY_INPUT_SPACE))
 	{
-		return eSceneType::eInGame;
+ 		return eSceneType::eResult;
 	}
 
 	// 現在のシーンがタイトルということを返す

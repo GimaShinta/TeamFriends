@@ -15,6 +15,8 @@ Player::Player():
 	, next_state(ePlayerState::NONE)
 	,stage_end(FALSE)
 	, isOnGround(false) //初期値(地面)
+	, is_goal(false)
+	, is_clear(false)
 {
 }
 
@@ -57,6 +59,7 @@ void Player::Initialize()
 /// <param name="delata_second">１フレーム当たりの時間</param>
 void Player::Update(float delta_second)
 {
+
 	// アニメーション
 	AnimationControl(delta_second, mario_aniamtion, mario_animation_num, 5, NULL, 6);
 
@@ -75,6 +78,29 @@ void Player::Update(float delta_second)
 
 	//状態別の更新処理を行う
 	state->Update(delta_second);
+
+	//重力速度の計算
+	g_velocity += D_GRAVITY;
+	velocity.y += g_velocity * delta_second;
+
+	// ゴールしたら
+	if (is_goal == true)
+	{
+		// 操作不可状態にする
+		is_mobility = false;
+		velocity.x = 0;
+		// 地面に当たったら自動で進む
+		if (isOnGround == true)
+		{
+			velocity.x += 100;
+		}
+		// お城の中に消える
+		if (location.x > ((D_OBJECT_SIZE * 2) * 11) + D_OBJECT_SIZE)
+		{
+			image = NULL;
+			is_clear = true;
+		}
+	}
 
 	// 移動を実行する関数の呼び出し
 	__super::Movement(delta_second);
@@ -108,10 +134,14 @@ void Player::Finalize()
 /// <param name="hit_object"></param>
 void Player::OnHitCollision(GameObjectBase* hit_object)
 {
-	// 当たった相手がエネミーだったら
-	if (hit_object->GetCollision().object_type == eObjectType::eEnemy)
+	// 当たった相手がゴールだったら
+	if (hit_object->GetCollision().object_type == eObjectType::eGoal)
 	{
-		//now_state = ePlayerState::DESTROY;
+		is_goal = true;
+	}
+	else if (hit_object->GetCollision().object_type == eObjectType::eEnemy)
+	{
+		velocity.y = 0;
 	}
 	// 当たった相手がブロックだったら
 	else if (hit_object->GetCollision().object_type == eObjectType::eBlock)
@@ -324,9 +354,6 @@ void Player::PlayerControl(float delta_second)
 	}
 	else
 	{
-		//重力速度の計算
-		g_velocity += D_GRAVITY;
-		velocity.y += g_velocity * delta_second;
 		isOnGround = false; // 空中にいる
 	}
 
@@ -386,4 +413,16 @@ void Player::PlayerControl(float delta_second)
 bool Player::IsOnGround() const
 {
 	return isOnGround;
+}
+
+// 死んでいるか
+bool Player::GetIsDestroy()
+{
+	return is_destroy;
+}
+
+// clearしているか
+bool Player::GetIsClear()
+{
+	return is_clear;
 }
