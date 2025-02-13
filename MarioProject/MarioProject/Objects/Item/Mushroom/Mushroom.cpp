@@ -1,6 +1,7 @@
 #include "Mushroom.h"
 
 #include "../../../Utility/ResourceManager.h"
+#include "../../../Objects/GameObjectManager.h"
 
 Mushroom::Mushroom()
 {
@@ -24,11 +25,10 @@ void Mushroom::Initialize()
 	collision.is_blocking = true;
 	collision.object_type = eObjectType::eItem;
 	collision.hit_object_type.push_back(eObjectType::ePlayer);
+	collision.hit_object_type.push_back(eObjectType::eBlock);
 
 	// 当たり判定サイズの設定
 	box_size = D_OBJECT_SIZE;
-
-	velocity.x = 100;
 }
 
 /// <summary>
@@ -37,6 +37,29 @@ void Mushroom::Initialize()
 /// <param name="delta_second">１フレーム当たりの時間</param>
 void Mushroom::Update(float delta_second)
 {
+	// 出現していなかったら
+	if (is_appearance == false)
+	{
+		// 少しずつ上に上げて出現しているように
+		// 出現位置より一マス上まで上げる
+		if (location.y < ((D_OBJECT_SIZE * 2) * 9) - D_OBJECT_SIZE)
+		{
+			location.y = ((D_OBJECT_SIZE * 2) * 9) - D_OBJECT_SIZE;
+			// 到達したら移動処理のフラグをオン
+			is_appearance = true;
+		}
+	}
+	// 出現していたら
+	else
+	{
+		// 速度の設定
+		velocity = Vector2D(100, 0);
+		//重力速度の計算
+		g_velocity += D_GRAVITY;
+		velocity.y += g_velocity * delta_second;
+	}
+
+	// 移動処理
 	__super::Movement(delta_second);
 }
 
@@ -44,6 +67,7 @@ void Mushroom::Update(float delta_second)
 void Mushroom::Finalize()
 {
 	ResourceManager::DeleteInstance();
+	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>
@@ -52,4 +76,14 @@ void Mushroom::Finalize()
 /// <param name="hit_object">当たった相手</param>
 void Mushroom::OnHitCollision(GameObjectBase* hit_object)
 {
+	// マリオに当たったら
+	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
+	{
+		// マリオの進行方向が上だったら
+		if (hit_object->GetVelocity().y < 0.0f)
+		{
+			// 初期速度の設定
+			velocity.y -= 100;
+		}
+	}
 }

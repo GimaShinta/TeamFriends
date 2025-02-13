@@ -2,6 +2,7 @@
 
 #include "../../../Utility/ResourceManager.h"
 #include "../../../Objects/GameObjectManager.h"
+#include "../../../Objects/Item/Coin/Coin.h"
 #include "../../../Objects/Item/Mushroom/Mushroom.h"
 
 Hatena::Hatena() :
@@ -59,6 +60,7 @@ void Hatena::Update(float delta_second)
 void Hatena::Finalize()
 {
 	ResourceManager::DeleteInstance();
+	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>
@@ -78,23 +80,9 @@ void Hatena::OnHitCollision(GameObjectBase* hit_object)
 			// 空じゃなかったら
 			if (is_kara == false)
 			{
-				// インスタンスの取得
-				GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
-				// キノコの生成
-				gm->CreateObject<Mushroom>(location);
 				// 空になる
 				is_kara = true;
 			}
 		}
-		//else if(hit_object->GetVelocity().x > 1.0f)
-		//{
-		//	// マリオを下降させる
-		//	hit_object->SetVelocity(Vector2D(0.0f, hit_object->GetVelocity().y));
-		//}
-		//else if(hit_object->GetVelocity().x < -1.0f)
-		//{
-		//	// マリオを下降させる
-		//	hit_object->SetVelocity(Vector2D(0.0f, hit_object->GetVelocity().y));
-		//}
 	}
 }

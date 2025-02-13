@@ -11,6 +11,7 @@ class GameObjectBase
 protected:
 	class GameObjectManager* owner_scene;   //
 	Vector2D location;                      // オブジェクトのウィンドウの位置座標
+	Vector2D old_location;                      // オブジェクトのウィンドウの位置座標
 	BoxCollision collision;                 // 当たり判定情報の保持
 	unsigned char z_layer;          //
 

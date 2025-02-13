@@ -14,6 +14,7 @@
 #include "../../Objects/Character/Nokonoko/Nokonoko.h"
 #include "../../Objects/Block/Brick/Brick.h"
 #include "../../Objects/Block/Hatena/Hatena.h"
+#include "../../Objects/Block/Hatena/ItemHatena.h"
 #include "../../Objects/Item/Coin/Coin.h"
 #include "../../Objects/Item/Mushroom/Mushroom.h"
 
@@ -242,73 +243,73 @@ void InGameScene::DrawStageMap()
 			case '1':	//地下 => 実装予定
 				continue;
 			case '2':
-				image = rm->GetImages("Resource/Images/Block/floor.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/Block/floor.png")[0];
 				break;
 			case 'a':
-				image = rm->GetImages("Resource/Images/mountain_left.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/mountain_left.png")[0];
 				break;
 			case 'b':
-				image = rm->GetImages("Resource/Images/mountain_surface2.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/mountain_surface2.png")[0];
 				break;
 			case 'c':
-				image = rm->GetImages("Resource/Images/mountain_surface.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/mountain_surface.png")[0];
 				break;
 			case 'd':
-				image = rm->GetImages("Resource/Images/mountain_surface1.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/mountain_surface1.png")[0];
 				break;
 			case 'e':
-				image = rm->GetImages("Resource/Images/mountain_right.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/mountain_right.png")[0];
 				break;
 			case 'f':
-				image = rm->GetImages("Resource/Images/mountain_up.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/mountain_up.png")[0];
 				break;
 			case 'g':
-				image = rm->GetImages("Resource/Images/ha0.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/ha0.png")[0];
 				break;
 			case 'h':
-				image = rm->GetImages("Resource/Images/ha1.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/ha1.png")[0];
 				break;
 			case 'i':
-				image = rm->GetImages("Resource/Images/ha2.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/ha2.png")[0];
 				break;
 			case 'j':
-				image = rm->GetImages("Resource/Images/dokan_left_down.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/dokan_left_down.png")[0];
 				break;
 			case 'k':
-				image = rm->GetImages("Resource/Images/dokan_right_down.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/dokan_right_down.png")[0];
 				break;
 			case 'l':
-				image = rm->GetImages("Resource/Images/dokan_left_up.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/dokan_left_up.png")[0];
 				break;
 			case 'm':
-				image = rm->GetImages("Resource/Images/dokan_right_up.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/dokan_right_up.png")[0];
 				break;
 			case 'n':
-				image = rm->GetImages("Resource/Images/Block/kai_block.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/Block/kai_block.png")[0];
 				break;
 			case 'o':
-				image = rm->GetImages("Resource/Images/flag.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/flag.png")[0];
 				break;
 			case 'p':
-				image = rm->GetImages("Resource/Images/siro1.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/siro1.png")[0];
 				break;
 			case 'q':
-				image = rm->GetImages("Resource/Images/pole.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/pole.png")[0];
 				break;
 			case 'r':
-				image = rm->GetImages("Resource/Images/cloud1.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/cloud1.png")[0];
 				break;
 			case 's':
-				image = rm->GetImages("Resource/Images/cloud2.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/cloud2.png")[0];
 				break;
 			case 't':
-				image = rm->GetImages("Resource/Images/cloud3.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/cloud3.png")[0];
 				break;
 			case 'u':
-				image = rm->GetImages("Resource/Images/cloud4.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/cloud4.png")[0];
 				break;
 			case 'v':
-				image = rm->GetImages("Resource/Images/cloud5.png", 1, 1, 1, 32, 32)[0];
+				image = rm->GetImages("Resource/Images/cloud5.png")[0];
 				break;
 			case 'w':
 				image = rm->GetImages("Resource/Images/cloud6.png")[0];
@@ -396,14 +397,22 @@ void InGameScene::CreateMapObject()
 			object_array.push_back(game_object);
 			break;
 		case 'H':
+			// コインの生成
+			game_object = obj_m->CreateObject<Coin>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(game_object);
 			// ハテナブロックの生成
 			game_object = obj_m->CreateObject<Hatena>(generate_location);
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
 			break;
-		case 'C':
-			// コインの生成
-			game_object = obj_m->CreateObject<Coin>(generate_location);
+		case 'O':
+			// キノコの生成
+			game_object = obj_m->CreateObject<Mushroom>(generate_location);
+			// 複数利用できるように配列で管理
+			object_array.push_back(game_object);
+			// ハテナブロックの生成
+			game_object = obj_m->CreateObject<ItemHatena>(generate_location);
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
 			break;

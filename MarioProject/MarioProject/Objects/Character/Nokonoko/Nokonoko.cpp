@@ -45,6 +45,10 @@ void Nokonoko::Initialize()
 /// <param name="delta_second">１フレーム当たりの時間</param>
 void Nokonoko::Update(float delta_second)
 {
+	////重力速度の計算
+	//g_velocity += D_GRAVITY;
+	//velocity.y += g_velocity * delta_second;
+
 	// ノコノコの状態管理
 	switch (noko_state)
 	{
@@ -77,6 +81,11 @@ void Nokonoko::Update(float delta_second)
 
 	// 削除処理
 	GameObjectBase::Update(delta_second);
+
+	if (location.y > 600)
+	{
+		location.y = 600;
+	}
 }
 
 /// <summary>

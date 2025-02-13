@@ -31,9 +31,6 @@ void BlockBase::Update(float delata_second)
 void BlockBase::Draw(const Vector2D& screen_offset) const
 {
 	__super::Draw(screen_offset);
-	//// “–‚½‚è”»’è‚Ì‰ÂŽ‹‰»
-	//DrawBox(this->location.x - this->box_size.x, this->location.y - this->box_size.y,
-	//	this->location.x + this->box_size.x, this->location.y + this->box_size.y, GetColor(255, 0, 0), FALSE);
 }
 
 // I—¹Žžˆ—

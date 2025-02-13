@@ -3,10 +3,9 @@
 
 // シングルトン継承クラスのインクルード
 #include "../../../Utility/ResourceManager.h"
+#include "../../../Objects/GameObjectManager.h"
 #include "StateBase/State/PlayerStateFactory.h"
 #include"../../../Application/Application.h"
-
-#include <cmath>
 
 #define P_MAX_SPEED 500.0f
 
@@ -50,9 +49,6 @@ void Player::Initialize()
 
 	// プレイヤーの当たり判定サイズの設定
 	box_size = D_OBJECT_SIZE;
-
-	// 速度の初期化
-	velocity = 0;
 }
 
 /// <summary>
@@ -103,6 +99,7 @@ void Player::Finalize()
 {
 	ResourceManager::DeleteInstance();
 	PlayerStateFactory::DeleteInstance();
+	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>
@@ -114,7 +111,7 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 	// 当たった相手がエネミーだったら
 	if (hit_object->GetCollision().object_type == eObjectType::eEnemy)
 	{
-		now_state = ePlayerState::DESTROY;
+		//now_state = ePlayerState::DESTROY;
 	}
 	// 当たった相手がブロックだったら
 	else if (hit_object->GetCollision().object_type == eObjectType::eBlock)
@@ -125,6 +122,64 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 		//	location.y = hit_object->GetLocation().y - (D_OBJECT_SIZE * 2);
 		//	isOnGround = true;
 		//}
+
+		Vector2D P = Vector2D(location.x + velocity.x, location.y);
+		Vector2D P_upper = Vector2D(P + (0, -24.0f));
+		Vector2D P_upper_div_chip = P_upper / (D_OBJECT_SIZE * 2);
+		if (map_data[P_upper_div_chip.y][P_upper_div_chip.x] == '2')
+		{
+			if (velocity.x > 0)
+			{
+				location.x = (location.x / (D_OBJECT_SIZE * 2)) * (D_OBJECT_SIZE * 2);
+			}
+			else
+			{
+				location.x += velocity.x;
+			}
+		}
+
+		Vector2D P_bottom = Vector2D(P + (0, 24.0f));
+		Vector2D P_bottom_div_chip = P_bottom / (D_OBJECT_SIZE * 2);
+		if (map_data[P_bottom_div_chip.y][P_bottom_div_chip.x] == '2')
+		{
+			if (velocity.x > 0)
+			{
+				location.x -= velocity.x;
+			}
+			else
+			{
+				location.x += velocity.x;
+			}
+		}
+
+		P = Vector2D(location.x, location.y + D_OBJECT_SIZE);
+		Vector2D P_left = Vector2D(P + (-24.0f, 0));
+		Vector2D P_left_div_chip = P_left / (D_OBJECT_SIZE * 2);
+		if (map_data[P_left_div_chip.y][P_left_div_chip.x] == '2')
+		{
+			if (velocity.y > 0)
+			{
+				location.y -= velocity.y;
+			}
+			else
+			{
+				location.y += velocity.y;
+			}
+		}
+
+		Vector2D P_right = Vector2D(P + (24.0f, 0));
+		Vector2D P_right_div_chip = P_right / (D_OBJECT_SIZE * 2);
+		if (map_data[P_right_div_chip.y][P_right_div_chip.x] == '2')
+		{
+			if (velocity.y > 0)
+			{
+				location.y -= velocity.y;
+			}
+			else
+			{
+				location.y += velocity.y;
+			}
+		}
 	}
 }
 
@@ -247,7 +302,7 @@ void Player::PlayerControl(float delta_second)
 	//}
 
 	// 当たっている場所が地面だったらその座標に設定
-	if (__super::MapCollision() == true)
+	if (__super::MapCollision(0, 0) == true)
 	{
 		// 変換用変数に保存
 		float y_map = location.y;
@@ -274,6 +329,33 @@ void Player::PlayerControl(float delta_second)
 		velocity.y += g_velocity * delta_second;
 		isOnGround = false; // 空中にいる
 	}
+
+	//// 当たっている場所が壁だったらその座標に設定
+	//if (__super::MapCollision(0, -1) == true)
+	//{
+	//	// 変換用変数に保存
+	//	float x_map = location.x;
+
+	//	// チップサイズで割って現在のマップ位置を特定
+	//	x_map /= (D_OBJECT_SIZE * 2);
+
+	//	// 切り上げ整数に変換
+	//	int x_id = std::floor(x_map);
+
+	//	// マップサイズをかけて座標を特定
+	//	x_id *= (D_OBJECT_SIZE * 2);
+
+	//	if (velocity.x > 0)
+	//	{
+	//		// 座標を設定
+	//		location.x = x_id;
+	//	}
+	//	else
+	//	{
+	//		// 座標を設定
+	//		location.x = x_id - D_OBJECT_SIZE;
+	//	}
+	//}
 
 	//画面外に行かないようにする
 	if (location.x < 0 + D_OBJECT_SIZE)

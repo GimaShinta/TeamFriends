@@ -2,6 +2,7 @@
 
 ItemBase::ItemBase() :
 	g_velocity(0.0f)
+	, is_appearance(false)
 {
 }
 
