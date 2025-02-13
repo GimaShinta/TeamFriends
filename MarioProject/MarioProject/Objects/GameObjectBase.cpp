@@ -14,7 +14,8 @@ GameObjectBase::GameObjectBase() :
 	is_destroy(false),
 	animation_count(0),
 	animation_time(0.0f),
-	box_size(0.0f)
+	box_size(0.0f),
+	score(0)
 {
 }
 
@@ -178,4 +179,9 @@ const unsigned char GameObjectBase::GetZLayer() const
 const bool& GameObjectBase::GetMobility() const
 {
 	return is_mobility;
+}
+
+int GameObjectBase::GetScore()
+{
+	return score;
 }

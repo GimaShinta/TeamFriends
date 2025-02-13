@@ -24,6 +24,7 @@ protected:
 	int image;                      // 画像用
 	int animation_count;            // 一定時間の到達数のカウント
 	float animation_time;           // アニメーションの間隔
+	int score;
 
 public:
 	bool is_mobility;               // 動くかどうか（trueなら動く、falseなら止まる）
@@ -91,5 +92,7 @@ public:
 	const BoxCollision& GetCollision()const;            // オブジェクトがもつ当たり判定情報（左上と右下の点とか）を取得する
 	const unsigned char GetZLayer()const;
 	const bool& GetMobility()const;                     // 
+	// clearしているか
+	int GetScore();
 };
 

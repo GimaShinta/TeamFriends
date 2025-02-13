@@ -9,14 +9,21 @@ class InGameScene : public SceneBase//,  public ObjectManager
 public:
 	float animation_time;
 	int animation_count;
+	float in_game_time;
+	int in_game_count;// カウンター
 	int image;	//画像用
 	float scroll;	//スクロール量
 	int bgm;     // bgm用
 	int score;   // スコア
+	int coin;   // 獲得コイン数
+	int gametime; // 制限時間
 
 private:
 	std::vector<int> ui_string;	//文字画像　
 	std::vector<int> ui_num;	//数字画像 
+	std::vector<int> ui_coin;	//コイン画像 
+	std::vector<int> ui_coin_num = { 0,1,2,3,2,1 };	//コイン画像の順番
+	int coin_image;
 	int ui_image[4];	//UI画像
 
 
@@ -41,6 +48,7 @@ private:
 
 	// 生成したオブジェクトを格納する配列
 	std::vector<GameObjectBase*> object_array;
+	std::vector<GameObjectBase*> charactor_array;
 
 	// ステージの情報配列
 	std::vector<std::vector<char>> map_array;
@@ -71,6 +79,9 @@ public:
 
 	// 現在のシーンタイプ（オーバーライド必須）
 	virtual eSceneType GetNowSceneType() const override;
+
+	// コインアニメーション
+	void CoinAnimation(float delta_second);
 
 	// スクロール処理
 	void Scroll(float delta_second);

@@ -40,6 +40,9 @@ InGameScene::InGameScene():
 	, score(0)
 	, animation_count(0)
 	, animation_time(0.0f)
+	, in_game_time(0.0f)
+	, gametime(0)
+	, in_game_count(0)
 {
 }
 
@@ -63,6 +66,8 @@ void InGameScene::Initialize()
 	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	ui_num = rm->GetImages("Resource/Images/UI/num.png", 15, 15, 1, 16, 16);
+	ui_coin = rm->GetImages("Resource/Images/UI/uicoin.png", 4, 4, 1, 16, 16);
+	coin_image = ui_coin[0];
 
 	//UI文字
 	ui_image[0] = rm->GetImages("Resource/Images/UI/name_mario.png", 1, 0, 0, 32, 32)[0];
@@ -74,9 +79,9 @@ void InGameScene::Initialize()
 	bgm = LoadSoundMem("Resource/Sounds/BGM/Nonomura.wav");
 	//ボリューム（BGM）
 	ChangeVolumeSoundMem(255 * 30 / 100, bgm);
-
-	// スコア（デバッグ用）
-	score = 12000;
+	 
+	// 時間制限の設定
+	gametime = 400;
 }
 
 /// <summary>
@@ -99,6 +104,12 @@ eSceneType InGameScene::Update(float delta_second)
 	// スクロール処理
 	Scroll(delta_second);
 
+	// UIのコインアニメーション
+	CoinAnimation(delta_second);
+
+	// スコアを取得
+	score += player->GetScore();
+
 
 	//【デバッグ用】Yキーでリザルト画面に遷移する
 	if (input->GetKeyDown(KEY_INPUT_Y))
@@ -115,15 +126,36 @@ eSceneType InGameScene::Update(float delta_second)
 	if (player->GetIsClear() == true)
 	{
 		// クリア余韻
-		animation_time += delta_second;
-		if (animation_time >= 0.07f)
+		in_game_time += delta_second;
+		if (in_game_time >= 0.07f)
 		{
-			animation_time = 0.0f;
-			animation_count++;
-			if (animation_count >= 50)
+			in_game_time = 0.0f;
+			in_game_count++;
+			if (in_game_count >= 50)
 			{
 			    obj_manager->DestroyGameObject(player);
 				return eSceneType::eTitle;
+			}
+		}
+	}
+
+	// 時間制限がなくなったら
+	if (gametime < 0)
+	{
+		return eSceneType::eResult;
+	}
+	else
+	{
+		// 時間制限の減算
+		in_game_time += delta_second;
+		if (in_game_time >= 0.07f)
+		{
+			in_game_time = 0.0f;
+			in_game_count++;
+			if (in_game_count >= 10)
+			{
+				gametime--;
+				in_game_count = 0;
 			}
 		}
 	}
@@ -145,6 +177,12 @@ void InGameScene::Draw(float delta_second)
 	//UI_マリオ
 	DrawRotaGraph(150,40,1.8,0.0, ui_image[0], TRUE);
 
+	// 作成したステージの情報配列を使って背景を描画
+	DrawStageMap();
+
+	// 親クラスの描画処理
+	__super::Draw(delta_second);
+
 	//UI_スコア
 	DrawRotaGraph(3 * 30, 70, 1.8, 0.0, ui_num[score / 100000], TRUE);
 	DrawRotaGraph(4 * 30, 70, 1.8, 0.0, ui_num[(score % 100000) / 10000], TRUE);
@@ -153,11 +191,23 @@ void InGameScene::Draw(float delta_second)
 	DrawRotaGraph(7 * 30, 70, 1.8, 0.0, ui_num[(score % 100000 % 10000 % 1000 % 100) / 10], TRUE);
 	DrawRotaGraph(8 * 30, 70, 1.8, 0.0, ui_num[(score % 100000 % 10000 % 1000 % 100) % 10], TRUE);
 
-	// 作成したステージの情報配列を使って背景を描画
-	DrawStageMap();
+	// コインカウント
+	DrawRotaGraph(370, 70, 1.8, 0.0, coin_image, TRUE);
+	DrawRotaGraph(400, 70, 1.8, 0.0, ui_num[11], TRUE);
+	DrawRotaGraph(430, 70, 1.8, 0.0, ui_num[1], TRUE);
+	DrawRotaGraph(460, 70, 1.8, 0.0, ui_num[1], TRUE);
 
-	// 親クラスの描画処理
-	__super::Draw(delta_second);
+	// ワールド
+	DrawRotaGraph(630, 40, 1.8, 0.0, ui_image[3], TRUE);
+	DrawRotaGraph(600, 70, 1.8, 0.0, ui_num[1], TRUE);
+	DrawRotaGraph(630, 70, 1.8, 0.0, ui_num[10], TRUE);
+	DrawRotaGraph(660, 70, 1.8, 0.0, ui_num[1], TRUE);
+
+	//制限時間表示
+	DrawRotaGraph(830, 40, 1.8, 0.0, ui_image[1], TRUE);
+	DrawRotaGraph(815, 70, 1.8, 0.0, ui_num[gametime / 100], TRUE);
+	DrawRotaGraph(845, 70, 1.8, 0.0, ui_num[gametime % 100 / 10], TRUE);
+	DrawRotaGraph(875, 70, 1.8, 0.0, ui_num[gametime % 10], TRUE);
 }
 
 // 終了時処理（使ったインスタンスの削除とか）
@@ -178,6 +228,29 @@ void InGameScene::Finalize()
 eSceneType InGameScene::GetNowSceneType() const
 {
 	return eSceneType::eInGame;
+}
+
+// コインアニメーション
+void InGameScene::CoinAnimation(float delta_second)
+{
+	//フレームレートで時間を計測
+	animation_time += delta_second;
+	//8秒経ったら画像を切り替える
+	if (animation_time >= (1.0f / 4.0f))
+	{
+		//計測時間の初期化
+		animation_time = 0.0f;
+		//時間経過カウントの増加
+		animation_count++;
+		//カウントがアニメーション画像の要素数以上になったら
+		if (animation_count >= ui_coin.size())
+		{
+			//カウントの初期化
+			animation_count = 0;
+		}
+		// アニメーションが順番に代入される
+		coin_image = ui_coin[ui_coin_num[animation_count]];
+	}
 }
 
 // スクロール処理
@@ -410,6 +483,7 @@ void InGameScene::CreateMapObject()
 			game_object = obj_m->CreateObject<Kuribo>(generate_location);
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
+			charactor_array.push_back(game_object);
 			break;
 		case 'N':
 			// ノコノコの生成
@@ -418,6 +492,7 @@ void InGameScene::CreateMapObject()
 			game_object = obj_m->CreateObject<Nokonoko>(generate_location);
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
+			charactor_array.push_back(game_object);
 			break;
 		case 'B':
 			// 破壊可能ブロックの生成

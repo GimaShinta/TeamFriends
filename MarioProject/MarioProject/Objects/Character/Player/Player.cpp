@@ -59,6 +59,8 @@ void Player::Initialize()
 /// <param name="delata_second">１フレーム当たりの時間</param>
 void Player::Update(float delta_second)
 {
+	// スコアの値を初期化
+	score = 0;
 
 	// アニメーション
 	AnimationControl(delta_second, mario_aniamtion, mario_animation_num, 5, NULL, 6);
@@ -142,6 +144,8 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 	else if (hit_object->GetCollision().object_type == eObjectType::eEnemy)
 	{
 		velocity.y = 0;
+		// スコアの値を設定
+		score = 300;
 	}
 	// 当たった相手がブロックだったら
 	else if (hit_object->GetCollision().object_type == eObjectType::eBlock)
