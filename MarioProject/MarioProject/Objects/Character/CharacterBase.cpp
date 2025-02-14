@@ -126,32 +126,4 @@ bool CharacterBase::MapCollision(int x, int y)
 	}
 	// “–‚½‚Á‚Ä‚¢‚È‚¢
 	return false;
-
-
-	//int width_range_ids[2]
-	//{
-	//	(world_location.x - D_OBJECT_SIZE) / (D_OBJECT_SIZE * 2),
-	//	(world_location.x + D_OBJECT_SIZE) / (D_OBJECT_SIZE * 2)
-	//};
-	//int height_range_ids[2]
-	//{
-	//	(world_location.y - D_OBJECT_SIZE) / (D_OBJECT_SIZE * 2),
-	//	(world_location.y + D_OBJECT_SIZE) / (D_OBJECT_SIZE * 2)
-	//};
-
-	//const int start = 0;
-	//const int end = 1;
-
-	//for (int i = height_range_ids[start]; i <= height_range_ids[end]; i++)
-	//{
-	//	for (int j = width_range_ids[start]; j <= width_range_ids[end]; j++)
-	//	{
-	//		if (map_data[i][j] == '2')
-	//		{
-	//			// “–‚½‚è
-	//			return true;
-	//		}
-	//	}
-	//}
-	//return false;
 }

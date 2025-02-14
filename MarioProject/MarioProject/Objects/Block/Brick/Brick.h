@@ -1,8 +1,6 @@
 #pragma once
 #include "../BlockBase.h"
 
-#define D_GRAVITY (30.0f)    //重力加速度(m/ss)
-
 // 破壊可能ブロック
 class Brick : public BlockBase
 {

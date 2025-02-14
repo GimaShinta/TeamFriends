@@ -2,7 +2,6 @@
 #include "DxLib.h"
 
 #include "../../../Utility/ResourceManager.h"
-#include "../../../Objects/GameObjectManager.h"
 
 Hatena::Hatena() :
 	 is_kara(false)
@@ -80,7 +79,6 @@ void Hatena::Update(float delta_second)
 void Hatena::Finalize()
 {
 	ResourceManager::DeleteInstance();
-	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>
