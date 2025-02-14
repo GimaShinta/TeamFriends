@@ -1,6 +1,7 @@
 #pragma once
 
 #include"../SceneBase.h"
+#include"../../Objects/Character/CharacterBase.h"
 #include <vector>
 
 // インゲームシーンクラス 
@@ -42,6 +43,8 @@ private:
 private:
 	// クラスポインタ変数
 	class Player* player;                   // プレイヤー情報を保持
+	class Nokonoko* nokonoko;               // プレイヤー情報を保持
+	class Kuribo* kuribo;                   // プレイヤー情報を保持
 	class GameObjectBase* game_object;      // プレイヤー以外のゲームオブジェクト情報を保持する
 
 	// オブジェクトの情報配列
@@ -49,6 +52,7 @@ private:
 
 	// 生成したオブジェクトを格納する配列
 	std::vector<GameObjectBase*> object_array;
+	std::vector<CharacterBase*> charactor_array;
 
 	// ステージの情報配列
 	std::vector<std::vector<char>> map_array;

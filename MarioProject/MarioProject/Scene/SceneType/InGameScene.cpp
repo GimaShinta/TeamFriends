@@ -9,6 +9,7 @@
 
 // ゲームオブジェクトのインクルード
 #include "../../Objects/GameObjectBase.h"
+#include "../../Objects/Character/CharacterBase.h"
 #include "../../Objects/Character/Player/Player.h"
 #include "../../Objects/Character/Kuribo/Kuribo.h"
 #include "../../Objects/Character/Nokonoko/Nokonoko.h"
@@ -33,6 +34,8 @@
 
 InGameScene::InGameScene():
 	  player(nullptr)
+	, kuribo(nullptr)
+	, nokonoko(nullptr)
 	, game_object(nullptr)
 	, image(NULL)
 	, bgm(NULL)
@@ -62,8 +65,11 @@ void InGameScene::Initialize()
 	// csvを読み込んでステージの情報配列を作成
 	map_array = LoadStageMapCSV();
 
-	// ゲームオブジェクトにステージの情報配列を参照して渡す
-	player->SetMapData(map_array);
+	// キャラクターオブジェクトにステージの情報配列を参照して渡す
+	for (CharacterBase* obj : charactor_array)
+	{
+		obj->SetMapData(map_array);
+	}
 
 	// リソースマネージャーのインスタンスの取得（rmにはリソースマネージャークラスにアクセスできるアドレスが入る）
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
@@ -234,9 +240,20 @@ void InGameScene::Draw(float delta_second)
 
 	//制限時間表示
 	DrawRotaGraph(830, 40, 1.8, 0.0, ui_image[1], TRUE);
-	DrawRotaGraph(815, 70, 1.8, 0.0, ui_num[gametime / 100], TRUE);
-	DrawRotaGraph(845, 70, 1.8, 0.0, ui_num[gametime % 100 / 10], TRUE);
-	DrawRotaGraph(875, 70, 1.8, 0.0, ui_num[gametime % 10], TRUE);
+	// 値が正の時
+	if (gametime >= 0)
+	{
+		DrawRotaGraph(815, 70, 1.8, 0.0, ui_num[gametime / 100], TRUE);
+		DrawRotaGraph(845, 70, 1.8, 0.0, ui_num[gametime % 100 / 10], TRUE);
+		DrawRotaGraph(875, 70, 1.8, 0.0, ui_num[gametime % 10], TRUE);
+	}
+	// マイナスになったら0で表示させる
+	else
+	{
+		DrawRotaGraph(815, 70, 1.8, 0.0, ui_num[0], TRUE);
+		DrawRotaGraph(845, 70, 1.8, 0.0, ui_num[0], TRUE);
+		DrawRotaGraph(875, 70, 1.8, 0.0, ui_num[0], TRUE);
+	}
 }
 
 // 終了時処理（使ったインスタンスの削除とか）
@@ -508,20 +525,23 @@ void InGameScene::CreateMapObject()
 		case 'P':
 			// プレイヤーの生成
 			player = obj_m->CreateObject<Player>(generate_location);
+			charactor_array.push_back(player);
 			break;
 		case 'K':
 			// クリボーの生成
-			game_object = obj_m->CreateObject<Kuribo>(generate_location);
+			kuribo = obj_m->CreateObject<Kuribo>(generate_location);
 			// 複数利用できるように配列で管理
-			object_array.push_back(game_object);
+			object_array.push_back(kuribo);
+			charactor_array.push_back(kuribo);
 			break;
 		case 'N':
 			// ノコノコの生成
 			// 背が高い分上にずらして生成
 			generate_location.y -= D_OBJECT_SIZE;
-			game_object = obj_m->CreateObject<Nokonoko>(generate_location);
+			nokonoko = obj_m->CreateObject<Nokonoko>(generate_location);
 			// 複数利用できるように配列で管理
-			object_array.push_back(game_object);
+			object_array.push_back(nokonoko);
+			charactor_array.push_back(nokonoko);
 			break;
 		case 'B':
 			// 破壊可能ブロックの生成

@@ -1,6 +1,7 @@
 #include "CharacterBase.h"
 
 #include "../../Scene/SceneType/InGameScene.h"
+#include "../../Application/Application.h"
 
 #include <cmath>
 
@@ -85,12 +86,19 @@ void CharacterBase::SetScrollValue(float& scroll)
 /// <param name="map">インゲームで作ったステージ情報を参照で受け取る</param>
 void CharacterBase::SetMapData( const std::vector<std::vector<char>>& map)
 {
-	this->map_data = map;
+	map_data = map;
 }
 
 // マップとの当たり判定
 bool CharacterBase::MapCollision(int x, int y)
 {
+	// 範囲外だったらあたってない
+	if (this->location.x < 0 || this->location.x >= D_WIN_MAX_X ||
+		this->location.y < D_OBJECT_SIZE * 4 || this->location.y >= D_WIN_MAX_Y)
+	{
+		return false; // マップ範囲外
+	}
+
 	// ワールド座標を保存
 	Vector2D object_rect = Vector2D (this->location.x + scroll_value, this->location.y);
 	// サイズを保存

@@ -235,58 +235,6 @@ void Player::SetNextState(ePlayerState next_state)
 /// </summary>
 void Player::PlayerControl(float delta_second)
 {
-	//// 歩いているとき
-	//if (now_state == ePlayerState::RUN)
-	//{
-	//	// 当たっている場所が壁だったら
-	//	if (__super::MapCollision(0, -1) == true)
-	//	{
-	//		// 前座標を保存
-	//		old_location = location;
-
-	//		// 変換用変数に保存
-	//		float x_map = location.x;
-
-	//		// チップサイズで割って現在のマップ位置を特定
-	//		x_map /= (D_OBJECT_SIZE * 2);
-
-	//		// 切り上げ整数に変換
-	//		int x_id = std::floor(x_map);
-
-	//		// ワールド座標を保存
-	//		Vector2D object_rect = Vector2D(location.x + scroll_value, location.y);
-
-	//		float scroll = scroll_value;
-
-	//		// 右に歩いているとき
-	//		if (velocity.x > 1.0f)
-	//		{
-	//			// マップサイズをかけて座標を特定
-	//			x_id *= (D_OBJECT_SIZE * 2);
-
-	//			// 座標を設定
-	//			location.x = x_id;
-	//		}
-	//		// 左に歩いているとき
-	//		else if (velocity.x < -1.0f)
-	//		{
-	//			// マップ位置を右にずらす
-	//			x_id++;
-
-	//			// マップサイズをかけて座標を特定
-	//			x_id *= (D_OBJECT_SIZE * 2);
-
-	//			// 座標を設定
-	//			location.x = x_id;
-	//		}
-	//		else
-	//		{
-	//			// 座標を設定
-	//			location.x = x_id;
-	//		}
-	//	}
-	//}
-
 	//最大速度の設定
 	if (velocity.x >= P_MAX_SPEED)
 	{
@@ -329,10 +277,10 @@ void Player::PlayerControl(float delta_second)
 		location.x = 0 + D_OBJECT_SIZE;
 	}
 
-	//画面外に行かないようにする
-	if (location.y < 0 + D_OBJECT_SIZE)
-	{ //←
-		velocity.y = -1;
+	// 穴に落ちたら死亡
+	if (location.y > D_WIN_MAX_Y - (D_OBJECT_SIZE * 2))
+	{
+		is_destroy = true;
 	}
 
 	//スクロール処理

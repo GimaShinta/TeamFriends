@@ -71,6 +71,31 @@ void Nokonoko::Update(float delta_second)
 		break;
 	}
 
+	//重力速度の計算
+	g_velocity += D_GRAVITY;
+	velocity.y += g_velocity * delta_second;
+
+	// 当たっている場所が地面だったらその座標に設定
+	if (__super::MapCollision(0, 0) == true)
+	{
+		// 変換用変数に保存
+		float y_map = location.y;
+
+		// チップサイズで割って現在のマップ位置を特定
+		y_map /= (D_OBJECT_SIZE * 2);
+
+		// 切り上げ整数に変換
+		int y_id = std::ceil(y_map);
+
+		// マップサイズをかけて座標を特定
+		y_id *= (D_OBJECT_SIZE * 2);
+
+		// 座標を設定
+		location.y = y_id - D_OBJECT_SIZE;
+		velocity.y = 0.0f;
+		g_velocity = 0.0f;
+	}
+
 	// 親クラスの更新処理を呼び出す
 	__super::Update(delta_second);
 }
@@ -129,15 +154,8 @@ void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 					velocity *= 5.0f;
 				}
 			}
-
 			// マリオをジャンプさせる
 			hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, -1500));
-		}
-		// ノコノコの上以外に触れたら
-		else 
-		{
-			//// マリオを削除する（バグあり）
-			//rm->DestroyGameObject(hit_object);
 		}
 	}
 }

@@ -82,6 +82,31 @@ void Kuribo::Update(float delta_second)
 		break;
 	}
 
+	//重力速度の計算
+	g_velocity += D_GRAVITY;
+	velocity.y += g_velocity * delta_second;
+
+	// 当たっている場所が地面だったらその座標に設定
+	if (__super::MapCollision(0, 0) == true)
+	{
+		// 変換用変数に保存
+		float y_map = location.y;
+
+		// チップサイズで割って現在のマップ位置を特定
+		y_map /= (D_OBJECT_SIZE * 2);
+
+		// 切り上げ整数に変換
+		int y_id = std::ceil(y_map);
+
+		// マップサイズをかけて座標を特定
+		y_id *= (D_OBJECT_SIZE * 2);
+
+		// 座標を設定
+		location.y = y_id - D_OBJECT_SIZE;
+		velocity.y = 0.0f;
+		g_velocity = 0.0f;
+	}
+
 	// 親クラスの更新処理を呼び出す
 	__super::Update(delta_second);
 }
@@ -94,9 +119,6 @@ void Kuribo::Draw(const Vector2D& screen_offset) const
 {
 	//親クラスの描画処理を呼び出す
 	__super::Draw(screen_offset);
-	//// 当たり判定の可視化
-	//DrawBox(this->location.x - this->box_size.x, this->location.y - this->box_size.y,
-	//	this->location.x + this->box_size.x, this->location.y + this->box_size.y, GetColor(255, 0, 0), TRUE);
 }
 
 // 終了時処理（使ったインスタンスなどの削除）
