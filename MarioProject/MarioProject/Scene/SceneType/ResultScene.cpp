@@ -27,8 +27,8 @@ void ResultScene::Initialize()
 	mario_image = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32)[0];
 	ui_num = rm->GetImages("Resource/Images/UI/num.png", 15, 15, 1, 16, 16);
 
-	game_over_sound = rm->GetSounds("Resource/Sounds/SE_GameOver.wav");
-	death_sound = rm->GetSounds("Resource/Sounds/SE_Death.wav");
+	game_over_sound = rm->GetSounds("Resource/Sounds/BGM/Destroy_BGM_Nonomura.wav");
+	death_sound = rm->GetSounds("Resource/Sounds/BGM/GameOver_BGM_Nonomura.wav");
 }
 
 /// <summary>
