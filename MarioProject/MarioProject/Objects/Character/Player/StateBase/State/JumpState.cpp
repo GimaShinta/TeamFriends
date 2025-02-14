@@ -26,7 +26,7 @@ void JumpState::Initialize()
 	PlaySoundMem(jump_sound, DX_PLAYTYPE_BACK);
 
 	//移動処理
-	this->player->velocity.y -= 950.0f;         //ジャンプ力
+	this->player->velocity.y -= 1700.0f;         //ジャンプ力
 	old_location = 0.0f;
 }
 

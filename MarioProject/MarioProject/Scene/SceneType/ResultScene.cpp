@@ -6,7 +6,7 @@
 #include"../../Utility/ResourceManager.h"
 #include"../../Application/Application.h"
 
-int zanki = 2;
+int zanki = 3;
 
 ResultScene::ResultScene() :
 	mario_image(NULL)
@@ -47,7 +47,7 @@ eSceneType ResultScene::Update(float delta_second)
 		//SPACEキーでタイトル画面に遷移する
 		if (input->GetKeyDown(KEY_INPUT_SPACE))
 		{
-			if (zanki < 2)
+			if (zanki < 3)
 			{
 				PlaySoundMem(death_sound, DX_PLAYTYPE_NORMAL);
 			}
@@ -60,7 +60,7 @@ eSceneType ResultScene::Update(float delta_second)
 	{
 		PlaySoundMem(game_over_sound, DX_PLAYTYPE_NORMAL);
 		// 残機が0になったらタイトルへ遷移
-		zanki = 2;
+		zanki = 3;
 		return eSceneType::eTitle;
 	}
 
