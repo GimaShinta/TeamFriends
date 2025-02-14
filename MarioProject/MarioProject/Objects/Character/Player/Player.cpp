@@ -62,6 +62,8 @@ void Player::Initialize()
 
 	// プレイヤーの当たり判定サイズの設定
 	box_size = D_OBJECT_SIZE;
+
+	z_layer = 2;
 }
 
 /// <summary>
@@ -119,7 +121,7 @@ void Player::Update(float delta_second)
 			velocity.x += 100;
 		}
 		// お城の中に消える
-		if (location.x > ((D_OBJECT_SIZE * 2) * 11) + D_OBJECT_SIZE)
+		if (location.x > ((D_OBJECT_SIZE * 2) * 13) + D_OBJECT_SIZE)
 		{
 			image = NULL;
 			is_clear = true;

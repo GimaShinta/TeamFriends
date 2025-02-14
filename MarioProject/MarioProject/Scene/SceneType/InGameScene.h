@@ -49,7 +49,6 @@ private:
 
 	// 生成したオブジェクトを格納する配列
 	std::vector<GameObjectBase*> object_array;
-	std::vector<GameObjectBase*> charactor_array;
 
 	// ステージの情報配列
 	std::vector<std::vector<char>> map_array;

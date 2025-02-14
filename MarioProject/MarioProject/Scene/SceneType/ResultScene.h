@@ -6,6 +6,7 @@
 class ResultScene :public SceneBase
 {
 private:
+	std::vector<int> ui_num;
 	int mario_image;    //ƒ}ƒŠƒI‚Ì‰æ‘œ
 	int game_over_sound;
 	int death_sound;

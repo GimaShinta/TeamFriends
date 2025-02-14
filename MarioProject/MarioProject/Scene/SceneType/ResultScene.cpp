@@ -25,6 +25,7 @@ void ResultScene::Initialize()
 	// マリオ画像の読込みと初期設定
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	mario_image = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32)[0];
+	ui_num = rm->GetImages("Resource/Images/UI/num.png", 15, 15, 1, 16, 16);
 
 	game_over_sound = rm->GetSounds("Resource/Sounds/SE_GameOver.wav");
 	death_sound = rm->GetSounds("Resource/Sounds/SE_Death.wav");
@@ -75,8 +76,9 @@ eSceneType ResultScene::Update(float delta_second)
 void ResultScene::Draw(float delta_second)
 {
 	DrawRotaGraph(D_WIN_MAX_X / 2 - ((D_OBJECT_SIZE * 2) * 1.5), D_WIN_MAX_Y / 2, 1.2, 0.0, mario_image, TRUE);
+	DrawRotaGraph(D_WIN_MAX_X / 2 - (D_OBJECT_SIZE / 2), D_WIN_MAX_Y / 2, 2.5, 0.0, ui_num[11], TRUE);
+	DrawRotaGraph(D_WIN_MAX_X / 2 + (D_OBJECT_SIZE * 2), D_WIN_MAX_Y / 2 + (D_OBJECT_SIZE / 6), 2.0, 0.0, ui_num[zanki], TRUE);
 	SetFontSize(32);
-	DrawFormatString(D_WIN_MAX_X / 2 - ((D_OBJECT_SIZE * 2) * 1), D_WIN_MAX_Y / 2 - (D_OBJECT_SIZE / 2), GetColor(255, 255, 255), " × %d", zanki, TRUE);
 	// フラグでスタートかリスタートか決める
 	if (zanki >= 2)
 	{

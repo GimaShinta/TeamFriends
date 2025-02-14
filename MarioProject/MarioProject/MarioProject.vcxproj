@@ -138,7 +138,6 @@
     <ClCompile Include="Application\Application.cpp" />
     <ClCompile Include="AppMain.cpp" />
     <ClCompile Include="Objects\Block\Hatena\ItemHatena.cpp" />
-    <ClCompile Include="Objects\Block\Brick\BlickDebris.cpp" />
     <ClCompile Include="Objects\Item\Mushroom\Mushroom.cpp" />
     <ClCompile Include="Objects\Item\Coin\Coin.cpp" />
     <ClCompile Include="Objects\Item\ItemBase.cpp" />
@@ -169,7 +168,6 @@
   <ItemGroup>
     <ClInclude Include="Application\Application.h" />
     <ClInclude Include="Objects\Block\Hatena\ItemHatena.h" />
-    <ClInclude Include="Objects\Block\Brick\BlickDebris.h" />
     <ClInclude Include="Objects\Item\Mushroom\Mushroom.h" />
     <ClInclude Include="Objects\Item\Coin\Coin.h" />
     <ClInclude Include="Objects\Item\ItemBase.h" />

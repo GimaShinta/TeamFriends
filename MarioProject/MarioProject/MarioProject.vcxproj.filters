@@ -93,9 +93,6 @@
     <ClCompile Include="Objects\Item\Mushroom\Mushroom.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Block\Brick\BlickDebris.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Objects\Block\Hatena\ItemHatena.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Item\Mushroom\Mushroom.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Block\Brick\BlickDebris.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Block\Hatena\ItemHatena.h">

@@ -44,6 +44,7 @@ InGameScene::InGameScene():
 	, in_game_time(0.0f)
 	, gametime(0)
 	, in_game_count(0)
+	, coin(0)
 {
 }
 
@@ -96,6 +97,8 @@ eSceneType InGameScene::Update(float delta_second)
 	// インスタンスの取得
 	GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
 	InputManager* input = Singleton<InputManager>::GetInstance();
+
+	//obj_manager->CheckCreateObject();
 
 	// GameObjectManagerクラスのUpdate関数にアクセス
 	obj_manager->Update(delta_second);
@@ -486,7 +489,6 @@ void InGameScene::CreateMapObject()
 			game_object = obj_m->CreateObject<Kuribo>(generate_location);
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
-			charactor_array.push_back(game_object);
 			break;
 		case 'N':
 			// ノコノコの生成
@@ -495,7 +497,6 @@ void InGameScene::CreateMapObject()
 			game_object = obj_m->CreateObject<Nokonoko>(generate_location);
 			// 複数利用できるように配列で管理
 			object_array.push_back(game_object);
-			charactor_array.push_back(game_object);
 			break;
 		case 'B':
 			// 破壊可能ブロックの生成
