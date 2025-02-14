@@ -4,6 +4,7 @@
 #include "../PlayerState.h"
 
 #include "../../../../../Utility/InputManager.h"
+#include "../../../../../Utility/ResourceManager.h"
 
 JumpState::JumpState(Player* p) :
 	PlayerStateBase(p)
@@ -17,6 +18,13 @@ JumpState::~JumpState()
 // 初期化処理
 void JumpState::Initialize()
 {
+	// インスタンスの取得
+	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
+	//BGMの読み込み
+	jump_sound = rm->GetSounds("Resource/Sounds/SE_MiniJump.wav");
+	// 再生
+	PlaySoundMem(jump_sound, DX_PLAYTYPE_BACK);
+
 	//移動処理
 	this->player->velocity.y -= 950.0f;         //ジャンプ力
 	old_location = 0.0f;
@@ -45,17 +53,6 @@ void JumpState::Update(float delta_second)
 		player->SetNextState(ePlayerState::IDLE);
 	}
 
-	//// しゃがみ状態に遷移
-	//if (input->GetKey(KEY_INPUT_DOWN))
-	//{
-	//	player->SetNextState(ePlayerState::SQUAT);
-	//}
-
-	//if (player->is_destroy == true)
-	//{
-	//	player->SetNextState(ePlayerState::DESTROY);
-	//}
-
 	// 前回座標の更新
 	old_location = player->GetLocation();
 }
@@ -69,6 +66,7 @@ void JumpState::Draw() const
 void JumpState::Finalize()
 {
 	InputManager::DeleteInstance();
+	ResourceManager::DeleteInstance();
 }
 
 // 現在の移動状態の取得

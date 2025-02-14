@@ -7,8 +7,8 @@
 class Brick : public BlockBase
 {
 private:
-	class Coin* coin;  //velocity“®‚©‚·—p
 	bool is_destruction;   // ‰ó‚µ‚½‚©‚Ç‚¤‚©
+	int block_sound;
 
 public:
 	Brick();

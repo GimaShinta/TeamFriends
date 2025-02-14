@@ -4,8 +4,6 @@
 #include "IdleState.h"
 #include "JumpState.h"
 #include "RunState.h"
-//#include "../SquatState/SquatState.h"
-//#include "../DestroyState/Destroy.h"
 
 #include "../../Player.h"
 
@@ -32,8 +30,6 @@ void PlayerStateFactory::Initialize(Player& player)
 	idle = new IdleState(&player);
 	jump = new JumpState(&player);
 	run = new RunState(&player);
-	//squat = new SquatState(&player);
-	//destroy = new DestroyState(&player);
 }
 
 PlayerStateBase* PlayerStateFactory::Get(Player& player, ePlayerState state)
@@ -59,14 +55,6 @@ PlayerStateBase* PlayerStateFactory::Get(Player& player, ePlayerState state)
 		factory->run->Initialize();
 		ret = factory->run;
 		break;
-	//case ePlayerState::SQUAT:
-	//	factory->squat->Initialize();
-	//	ret = factory->squat;
-	//	break;
-	//case ePlayerState::DESTROY:
-	//	factory->squat->Initialize();
-	//	ret = factory->destroy;
-	//	break;
 	case ePlayerState::NONE:      //返すものなし
 	default:
 		break;
@@ -82,13 +70,9 @@ void PlayerStateFactory::Finalize()
 	factory->idle->Finalize();
 	factory->jump->Finalize();
 	factory->run->Finalize();
-	//factory->squat->Finalize();
-	//factory->destroy->Finalize();
 
 	//各状態クラスのインスタンスを削除
 	delete factory->idle;
 	delete factory->jump;
 	delete factory->run;
-	//delete factory->squat;
-	//delete factory->destroy;
 }

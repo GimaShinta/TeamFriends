@@ -5,6 +5,9 @@
 // プレイヤーのジャンプ状態クラス
 class JumpState : public PlayerStateBase
 {
+private:
+	int jump_sound;
+
 public:
 	// このクラスが生成されるときに、引数にあるpにはプレイヤーのインスタンス（実体）のアドレスが渡される
 	JumpState(class Player* p);

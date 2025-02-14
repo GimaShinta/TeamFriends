@@ -6,7 +6,7 @@
 // インゲームシーンクラス 
 class InGameScene : public SceneBase//,  public ObjectManager
 {
-public:
+private:
 	float animation_time;
 	int animation_count;
 	float in_game_time;
@@ -14,6 +14,7 @@ public:
 	int image;	//画像用
 	float scroll;	//スクロール量
 	int bgm;     // bgm用
+	int clear_bgm;     // bgm用
 	int score;   // スコア
 	int coin;   // 獲得コイン数
 	int gametime; // 制限時間

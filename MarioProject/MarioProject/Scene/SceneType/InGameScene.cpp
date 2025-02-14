@@ -36,6 +36,7 @@ InGameScene::InGameScene():
 	, game_object(nullptr)
 	, image(NULL)
 	, bgm(NULL)
+	, clear_bgm(NULL)
 	, scroll(0.0f)
 	, score(0)
 	, animation_count(0)
@@ -75,6 +76,7 @@ void InGameScene::Initialize()
 	ui_image[2] = rm->GetImages("Resource/Images/UI/top.png", 1, 0, 0, 32, 32)[0];
 	ui_image[3] = rm->GetImages("Resource/Images/UI/world.png", 1, 0, 0, 32, 32)[0];
 
+
 	//BGMの読み込み
 	bgm = LoadSoundMem("Resource/Sounds/BGM/Main_BGM_Nonomura.wav");
 	//ボリューム（BGM）
@@ -91,9 +93,6 @@ void InGameScene::Initialize()
 /// <returns></returns>
 eSceneType InGameScene::Update(float delta_second)
 {
-	//BGM再生
-	PlaySoundMem(bgm, DX_PLAYTYPE_LOOP, FALSE);
-
 	// インスタンスの取得
 	GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
 	InputManager* input = Singleton<InputManager>::GetInstance();
@@ -210,8 +209,6 @@ void InGameScene::Draw(float delta_second)
 	DrawRotaGraph(815, 70, 1.8, 0.0, ui_num[gametime / 100], TRUE);
 	DrawRotaGraph(845, 70, 1.8, 0.0, ui_num[gametime % 100 / 10], TRUE);
 	DrawRotaGraph(875, 70, 1.8, 0.0, ui_num[gametime % 10], TRUE);
-
-	DrawFormatString(10, 10, GetColor(255, 255, 255), "%f", scroll);
 }
 
 // 終了時処理（使ったインスタンスの削除とか）

@@ -6,5 +6,8 @@ class ItemHatena :
 public:
 	ItemHatena();
 	~ItemHatena();
+
+public:
+	void Initialize() override;
 };
 

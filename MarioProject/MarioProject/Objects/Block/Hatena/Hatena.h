@@ -8,6 +8,8 @@ class Hatena :
 protected:
 	int kara_image;
 	bool is_kara;                       // 空かどうか（trueなら空、falseなら空じゃない）
+	int item_sound;
+	int block_sound;
 
 private:
 	std::vector<int> hatena_animation;  // ハテナブロックのアニメーション画像を保持

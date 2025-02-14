@@ -18,6 +18,12 @@ public:
 	bool is_goal;
 	bool is_clear;
 
+private:
+	int sound_bgm;
+	int sound_clear;
+	int sound_tach;
+	int sound_destroy;
+
 public:
 	ePlayerState next_state;                          // 次の状態パターンを保存
 	ePlayerState now_state;                           // 現在の状態パターンを保存

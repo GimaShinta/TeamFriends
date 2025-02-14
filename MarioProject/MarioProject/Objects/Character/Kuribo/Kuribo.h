@@ -16,6 +16,7 @@ private:
 
 private:
 	eKuriboState kuribo_state;       // クリボーの状態の管理
+	int hit_sound;
 
 private:
 	std::vector<int> kuribo_animation;     // クリボーのアニメーション画像を保持
