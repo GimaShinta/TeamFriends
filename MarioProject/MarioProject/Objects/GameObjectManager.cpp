@@ -42,12 +42,8 @@ void GameObjectManager::Update(const float& delta_second)
 	// インゲーム配列内のオブジェクトを更新する
 	for (GameObjectBase* obj : game_object)
 	{
-		// ゲームオブジェクトの位置座標がウィンドウの右端外あたりに来たら
-		if (obj->GetLocation().x <= D_WIN_MAX_X + (D_OBJECT_SIZE * 2))
-		{
-			// ゲームオブジェクトの更新処理を開始する（動作が重くなるのを防ぐ）
-			obj->Update(delta_second);
-		}
+		// ゲームオブジェクトの更新処理を開始する（動作が重くなるのを防ぐ）
+		obj->Update(delta_second);
 	}
 
 	// 当たり判定確認処理
@@ -82,12 +78,8 @@ void GameObjectManager::Draw() const
 	// ゲーム配列内のオブジェクトを描画する
 	for (GameObjectBase* obj : game_object)
 	{
-		// ゲームオブジェクトの位置座標がウィンドウの右端外あたりに来たら
-		if (obj->GetLocation().x <= D_WIN_MAX_X + (D_OBJECT_SIZE * 2))
-		{
-			// ゲームオブジェクトの描画処理を開始する（動作が重くなるのを防ぐ）
-			obj->Draw(screen_offset);
-		}
+		// ゲームオブジェクトの描画処理を開始する（動作が重くなるのを防ぐ）
+		obj->Draw(screen_offset);
 	}
 }
 
@@ -114,11 +106,24 @@ void GameObjectManager::CheckCreateObject()
 	// 生成配列にオブジェクトがあれば、インゲーム配列に挿入する
 	if (!create_object.empty())
 	{
+		std::vector<GameObjectBase*> object_to_add;
+
 		// 生成配列にいるオブジェクトの数だけ回す
 		for (GameObjectBase* obj : create_object)
 		{
+			// ウィンドウ内に入っていたら
+			if (obj->GetLocation().x >= 0 && obj->GetLocation().x - (D_OBJECT_SIZE * 2) <= D_WIN_MAX_X &&
+				obj->GetLocation().y >= 0 && obj->GetLocation().y + (D_OBJECT_SIZE * 2) <=D_WIN_MAX_Y)
+			{
+				// 一時保持
+				object_to_add.push_back(obj);
+			}
+		}
+		// ウィンドウ内オブジェクトの数だけ回す
+		for (GameObjectBase* obj_game : object_to_add)
+		{
 			// レイヤー情報を基に順番を入れ替える
-			int z_layer = obj->GetZLayer();
+			int z_layer = obj_game->GetZLayer();
 			std::vector<GameObjectBase*>::iterator itr = game_object.begin();	// オブジェクトリストの先頭
 			// リストの末尾になるまで走査する
 			for (; itr != game_object.end(); itr++)
@@ -131,11 +136,13 @@ void GameObjectManager::CheckCreateObject()
 					break;
 				}
 			}
-			// インゲーム配列の途中に挿入する
-			game_object.insert(itr, obj);
+			// インゲーム配列へ格納
+			game_object.insert(itr, obj_game);
+			// 追加済みオブジェクトの削除
+			create_object.erase(std::remove(create_object.begin(), create_object.end(), obj_game), create_object.end());
 		}
 		// 生成配列を解放する
-		create_object.clear();
+		object_to_add.clear();
 	}
 }
 

@@ -4,7 +4,6 @@
 #include "../../../Utility/ResourceManager.h"
 #include "../../../Objects/GameObjectManager.h"
 #include "../../../Objects/Item/Coin/Coin.h"
-#include "BlickDebris.h"
 
 Brick::Brick() :
 	is_destruction(false)
@@ -94,17 +93,7 @@ void Brick::OnHitCollision(GameObjectBase* hit_object)
 		hit_object->SetVelocity(Vector2D(hit_object->GetVelocity().x, 1.0f));
 
 		// 破壊されていたら
-		if (is_destruction == true)
-		{
-			// インスタンスの取得
-			GameObjectManager* gm = Singleton<GameObjectManager>::GetInstance();
-			gm->DestroyGameObject(this);
-			gm->CreateObject<BlickDebris>(location + box_size);
-			gm->CreateObject<BlickDebris>(location - box_size);
-			gm->CreateObject<BlickDebris>(Vector2D(location.x + box_size.x, location.y - box_size.y));
-			gm->CreateObject<BlickDebris>(Vector2D(location.x - box_size.x, location.y + box_size.y));
-		}
-		else
+		if (is_destruction == false)
 		{
 			PlaySoundMem(block_sound, DX_PLAYTYPE_BACK);
 			// 上に上昇させる

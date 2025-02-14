@@ -27,6 +27,8 @@ void PoleDown::Initialize()
 
 	// 当たり判定サイズの設定
 	box_size = D_OBJECT_SIZE;
+
+	z_layer = 1;
 }
 
 // 更新処理
