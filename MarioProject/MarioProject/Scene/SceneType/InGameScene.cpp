@@ -98,8 +98,6 @@ eSceneType InGameScene::Update(float delta_second)
 	GameObjectManager* obj_manager = Singleton<GameObjectManager>::GetInstance();
 	InputManager* input = Singleton<InputManager>::GetInstance();
 
-	//obj_manager->CheckCreateObject();
-
 	// GameObjectManagerクラスのUpdate関数にアクセス
 	obj_manager->Update(delta_second);
 
@@ -109,9 +107,36 @@ eSceneType InGameScene::Update(float delta_second)
 	// UIのコインアニメーション
 	CoinAnimation(delta_second);
 
-	// スコアを取得
-	score += player->GetScore();
-
+	// スコアがマイナスになったら
+	if (score < 0)
+	{
+		coin = 0;
+	}
+	// スコアが999999を超えたら
+	else if (score > 999999)
+	{
+		score = 999999;
+	}
+	else
+	{
+		// スコアを取得
+		score += player->GetScore();
+	}
+	// コインがマイナスになったら
+	if (coin < 0)
+	{
+		coin = 0;
+	}
+	// コインが99枚を超えたら
+	else if (coin > 99)
+	{
+		coin = 99;
+	}
+	else
+	{
+		// 獲得コイン数の取得
+		coin += player->GetCoin();
+	}
 
 	//【デバッグ用】Yキーでリザルト画面に遷移する
 	if (input->GetKeyDown(KEY_INPUT_Y))
@@ -198,8 +223,8 @@ void InGameScene::Draw(float delta_second)
 	// コインカウント
 	DrawRotaGraph(370, 70, 1.8, 0.0, coin_image, TRUE);
 	DrawRotaGraph(400, 70, 1.8, 0.0, ui_num[11], TRUE);
-	DrawRotaGraph(430, 70, 1.8, 0.0, ui_num[1], TRUE);
-	DrawRotaGraph(460, 70, 1.8, 0.0, ui_num[1], TRUE);
+	DrawRotaGraph(430, 70, 1.8, 0.0, ui_num[coin / 10], TRUE);
+	DrawRotaGraph(460, 70, 1.8, 0.0, ui_num[coin % 10], TRUE);
 
 	// ワールド
 	DrawRotaGraph(630, 40, 1.8, 0.0, ui_image[3], TRUE);

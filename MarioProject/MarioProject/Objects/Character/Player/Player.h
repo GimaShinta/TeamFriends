@@ -23,6 +23,7 @@ private:
 	int sound_clear;
 	int sound_tach;
 	int sound_destroy;
+	int coin;
 
 public:
 	ePlayerState next_state;                          // 次の状態パターンを保存
@@ -78,4 +79,7 @@ public:
 
 	// clearしているか
 	bool GetIsClear();
+
+	// 獲得コイン数の取得
+	int GetCoin();
 };
