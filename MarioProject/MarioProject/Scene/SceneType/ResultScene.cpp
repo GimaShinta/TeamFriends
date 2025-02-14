@@ -26,8 +26,8 @@ void ResultScene::Initialize()
 	ResourceManager* rm = Singleton<ResourceManager>::GetInstance();
 	mario_image = rm->GetImages("Resource/Images/Mario/mario.png", 9, 9, 1, 32, 32)[0];
 
-	game_over_sound = rm->GetSounds("Resource/Sounds/SE_GameOver.wav");
-	death_sound = rm->GetSounds("Resource/Sounds/SE_Death.wav");
+	game_over_sound = rm->GetSounds("Resource/Sounds/BGM/Destroy_BGM_Nonomura.wav");
+	death_sound = rm->GetSounds("Resource/Sounds/BGM/GameOver_BGM_Nonomura.wav");
 }
 
 /// <summary>
