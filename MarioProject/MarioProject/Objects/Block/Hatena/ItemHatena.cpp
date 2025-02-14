@@ -1,5 +1,4 @@
 #include "ItemHatena.h"
-#include "../../../Objects/Item/Mushroom/Mushroom.h"
 #include "../../../Utility/ResourceManager.h"
 
 ItemHatena::ItemHatena()

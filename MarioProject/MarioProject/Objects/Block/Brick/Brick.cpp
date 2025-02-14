@@ -2,8 +2,6 @@
 #include "DxLib.h"
 
 #include "../../../Utility/ResourceManager.h"
-#include "../../../Objects/GameObjectManager.h"
-#include "../../../Objects/Item/Coin/Coin.h"
 
 Brick::Brick() :
 	is_destruction(false)
@@ -77,7 +75,6 @@ void Brick::Draw(const Vector2D& screen_offset) const
 void Brick::Finalize()
 {
 	ResourceManager::DeleteInstance();
-	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>

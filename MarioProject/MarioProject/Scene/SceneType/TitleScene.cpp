@@ -57,6 +57,7 @@ void TitleScene::Draw(float delta_second)
 // 終了時処理（使ったインスタンスの削除とか）
 void TitleScene::Finalize()
 {
+	ResourceManager::DeleteInstance();
 	InputManager::DeleteInstance();
 }
 

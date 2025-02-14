@@ -3,7 +3,6 @@
 
 // シングルトン継承クラスのインクルード
 #include "../../../Utility/ResourceManager.h"
-#include "../../../Objects/GameObjectManager.h"
 
 Nokonoko::Nokonoko() :
 	noko_state(eNokonokoState::NORMAL)
@@ -45,10 +44,6 @@ void Nokonoko::Initialize()
 /// <param name="delta_second">１フレーム当たりの時間</param>
 void Nokonoko::Update(float delta_second)
 {
-	////重力速度の計算
-	//g_velocity += D_GRAVITY;
-	//velocity.y += g_velocity * delta_second;
-
 	// ノコノコの状態管理
 	switch (noko_state)
 	{
@@ -78,14 +73,6 @@ void Nokonoko::Update(float delta_second)
 
 	// 親クラスの更新処理を呼び出す
 	__super::Update(delta_second);
-
-	// 削除処理
-	GameObjectBase::Update(delta_second);
-
-	if (location.y > 600)
-	{
-		location.y = 600;
-	}
 }
 
 /// <summary>
@@ -96,16 +83,12 @@ void Nokonoko::Draw(const Vector2D& screen_offset) const
 {
 	//親クラスの描画処理を呼び出す
 	__super::Draw(screen_offset);
-	//// 当たり判定の可視化
-	//DrawBox(this->location.x - this->box_size.x, this->location.y - this->box_size.y,
-	//	this->location.x + this->box_size.x, this->location.y + this->box_size.y, GetColor(255, 0, 0), TRUE);
 }
 
 // 終了時処理（使ったインスタンスなどの削除）
 void Nokonoko::Finalize()
 {
 	ResourceManager::DeleteInstance();
-	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>
@@ -114,9 +97,6 @@ void Nokonoko::Finalize()
 /// <param name="hit_object">当たった相手</param>
 void Nokonoko::OnHitCollision(GameObjectBase* hit_object)
 {
-	// インスタンスの取得
-	GameObjectManager* rm = Singleton<GameObjectManager>::GetInstance();
-
 	// マリオに当たったら
 	if (hit_object->GetCollision().object_type == eObjectType::ePlayer)
 	{

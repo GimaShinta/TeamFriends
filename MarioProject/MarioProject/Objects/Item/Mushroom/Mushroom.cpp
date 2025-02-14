@@ -1,7 +1,6 @@
 #include "Mushroom.h"
 
 #include "../../../Utility/ResourceManager.h"
-#include "../../../Objects/GameObjectManager.h"
 
 Mushroom::Mushroom()
 {
@@ -67,7 +66,6 @@ void Mushroom::Update(float delta_second)
 void Mushroom::Finalize()
 {
 	ResourceManager::DeleteInstance();
-	GameObjectManager::DeleteInstance();
 }
 
 /// <summary>
