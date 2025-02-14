@@ -417,6 +417,8 @@ void InGameScene::DrawStageMap()
 			case 'w':
 				image = rm->GetImages("Resource/Images/cloud6.png")[0];
 				break;
+			default:
+				continue;
 			}
 			// ステージ情報を見て描画
 			DrawRotaGraphF(D_OBJECT_SIZE + ((D_OBJECT_SIZE * 2) * j) - scroll, D_OBJECT_SIZE + ((D_OBJECT_SIZE *  2) * i), 1.5, 0.0, image, TRUE);

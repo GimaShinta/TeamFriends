@@ -180,63 +180,63 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 		//	isOnGround = true;
 		//}
 
-		Vector2D P = Vector2D(location.x + velocity.x, location.y);
-		Vector2D P_upper = Vector2D(P + (0, -24.0f));
-		Vector2D P_upper_div_chip = P_upper / (D_OBJECT_SIZE * 2);
-		if (map_data[P_upper_div_chip.y][P_upper_div_chip.x] == '2')
-		{
-			if (velocity.x > 0)
-			{
-				location.x = (location.x / (D_OBJECT_SIZE * 2)) * (D_OBJECT_SIZE * 2);
-			}
-			else
-			{
-				location.x += velocity.x;
-			}
-		}
+		//Vector2D P = Vector2D(location.x + velocity.x, location.y);
+		//Vector2D P_upper = Vector2D(P + (0, -24.0f));
+		//Vector2D P_upper_div_chip = P_upper / (D_OBJECT_SIZE * 2);
+		//if (map_data[P_upper_div_chip.y][P_upper_div_chip.x] == '2')
+		//{
+		//	if (velocity.x > 0)
+		//	{
+		//		location.x = (location.x / (D_OBJECT_SIZE * 2)) * (D_OBJECT_SIZE * 2);
+		//	}
+		//	else
+		//	{
+		//		location.x += velocity.x;
+		//	}
+		//}
 
-		Vector2D P_bottom = Vector2D(P + (0, 24.0f));
-		Vector2D P_bottom_div_chip = P_bottom / (D_OBJECT_SIZE * 2);
-		if (map_data[P_bottom_div_chip.y][P_bottom_div_chip.x] == '2')
-		{
-			if (velocity.x > 0)
-			{
-				location.x -= velocity.x;
-			}
-			else
-			{
-				location.x += velocity.x;
-			}
-		}
+		//Vector2D P_bottom = Vector2D(P + (0, 24.0f));
+		//Vector2D P_bottom_div_chip = P_bottom / (D_OBJECT_SIZE * 2);
+		//if (map_data[P_bottom_div_chip.y][P_bottom_div_chip.x] == '2')
+		//{
+		//	if (velocity.x > 0)
+		//	{
+		//		location.x -= velocity.x;
+		//	}
+		//	else
+		//	{
+		//		location.x += velocity.x;
+		//	}
+		//}
 
-		P = Vector2D(location.x, location.y + D_OBJECT_SIZE);
-		Vector2D P_left = Vector2D(P + (-24.0f, 0));
-		Vector2D P_left_div_chip = P_left / (D_OBJECT_SIZE * 2);
-		if (map_data[P_left_div_chip.y][P_left_div_chip.x] == '2')
-		{
-			if (velocity.y > 0)
-			{
-				location.y -= velocity.y;
-			}
-			else
-			{
-				location.y += velocity.y;
-			}
-		}
+		//P = Vector2D(location.x, location.y + D_OBJECT_SIZE);
+		//Vector2D P_left = Vector2D(P + (-24.0f, 0));
+		//Vector2D P_left_div_chip = P_left / (D_OBJECT_SIZE * 2);
+		//if (map_data[P_left_div_chip.y][P_left_div_chip.x] == '2')
+		//{
+		//	if (velocity.y > 0)
+		//	{
+		//		location.y -= velocity.y;
+		//	}
+		//	else
+		//	{
+		//		location.y += velocity.y;
+		//	}
+		//}
 
-		Vector2D P_right = Vector2D(P + (24.0f, 0));
-		Vector2D P_right_div_chip = P_right / (D_OBJECT_SIZE * 2);
-		if (map_data[P_right_div_chip.y][P_right_div_chip.x] == '2')
-		{
-			if (velocity.y > 0)
-			{
-				location.y -= velocity.y;
-			}
-			else
-			{
-				location.y += velocity.y;
-			}
-		}
+		//Vector2D P_right = Vector2D(P + (24.0f, 0));
+		//Vector2D P_right_div_chip = P_right / (D_OBJECT_SIZE * 2);
+		//if (map_data[P_right_div_chip.y][P_right_div_chip.x] == '2')
+		//{
+		//	if (velocity.y > 0)
+		//	{
+		//		location.y -= velocity.y;
+		//	}
+		//	else
+		//	{
+		//		location.y += velocity.y;
+		//	}
+		//}
 	}
 }
 
@@ -290,6 +290,58 @@ void Player::SetNextState(ePlayerState next_state)
 /// </summary>
 void Player::PlayerControl(float delta_second)
 {
+	//// 歩いているとき
+	//if (now_state == ePlayerState::RUN)
+	//{
+	//	// 当たっている場所が壁だったら
+	//	if (__super::MapCollision(0, -1) == true)
+	//	{
+	//		// 前座標を保存
+	//		old_location = location;
+
+	//		// 変換用変数に保存
+	//		float x_map = location.x;
+
+	//		// チップサイズで割って現在のマップ位置を特定
+	//		x_map /= (D_OBJECT_SIZE * 2);
+
+	//		// 切り上げ整数に変換
+	//		int x_id = std::floor(x_map);
+
+	//		// ワールド座標を保存
+	//		Vector2D object_rect = Vector2D(location.x + scroll_value, location.y);
+
+	//		float scroll = scroll_value;
+
+	//		// 右に歩いているとき
+	//		if (velocity.x > 1.0f)
+	//		{
+	//			// マップサイズをかけて座標を特定
+	//			x_id *= (D_OBJECT_SIZE * 2);
+
+	//			// 座標を設定
+	//			location.x = x_id;
+	//		}
+	//		// 左に歩いているとき
+	//		else if (velocity.x < -1.0f)
+	//		{
+	//			// マップ位置を右にずらす
+	//			x_id++;
+
+	//			// マップサイズをかけて座標を特定
+	//			x_id *= (D_OBJECT_SIZE * 2);
+
+	//			// 座標を設定
+	//			location.x = x_id;
+	//		}
+	//		else
+	//		{
+	//			// 座標を設定
+	//			location.x = x_id;
+	//		}
+	//	}
+	//}
+
 	//最大速度の設定
 	if (velocity.x >= P_MAX_SPEED)
 	{
@@ -299,64 +351,6 @@ void Player::PlayerControl(float delta_second)
 	{
 		velocity.x = -P_MAX_SPEED;
 	}
-
-	//Vector2D P = Vector2D(location.x + velocity.x, location.y);
-	//Vector2D P_upper = Vector2D(P + (0, -24.0f));
-	//Vector2D P_upper_div_chip = P_upper / (D_OBJECT_SIZE * 2);
-	//if (map_data[P_upper_div_chip.y][P_upper_div_chip.x] == '2')
-	//{
-	//	if (velocity.x > 0)
-	//	{
-	//		location.x -= velocity.x;
-	//	}
-	//	else
-	//	{
-	//		location.x += velocity.x;
-	//	}
-	//}
-
-	//Vector2D P_bottom = Vector2D(P + (0, 24.0f));
-	//Vector2D P_bottom_div_chip = P_bottom / (D_OBJECT_SIZE * 2);
-	//if (map_data[P_bottom_div_chip.y][P_bottom_div_chip.x] == '2')
-	//{
-	//	if (velocity.x > 0)
-	//	{
-	//		location.x -= velocity.x;
-	//	}
-	//	else
-	//	{
-	//		location.x += velocity.x;
-	//	}
-	//}
-
-	//P = Vector2D(location.x, location.y + D_OBJECT_SIZE);
-	//Vector2D P_left = Vector2D(P + (-24.0f, 0));
-	//Vector2D P_left_div_chip = P_left / (D_OBJECT_SIZE * 2);
-	//if (map_data[P_left_div_chip.y][P_left_div_chip.x] == '2')
-	//{
-	//	if (velocity.y > 0)
-	//	{
-	//		location.y -= velocity.y;
-	//	}
-	//	else
-	//	{
-	//		location.y += velocity.y;
-	//	}
-	//}
-
-	//Vector2D P_right = Vector2D(P + (24.0f, 0));
-	//Vector2D P_right_div_chip = P_right / (D_OBJECT_SIZE * 2);
-	//if (map_data[P_right_div_chip.y][P_right_div_chip.x] == '2')
-	//{
-	//	if (velocity.y > 0)
-	//	{
-	//		location.y -= velocity.y;
-	//	}
-	//	else
-	//	{
-	//		location.y += velocity.y;
-	//	}
-	//}
 
 	// 当たっている場所が地面だったらその座標に設定
 	if (__super::MapCollision(0, 0) == true)
@@ -384,37 +378,16 @@ void Player::PlayerControl(float delta_second)
 		isOnGround = false; // 空中にいる
 	}
 
-	//// 当たっている場所が壁だったらその座標に設定
-	//if (__super::MapCollision(0, -1) == true)
-	//{
-	//	// 変換用変数に保存
-	//	float x_map = location.x;
-
-	//	// チップサイズで割って現在のマップ位置を特定
-	//	x_map /= (D_OBJECT_SIZE * 2);
-
-	//	// 切り上げ整数に変換
-	//	int x_id = std::floor(x_map);
-
-	//	// マップサイズをかけて座標を特定
-	//	x_id *= (D_OBJECT_SIZE * 2);
-
-	//	if (velocity.x > 0)
-	//	{
-	//		// 座標を設定
-	//		location.x = x_id;
-	//	}
-	//	else
-	//	{
-	//		// 座標を設定
-	//		location.x = x_id - D_OBJECT_SIZE;
-	//	}
-	//}
-
 	//画面外に行かないようにする
 	if (location.x < 0 + D_OBJECT_SIZE)
 	{ //←
 		location.x = 0 + D_OBJECT_SIZE;
+	}
+
+	//画面外に行かないようにする
+	if (location.y < 0 + D_OBJECT_SIZE)
+	{ //←
+		velocity.y = -1;
 	}
 
 	//スクロール処理

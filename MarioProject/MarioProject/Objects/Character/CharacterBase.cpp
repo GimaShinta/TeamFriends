@@ -115,7 +115,8 @@ bool CharacterBase::MapCollision(int x, int y)
 		int y_id = std::floor(vertices[i].y) / (D_OBJECT_SIZE * 2);
 		// プレイヤーがいるマスが0以外の文字だったら
 		if (map_data[y_id + y][x_id + x] == '2' || map_data[y_id + y][x_id + x] == 'j' || map_data[y_id + y][x_id + x] == 'k'
-			|| map_data[y_id + y][x_id + x] == 'l' || map_data[y_id + y][x_id + x] == 'm' || map_data[y_id + y][x_id + x] == 'n')
+			|| map_data[y_id + y][x_id + x] == 'l' || map_data[y_id + y][x_id + x] == 'm' || map_data[y_id + y][x_id + x] == 'n'
+			|| map_data[y_id + y][x_id + x] == 'H'|| map_data[y_id + y][x_id + x] == 'B'|| map_data[y_id + y][x_id + x] == 'O')
 		{
 			// どのポイントが当たっているか
 			int id = i;
