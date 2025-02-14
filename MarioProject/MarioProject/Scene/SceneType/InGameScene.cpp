@@ -76,7 +76,7 @@ void InGameScene::Initialize()
 	ui_image[3] = rm->GetImages("Resource/Images/UI/world.png", 1, 0, 0, 32, 32)[0];
 
 	//BGMの読み込み
-	bgm = LoadSoundMem("Resource/Sounds/BGM/Nonomura.wav");
+	bgm = LoadSoundMem("Resource/Sounds/BGM/Main_BGM_Nonomura.wav");
 	//ボリューム（BGM）
 	ChangeVolumeSoundMem(255 * 30 / 100, bgm);
 	 
