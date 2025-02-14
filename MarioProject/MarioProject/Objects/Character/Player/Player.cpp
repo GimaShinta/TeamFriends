@@ -21,6 +21,7 @@ Player::Player():
 	, sound_clear(NULL)
 	, sound_destroy(NULL)
 	, sound_tach(NULL)
+	, coin(0)
 {
 }
 
@@ -72,8 +73,9 @@ void Player::Initialize()
 /// <param name="delata_second">１フレーム当たりの時間</param>
 void Player::Update(float delta_second)
 {
-	// スコアの値を初期化
+	// 値を初期化
 	score = 0;
+	coin = 0;
 
 	// アニメーション
 	AnimationControl(delta_second, mario_aniamtion, mario_animation_num, 5, NULL, 6);
@@ -166,79 +168,20 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 	{
 		is_goal = true;
 	}
-	else if (hit_object->GetCollision().object_type == eObjectType::eEnemy)
+
+	// 敵に触れたら
+	if (hit_object->GetCollision().object_type == eObjectType::eEnemy)
 	{
 		velocity.y = 0;
 		// スコアの値を設定
 		score = 300;
 	}
-	// 当たった相手がブロックだったら
-	else if (hit_object->GetCollision().object_type == eObjectType::eBlock)
+
+	// アイテムに触れたら
+	if (hit_object->GetCollision().object_type == eObjectType::eItem)
 	{
-		Vector2D diff = location - hit_object->GetLocation();
-		//if (velocity.y > 0)
-		//{
-		//	location.y = hit_object->GetLocation().y - (D_OBJECT_SIZE * 2);
-		//	isOnGround = true;
-		//}
-
-		//Vector2D P = Vector2D(location.x + velocity.x, location.y);
-		//Vector2D P_upper = Vector2D(P + (0, -24.0f));
-		//Vector2D P_upper_div_chip = P_upper / (D_OBJECT_SIZE * 2);
-		//if (map_data[P_upper_div_chip.y][P_upper_div_chip.x] == '2')
-		//{
-		//	if (velocity.x > 0)
-		//	{
-		//		location.x = (location.x / (D_OBJECT_SIZE * 2)) * (D_OBJECT_SIZE * 2);
-		//	}
-		//	else
-		//	{
-		//		location.x += velocity.x;
-		//	}
-		//}
-
-		//Vector2D P_bottom = Vector2D(P + (0, 24.0f));
-		//Vector2D P_bottom_div_chip = P_bottom / (D_OBJECT_SIZE * 2);
-		//if (map_data[P_bottom_div_chip.y][P_bottom_div_chip.x] == '2')
-		//{
-		//	if (velocity.x > 0)
-		//	{
-		//		location.x -= velocity.x;
-		//	}
-		//	else
-		//	{
-		//		location.x += velocity.x;
-		//	}
-		//}
-
-		//P = Vector2D(location.x, location.y + D_OBJECT_SIZE);
-		//Vector2D P_left = Vector2D(P + (-24.0f, 0));
-		//Vector2D P_left_div_chip = P_left / (D_OBJECT_SIZE * 2);
-		//if (map_data[P_left_div_chip.y][P_left_div_chip.x] == '2')
-		//{
-		//	if (velocity.y > 0)
-		//	{
-		//		location.y -= velocity.y;
-		//	}
-		//	else
-		//	{
-		//		location.y += velocity.y;
-		//	}
-		//}
-
-		//Vector2D P_right = Vector2D(P + (24.0f, 0));
-		//Vector2D P_right_div_chip = P_right / (D_OBJECT_SIZE * 2);
-		//if (map_data[P_right_div_chip.y][P_right_div_chip.x] == '2')
-		//{
-		//	if (velocity.y > 0)
-		//	{
-		//		location.y -= velocity.y;
-		//	}
-		//	else
-		//	{
-		//		location.y += velocity.y;
-		//	}
-		//}
+		// コインカウント加算
+		coin++;
 	}
 }
 
@@ -427,4 +370,10 @@ bool Player::GetIsDestroy()
 bool Player::GetIsClear()
 {
 	return is_clear;
+}
+
+// 獲得コイン数の取得
+int Player::GetCoin()
+{
+	return coin;
 }
